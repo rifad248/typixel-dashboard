@@ -1,0 +1,3296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typixel - Graphic Design Management</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --border: #e5e7eb;
+            --text: #111827;
+            --text-muted: #6b7280;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            background: white;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--dark);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .menu-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .menu-item i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .sidebar-footer {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            height: 60px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+        }
+
+        .search-bar i {
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+            margin-right: 0.5rem;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .notification-btn:hover {
+            background: var(--light);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Page Content */
+        .page-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: var(--light);
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-muted);
+        }
+
+        .btn-icon:hover {
+            background: var(--light);
+            color: var(--text);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.625rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        /* Tables */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .table-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: var(--light);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        tr:hover {
+            background: var(--light);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-primary {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon.primary {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .stat-icon.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .stat-icon.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            color: var(--danger);
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 0.25rem;
+            line-height: 1;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab:hover {
+            color: var(--text);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            min-width: 300px;
+            animation: toastSlideIn 0.3s ease;
+        }
+
+        @keyframes toastSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--danger);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.info .toast-icon {
+            color: var(--info);
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-message {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        /* Chat System */
+        .chat-container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .chat-sidebar {
+            width: 300px;
+            background: white;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chat-search {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .chat-search i {
+            color: var(--text-muted);
+            margin-right: 0.5rem;
+        }
+
+        .chat-search input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chat-item:hover {
+            background: var(--light);
+        }
+
+        .chat-item.active {
+            background: rgba(99, 102, 241, 0.05);
+            border-left: 3px solid var(--primary);
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        .chat-info {
+            flex: 1;
+        }
+
+        .chat-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .chat-preview {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .message.sent {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            background: var(--light);
+        }
+
+        .message.sent .message-bubble {
+            background: var(--primary);
+            color: white;
+        }
+
+        .message-text {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .message.sent .message-time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+        }
+
+        .chat-send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .file-upload-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            color: var(--text-muted);
+        }
+
+        .file-upload-text {
+            color: var(--text);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-hint {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Login Page */
+        .login-container {
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .login-left {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-form-container {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .login-logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .login-logo-text {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .login-subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .login-divider::before,
+        .login-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .login-divider span {
+            padding: 0 1rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .login-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .login-right-content {
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .login-right-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .login-right-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -260px;
+                z-index: 999;
+                height: 100vh;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .page-content {
+                padding: 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .login-container {
+                flex-direction: column;
+            }
+
+            .login-right {
+                display: none;
+            }
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-toggle:hover {
+            background: var(--light);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            z-index: 100;
+            display: none;
+        }
+
+        .dropdown.active .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background: var(--light);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0.5rem 0;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Avatar */
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 0.875rem;
+        }
+
+        .avatar-sm {
+            width: 28px;
+            height: 28px;
+            font-size: 0.75rem;
+        }
+
+        .avatar-lg {
+            width: 48px;
+            height: 48px;
+            font-size: 1.125rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .empty-state-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state-text {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Work Assignment Card */
+        .work-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .work-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .work-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .work-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .work-status.pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .work-status.in-progress {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .work-status.completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .work-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .work-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .work-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .work-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Help/Ticket System */
+        .ticket-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--info);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .ticket-id {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .ticket-priority {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .ticket-priority.high {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .ticket-priority.medium {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .ticket-priority.low {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .ticket-subject {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .ticket-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .ticket-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        // Main App
+        const app = {
+            currentUser: null,
+            currentPage: 'login',
+            data: {
+                users: [],
+                clients: [],
+                projects: [],
+                workAssignments: [],
+                messages: [],
+                notifications: [],
+                tickets: [],
+                invoices: []
+            },
+
+            init: function () {
+                this.loadData();
+                this.checkAuth();
+                this.setupEventListeners();
+            },
+
+            loadData: function () {
+                const savedData = localStorage.getItem('typixel_data');
+                if (savedData) {
+                    this.data = JSON.parse(savedData);
+                } else {
+                    // Initialize with admin
+                    this.data.users = [
+                        {
+                            id: 1,
+                            name: 'Admin',
+                            email: 'rifadwork@gmail.com',
+                            password: '123',
+                            role: 'admin',
+                            avatar: 'AD',
+                            approved: true,
+                            totalWorkTime: 0,
+                            pendingSalary: 0
+                        }
+                    ];
+                    this.saveData();
+                }
+            },
+
+            saveData: function () {
+                localStorage.setItem('typixel_data', JSON.stringify(this.data));
+            },
+
+            checkAuth: function () {
+                const savedUser = sessionStorage.getItem('typixel_user');
+                if (savedUser) {
+                    this.currentUser = JSON.parse(savedUser);
+                    this.renderApp();
+                } else {
+                    this.renderLogin();
+                }
+            },
+
+            renderLogin: function () {
+                document.getElementById('app').innerHTML = `
+                    <div class="login-container">
+                        <div class="login-left">
+                            <div class="login-form-container">
+                                <div class="login-logo">
+                                    <div class="login-logo-icon">T</div>
+                                    <div class="login-logo-text">Typixel</div>
+                                </div>
+                                <h2 class="login-title">Welcome Back</h2>
+                                <p class="login-subtitle">Sign in to your account to continue</p>
+                                
+                                <form id="login-form">
+                                    <div class="form-group">
+                                        <label class="form-label">Email Address</label>
+                                        <input type="email" id="login-email" class="form-control" placeholder="Enter your email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                                </form>
+                                
+                                <div class="login-divider">
+                                    <span>New to Typixel?</span>
+                                </div>
+                                
+                                <button class="btn btn-secondary" style="width: 100%;" onclick="app.openModal('join-team')">
+                                    <i data-lucide="user-plus"></i>
+                                    Join Our Team
+                                </button>
+                            </div>
+                        </div>
+                        <div class="login-right">
+                            <div class="login-right-content">
+                                <h1 class="login-right-title">Create Amazing Designs</h1>
+                                <p class="login-right-subtitle">
+                                    Join Typixel and collaborate with talented designers. 
+                                    Work on exciting projects and grow your creative career.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('login-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.login();
+                });
+            },
+
+            login: function () {
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+
+                const user = this.data.users.find(u => u.email === email && u.password === password);
+
+                if (user) {
+                    if (user.role === 'editor' && !user.approved) {
+                        this.showToast('warning', 'Account Pending', 'Your account is pending approval. Please wait for admin approval.');
+                        return;
+                    }
+
+                    this.currentUser = user;
+                    sessionStorage.setItem('typixel_user', JSON.stringify(user));
+                    this.renderApp();
+                    this.showToast('success', 'Login Successful', `Welcome back, ${user.name}!`);
+                } else {
+                    this.showToast('error', 'Login Failed', 'Invalid email or password');
+                }
+            },
+
+            logout: function () {
+                sessionStorage.removeItem('typixel_user');
+                this.currentUser = null;
+                this.renderLogin();
+                this.showToast('info', 'Logged Out', 'You have been logged out successfully');
+            },
+
+            renderApp: function () {
+                const appContainer = document.getElementById('app');
+                appContainer.innerHTML = `
+                    <div class="app-container">
+                        ${this.renderSidebar()}
+                        <div class="main-content">
+                            ${this.renderHeader()}
+                            <div class="page-content" id="page-content">
+                                ${this.renderPage()}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                lucide.createIcons();
+                this.setupDropdowns();
+            },
+
+            renderSidebar: function () {
+                const menuItems = this.getMenuItems();
+                
+                return `
+                    <div class="sidebar">
+                        <div class="sidebar-header">
+                            <a href="#" class="logo">
+                                <div class="logo-icon">T</div>
+                                <span>Typixel</span>
+                            </a>
+                        </div>
+                        <nav class="sidebar-menu">
+                            ${menuItems.map(item => `
+                                <button class="menu-item ${item.active ? 'active' : ''}" onclick="app.navigate('${item.id}')">
+                                    <i data-lucide="${item.icon}"></i>
+                                    <span>${item.label}</span>
+                                </button>
+                            `).join('')}
+                        </nav>
+                        <div class="sidebar-footer">
+                            <div class="user-profile">
+                                <div class="user-avatar">${this.currentUser.avatar}</div>
+                                <div class="user-info">
+                                    <div class="user-name">${this.currentUser.name}</div>
+                                    <div class="user-role">${this.currentUser.role}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            getMenuItems: function () {
+                const role = this.currentUser.role;
+                const items = [];
+
+                if (role === 'admin') {
+                    items.push(
+                        { id: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard', active: this.currentPage === 'dashboard' },
+                        { id: 'clients', label: 'Clients', icon: 'users', active: this.currentPage === 'clients' },
+                        { id: 'editors', label: 'Editors', icon: 'user-check', active: this.currentPage === 'editors' },
+                        { id: 'projects', label: 'Projects', icon: 'briefcase', active: this.currentPage === 'projects' },
+                        { id: 'work-assignments', label: 'Work Assignments', icon: 'clipboard-list', active: this.currentPage === 'work-assignments' },
+                        { id: 'invoices', label: 'Invoices', icon: 'file-text', active: this.currentPage === 'invoices' },
+                        { id: 'tickets', label: 'Support Tickets', icon: 'help-circle', active: this.currentPage === 'tickets' },
+                        { id: 'chat', label: 'Chat', icon: 'message-circle', active: this.currentPage === 'chat' }
+                    );
+                } else if (role === 'editor') {
+                    items.push(
+                        { id: 'editor-dashboard', label: 'Dashboard', icon: 'layout-dashboard', active: this.currentPage === 'editor-dashboard' },
+                        { id: 'my-work', label: 'My Work', icon: 'briefcase', active: this.currentPage === 'my-work' },
+                        { id: 'submit-work', label: 'Submit Work', icon: 'upload', active: this.currentPage === 'submit-work' },
+                        { id: 'my-invoices', label: 'My Invoices', icon: 'file-text', active: this.currentPage === 'my-invoices' },
+                        { id: 'support', label: 'Get Help', icon: 'help-circle', active: this.currentPage === 'support' },
+                        { id: 'chat', label: 'Chat', icon: 'message-circle', active: this.currentPage === 'chat' }
+                    );
+                }
+
+                items.push(
+                    { id: 'profile', label: 'Profile', icon: 'user', active: this.currentPage === 'profile' }
+                );
+
+                return items;
+            },
+
+            renderHeader: function () {
+                const notificationCount = this.getUnreadNotifications().length;
+
+                return `
+                    <header class="header">
+                        <div class="header-left">
+                            <div class="search-bar">
+                                <i data-lucide="search"></i>
+                                <input type="text" placeholder="Search...">
+                            </div>
+                        </div>
+                        <div class="header-right">
+                            <button class="notification-btn" onclick="app.openNotifications()">
+                                <i data-lucide="bell"></i>
+                                ${notificationCount > 0 ? `<span class="notification-badge">${notificationCount}</span>` : ''}
+                            </button>
+                            <div class="dropdown">
+                                <button class="dropdown-toggle">
+                                    <i data-lucide="more-vertical"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#" onclick="app.navigate('profile')">
+                                        <i data-lucide="user"></i>
+                                        Profile
+                                    </a>
+                                    <a class="dropdown-item" href="#" onclick="app.navigate('settings')">
+                                        <i data-lucide="settings"></i>
+                                        Settings
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" onclick="app.logout()">
+                                        <i data-lucide="log-out"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                `;
+            },
+
+            renderPage: function () {
+                switch (this.currentPage) {
+                    case 'dashboard':
+                        return this.renderDashboard();
+                    case 'clients':
+                        return this.renderClients();
+                    case 'editors':
+                        return this.renderEditors();
+                    case 'projects':
+                        return this.renderProjects();
+                    case 'work-assignments':
+                        return this.renderWorkAssignments();
+                    case 'invoices':
+                        return this.renderInvoices();
+                    case 'tickets':
+                        return this.renderTickets();
+                    case 'chat':
+                        return this.renderChat();
+                    case 'editor-dashboard':
+                        return this.renderEditorDashboard();
+                    case 'my-work':
+                        return this.renderMyWork();
+                    case 'submit-work':
+                        return this.renderSubmitWork();
+                    case 'my-invoices':
+                        return this.renderMyInvoices();
+                    case 'support':
+                        return this.renderSupport();
+                    case 'profile':
+                        return this.renderProfile();
+                    default:
+                        return this.renderDashboard();
+                }
+            },
+
+            renderDashboard: function () {
+                const stats = this.getDashboardStats();
+
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Dashboard</h1>
+                            <p class="page-subtitle">Welcome back! Here's what's happening with your business today.</p>
+                        </div>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" onclick="app.openModal('add-project')">
+                                <i data-lucide="plus"></i>
+                                New Project
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-title">Total Revenue</span>
+                                <div class="stat-icon primary">
+                                    <i data-lucide="indian-rupee"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">₹${stats.totalRevenue.toLocaleString('en-IN')}</div>
+                            <div class="stat-change positive">
+                                <i data-lucide="trending-up"></i>
+                                <span>12% from last month</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-title">Active Projects</span>
+                                <div class="stat-icon success">
+                                    <i data-lucide="briefcase"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">${stats.activeProjects}</div>
+                            <div class="stat-change positive">
+                                <i data-lucide="trending-up"></i>
+                                <span>3 new this week</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-title">Total Clients</span>
+                                <div class="stat-icon warning">
+                                    <i data-lucide="users"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">${stats.totalClients}</div>
+                            <div class="stat-change positive">
+                                <i data-lucide="trending-up"></i>
+                                <span>2 new this month</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-title">Active Editors</span>
+                                <div class="stat-icon primary">
+                                    <i data-lucide="user-check"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">${stats.activeEditors}</div>
+                            <div class="stat-change">
+                                <i data-lucide="minus"></i>
+                                <span>No change</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Work Assignments</h3>
+                        </div>
+                        <div class="card-body">
+                            ${this.renderRecentWorkAssignments()}
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderClients: function () {
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Clients</h1>
+                            <p class="page-subtitle">Manage your client relationships and projects.</p>
+                        </div>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" onclick="app.openModal('add-client')">
+                                <i data-lucide="plus"></i>
+                                Add Client
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">All Clients</h3>
+                            <div class="table-actions">
+                                <div class="search-bar" style="width: 250px;">
+                                    <i data-lucide="search"></i>
+                                    <input type="text" placeholder="Search clients...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Client</th>
+                                        <th>Company</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Total Projects</th>
+                                        <th>Total Spent</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${this.data.clients.map(client => {
+                                        const clientProjects = this.data.projects.filter(p => p.clientId === client.id);
+                                        const totalSpent = clientProjects.reduce((sum, p) => sum + (p.budget || 0), 0);
+                                        return `
+                                            <tr>
+                                                <td>
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="avatar">${client.avatar}</div>
+                                                        <div>
+                                                            <div class="font-semibold">${client.name}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>${client.company}</td>
+                                                <td>${client.email}</td>
+                                                <td>${client.phone}</td>
+                                                <td>${clientProjects.length}</td>
+                                                <td>₹${totalSpent.toLocaleString('en-IN')}</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button class="dropdown-toggle btn-icon btn-sm">
+                                                            <i data-lucide="more-horizontal"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="#" onclick="app.editClient(${client.id})">
+                                                                <i data-lucide="edit"></i>
+                                                                Edit
+                                                            </a>
+                                                            <a class="dropdown-item" href="#" onclick="app.viewClientProjects(${client.id})">
+                                                                <i data-lucide="briefcase"></i>
+                                                                View Projects
+                                                            </a>
+                                                            <a class="dropdown-item" href="#" onclick="app.deleteClient(${client.id})">
+                                                                <i data-lucide="trash-2"></i>
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderEditors: function () {
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Editors</h1>
+                            <p class="page-subtitle">Manage your design team and work assignments.</p>
+                        </div>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" onclick="app.openModal('add-editor')">
+                                <i data-lucide="plus"></i>
+                                Add Editor
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">All Editors</h3>
+                            <div class="table-actions">
+                                <div class="search-bar" style="width: 250px;">
+                                    <i data-lucide="search"></i>
+                                    <input type="text" placeholder="Search editors...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Editor</th>
+                                        <th>Email</th>
+                                        <th>Total Work Time</th>
+                                        <th>Pending Salary</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${this.data.users.filter(u => u.role === 'editor').map(editor => {
+                                        const editorWork = this.data.workAssignments.filter(w => w.editorId === editor.id);
+                                        return `
+                                            <tr>
+                                                <td>
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="avatar">${editor.avatar}</div>
+                                                        <div>
+                                                            <div class="font-semibold">${editor.name}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>${editor.email}</td>
+                                                <td>${editor.totalWorkTime || 0} hours</td>
+                                                <td>₹${(editor.pendingSalary || 0).toLocaleString('en-IN')}</td>
+                                                <td>
+                                                    <span class="badge ${editor.approved ? 'badge-success' : 'badge-warning'}">
+                                                        ${editor.approved ? 'Active' : 'Pending'}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button class="dropdown-toggle btn-icon btn-sm">
+                                                            <i data-lucide="more-horizontal"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            ${!editor.approved ? `
+                                                                <a class="dropdown-item" href="#" onclick="app.approveEditor(${editor.id})">
+                                                                    <i data-lucide="check"></i>
+                                                                    Approve
+                                                                </a>
+                                                            ` : ''}
+                                                            <a class="dropdown-item" href="#" onclick="app.updateEditorSalary(${editor.id})">
+                                                                <i data-lucide="indian-rupee"></i>
+                                                                Update Salary
+                                                            </a>
+                                                            <a class="dropdown-item" href="#" onclick="app.deleteEditor(${editor.id})">
+                                                                <i data-lucide="trash-2"></i>
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderProjects: function () {
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Projects</h1>
+                            <p class="page-subtitle">Manage all your design projects.</p>
+                        </div>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" onclick="app.openModal('add-project')">
+                                <i data-lucide="plus"></i>
+                                New Project
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">All Projects</h3>
+                            <div class="table-actions">
+                                <div class="search-bar" style="width: 250px;">
+                                    <i data-lucide="search"></i>
+                                    <input type="text" placeholder="Search projects...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Project</th>
+                                        <th>Client</th>
+                                        <th>Assigned Editor</th>
+                                        <th>Budget</th>
+                                        <th>Status</th>
+                                        <th>Deadline</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${this.data.projects.map(project => {
+                                        const client = this.data.clients.find(c => c.id === project.clientId);
+                                        const editor = project.assignedEditorId ? 
+                                            this.data.users.find(u => u.id === project.assignedEditorId) : null;
+                                        return `
+                                            <tr>
+                                                <td>
+                                                    <div class="font-semibold">${project.name}</div>
+                                                    <div class="text-xs text-muted">${project.description}</div>
+                                                </td>
+                                                <td>${client ? client.name : 'Unknown'}</td>
+                                                <td>${editor ? editor.name : 'Not Assigned'}</td>
+                                                <td>₹${project.budget.toLocaleString('en-IN')}</td>
+                                                <td>
+                                                    <span class="badge badge-${project.status === 'completed' ? 'success' : project.status === 'in-progress' ? 'primary' : 'warning'}">
+                                                        ${project.status}
+                                                    </span>
+                                                </td>
+                                                <td>${project.deadline || 'Not Set'}</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button class="dropdown-toggle btn-icon btn-sm">
+                                                            <i data-lucide="more-horizontal"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="#" onclick="app.assignWork(${project.id})">
+                                                                <i data-lucide="user-plus"></i>
+                                                                Assign Work
+                                                            </a>
+                                                            <a class="dropdown-item" href="#" onclick="app.editProject(${project.id})">
+                                                                <i data-lucide="edit"></i>
+                                                                Edit
+                                                            </a>
+                                                            <a class="dropdown-item" href="#" onclick="app.deleteProject(${project.id})">
+                                                                <i data-lucide="trash-2"></i>
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderWorkAssignments: function () {
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Work Assignments</h1>
+                            <p class="page-subtitle">Track all work assignments and their status.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            ${this.data.workAssignments.length === 0 ? 
+                                '<div class="empty-state"><p>No work assignments yet</p></div>' :
+                                this.data.workAssignments.map(assignment => {
+                                    const editor = this.data.users.find(u => u.id === assignment.editorId);
+                                    const project = this.data.projects.find(p => p.id === assignment.projectId);
+                                    return `
+                                        <div class="work-card">
+                                            <div class="work-header">
+                                                <h3 class="work-title">${project ? project.name : 'Unknown Project'}</h3>
+                                                <span class="work-status ${assignment.status}">${assignment.status}</span>
+                                            </div>
+                                            <p class="work-description">${assignment.description}</p>
+                                            <div class="work-meta">
+                                                <div class="work-meta-item">
+                                                    <i data-lucide="user"></i>
+                                                    ${editor ? editor.name : 'Unknown Editor'}
+                                                </div>
+                                                <div class="work-meta-item">
+                                                    <i data-lucide="calendar"></i>
+                                                    Deadline: ${assignment.deadline}
+                                                </div>
+                                            </div>
+                                            ${assignment.status === 'pending' ? `
+                                                <div class="work-actions">
+                                                    <button class="btn btn-sm btn-secondary" onclick="app.viewAssignmentDetails(${assignment.id})">
+                                                        View Details
+                                                    </button>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    `;
+                                }).join('')
+                            }
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderInvoices: function () {
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Invoices</h1>
+                            <p class="page-subtitle">Manage all client invoices and payments.</p>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">All Invoices</h3>
+                            <div class="table-actions">
+                                <div class="search-bar" style="width: 250px;">
+                                    <i data-lucide="search"></i>
+                                    <input type="text" placeholder="Search invoices...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Invoice #</th>
+                                        <th>Client</th>
+                                        <th>Project</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${this.data.invoices.map(invoice => {
+                                        const client = this.data.clients.find(c => c.id === invoice.clientId);
+                                        const project = this.data.projects.find(p => p.id === invoice.projectId);
+                                        return `
+                                            <tr>
+                                                <td>#${invoice.id.toString().padStart(5, '0')}</td>
+                                                <td>${client ? client.name : 'Unknown'}</td>
+                                                <td>${project ? project.name : 'Unknown'}</td>
+                                                <td>₹${invoice.amount.toLocaleString('en-IN')}</td>
+                                                <td>${new Date(invoice.date).toLocaleDateString()}</td>
+                                                <td>
+                                                    <span class="badge badge-${invoice.status === 'paid' ? 'success' : 'warning'}">
+                                                        ${invoice.status}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    ${invoice.status === 'unpaid' ? `
+                                                        <button class="btn btn-sm btn-success" onclick="app.markInvoicePaid(${invoice.id})">
+                                                            Mark Paid
+                                                        </button>
+                                                    ` : '-'}
+                                                </td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderTickets: function () {
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Support Tickets</h1>
+                            <p class="page-subtitle">Manage editor support requests.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            ${this.data.tickets.length === 0 ? 
+                                '<div class="empty-state"><p>No support tickets</p></div>' :
+                                this.data.tickets.map(ticket => {
+                                    const editor = this.data.users.find(u => u.id === ticket.editorId);
+                                    return `
+                                        <div class="ticket-card">
+                                            <div class="ticket-header">
+                                                <span class="ticket-id">Ticket #${ticket.id}</span>
+                                                <span class="ticket-priority ${ticket.priority}">${ticket.priority}</span>
+                                            </div>
+                                            <h3 class="ticket-subject">${ticket.subject}</h3>
+                                            <p class="ticket-description">${ticket.description}</p>
+                                            <div class="ticket-footer">
+                                                <span>From: ${editor ? editor.name : 'Unknown'}</span>
+                                                <span>${new Date(ticket.createdAt).toLocaleDateString()}</span>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')
+                            }
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderChat: function () {
+                const users = this.data.users.filter(u => u.id !== this.currentUser.id);
+                
+                return `
+                    <div class="chat-container">
+                        <div class="chat-sidebar">
+                            <div class="chat-header">
+                                <h3>Messages</h3>
+                                <div class="chat-search">
+                                    <i data-lucide="search"></i>
+                                    <input type="text" placeholder="Search conversations...">
+                                </div>
+                            </div>
+                            <div class="chat-list">
+                                ${users.map(user => {
+                                    const lastMessage = this.getLastMessage(this.currentUser.id, user.id);
+                                    return `
+                                        <div class="chat-item" onclick="app.openChatWith(${user.id})">
+                                            <div class="chat-avatar">${user.avatar}</div>
+                                            <div class="chat-info">
+                                                <div class="chat-name">${user.name}</div>
+                                                <div class="chat-preview">${lastMessage ? lastMessage.text : 'No messages yet'}</div>
+                                            </div>
+                                            <div class="chat-time">${lastMessage ? this.formatTime(lastMessage.timestamp) : ''}</div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                        <div class="chat-main" id="chat-main">
+                            <div class="empty-state">
+                                <i data-lucide="message-circle" class="empty-state-icon"></i>
+                                <h3 class="empty-state-title">Select a conversation</h3>
+                                <p class="empty-state-text">Choose a user from the list to start chatting</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderEditorDashboard: function () {
+                const editorWork = this.data.workAssignments.filter(w => w.editorId === this.currentUser.id);
+                const pendingWork = editorWork.filter(w => w.status === 'pending');
+                const inProgressWork = editorWork.filter(w => w.status === 'in-progress');
+                const completedWork = editorWork.filter(w => w.status === 'completed');
+
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Editor Dashboard</h1>
+                            <p class="page-subtitle">Welcome back, ${this.currentUser.name}!</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-title">Total Work Time</span>
+                                <div class="stat-icon primary">
+                                    <i data-lucide="clock"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">${this.currentUser.totalWorkTime || 0} hrs</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-title">Pending Salary</span>
+                                <div class="stat-icon warning">
+                                    <i data-lucide="indian-rupee"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">₹${(this.currentUser.pendingSalary || 0).toLocaleString('en-IN')}</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-title">Pending Work</span>
+                                <div class="stat-icon warning">
+                                    <i data-lucide="clipboard-list"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">${pendingWork.length}</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-title">Completed Work</span>
+                                <div class="stat-icon success">
+                                    <i data-lucide="check-circle"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">${completedWork.length}</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Work</h3>
+                        </div>
+                        <div class="card-body">
+                            ${editorWork.length === 0 ? 
+                                '<div class="empty-state"><p>No work assigned yet</p></div>' :
+                                editorWork.slice(0, 5).map(work => {
+                                    const project = this.data.projects.find(p => p.id === work.projectId);
+                                    return `
+                                        <div class="work-card">
+                                            <div class="work-header">
+                                                <h3 class="work-title">${project ? project.name : 'Unknown Project'}</h3>
+                                                <span class="work-status ${work.status}">${work.status}</span>
+                                            </div>
+                                            <p class="work-description">${work.description}</p>
+                                            <div class="work-meta">
+                                                <div class="work-meta-item">
+                                                    <i data-lucide="calendar"></i>
+                                                    Deadline: ${work.deadline}
+                                                </div>
+                                            </div>
+                                            ${work.status === 'pending' ? `
+                                                <div class="work-actions">
+                                                    <button class="btn btn-sm btn-primary" onclick="app.acceptWork(${work.id})">
+                                                        Accept
+                                                    </button>
+                                                    <button class="btn btn-sm btn-secondary" onclick="app.rejectWork(${work.id})">
+                                                        Reject
+                                                    </button>
+                                                </div>
+                                            ` : work.status === 'in-progress' ? `
+                                                <div class="work-actions">
+                                                    <button class="btn btn-sm btn-primary" onclick="app.navigate('submit-work')">
+                                                        Submit Work
+                                                    </button>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    `;
+                                }).join('')
+                            }
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderMyWork: function () {
+                const editorWork = this.data.workAssignments.filter(w => w.editorId === this.currentUser.id);
+                
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">My Work</h1>
+                            <p class="page-subtitle">View all your assigned work.</p>
+                        </div>
+                    </div>
+
+                    <div class="tabs">
+                        <div class="tab active" onclick="app.filterWork('all')">All Work</div>
+                        <div class="tab" onclick="app.filterWork('pending')">Pending</div>
+                        <div class="tab" onclick="app.filterWork('in-progress')">In Progress</div>
+                        <div class="tab" onclick="app.filterWork('completed')">Completed</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            ${editorWork.length === 0 ? 
+                                '<div class="empty-state"><p>No work assigned yet</p></div>' :
+                                editorWork.map(work => {
+                                    const project = this.data.projects.find(p => p.id === work.projectId);
+                                    return `
+                                        <div class="work-card">
+                                            <div class="work-header">
+                                                <h3 class="work-title">${project ? project.name : 'Unknown Project'}</h3>
+                                                <span class="work-status ${work.status}">${work.status}</span>
+                                            </div>
+                                            <p class="work-description">${work.description}</p>
+                                            <div class="work-meta">
+                                                <div class="work-meta-item">
+                                                    <i data-lucide="calendar"></i>
+                                                    Deadline: ${work.deadline}
+                                                </div>
+                                                <div class="work-meta-item">
+                                                    <i data-lucide="clock"></i>
+                                                    Assigned: ${new Date(work.createdAt).toLocaleDateString()}
+                                                </div>
+                                            </div>
+                                            ${work.status === 'pending' ? `
+                                                <div class="work-actions">
+                                                    <button class="btn btn-sm btn-primary" onclick="app.acceptWork(${work.id})">
+                                                        Accept
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger" onclick="app.rejectWork(${work.id})">
+                                                        Reject
+                                                    </button>
+                                                </div>
+                                            ` : work.status === 'in-progress' ? `
+                                                <div class="work-actions">
+                                                    <button class="btn btn-sm btn-primary" onclick="app.navigate('submit-work')">
+                                                        Submit Work
+                                                    </button>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    `;
+                                }).join('')
+                            }
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderSubmitWork: function () {
+                const inProgressWork = this.data.workAssignments.filter(w => 
+                    w.editorId === this.currentUser.id && w.status === 'in-progress'
+                );
+                
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Submit Work</h1>
+                            <p class="page-subtitle">Upload your completed work files.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Select Work to Submit</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="submit-work-form">
+                                <div class="form-group">
+                                    <label class="form-label">Select Work</label>
+                                    <select class="form-control" id="work-select" required>
+                                        <option value="">Choose a work...</option>
+                                        ${inProgressWork.map(work => {
+                                            const project = this.data.projects.find(p => p.id === work.projectId);
+                                            return `<option value="${work.id}">${project ? project.name : 'Unknown'}</option>`;
+                                        }).join('')}
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Upload Files</label>
+                                    <div class="file-upload" onclick="document.getElementById('file-input').click()">
+                                        <i data-lucide="upload-cloud" class="file-upload-icon"></i>
+                                        <div class="file-upload-text">Click to upload or drag and drop</div>
+                                        <div class="file-upload-hint">PNG, JPG, PDF, PSD, AI (MAX. 50MB)</div>
+                                    </div>
+                                    <input type="file" id="file-input" multiple style="display: none;" accept=".png,.jpg,.jpeg,.pdf,.psd,.ai">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Notes</label>
+                                    <textarea class="form-control" rows="3" placeholder="Add any notes about your work..."></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">
+                                    <i data-lucide="send"></i>
+                                    Submit Work
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderMyInvoices: function () {
+                const editorInvoices = this.data.invoices.filter(i => i.editorId === this.currentUser.id);
+                
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">My Invoices</h1>
+                            <p class="page-subtitle">View your payment history.</p>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">Payment History</h3>
+                        </div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Invoice #</th>
+                                        <th>Project</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${editorInvoices.length === 0 ? 
+                                        '<tr><td colspan="5" style="text-align: center;">No invoices yet</td></tr>' :
+                                        editorInvoices.map(invoice => {
+                                            const project = this.data.projects.find(p => p.id === invoice.projectId);
+                                            return `
+                                                <tr>
+                                                    <td>#${invoice.id.toString().padStart(5, '0')}</td>
+                                                    <td>${project ? project.name : 'Unknown'}</td>
+                                                    <td>₹${invoice.amount.toLocaleString('en-IN')}</td>
+                                                    <td>${new Date(invoice.date).toLocaleDateString()}</td>
+                                                    <td>
+                                                        <span class="badge badge-${invoice.status === 'paid' ? 'success' : 'warning'}">
+                                                            ${invoice.status}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            `;
+                                        }).join('')
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderSupport: function () {
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Get Help</h1>
+                            <p class="page-subtitle">Submit a support ticket if you need assistance.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Create Support Ticket</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="support-form">
+                                <div class="form-group">
+                                    <label class="form-label">Subject</label>
+                                    <input type="text" class="form-control" placeholder="Brief description of your issue" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Priority</label>
+                                    <select class="form-control" required>
+                                        <option value="low">Low</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="high">High</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" rows="5" placeholder="Describe your issue in detail..." required></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">
+                                    <i data-lucide="send"></i>
+                                    Submit Ticket
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderProfile: function () {
+                return `
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Profile</h1>
+                            <p class="page-subtitle">Manage your account settings.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Personal Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="profile-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" value="${this.currentUser.name}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" value="${this.currentUser.email}" readonly>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" placeholder="Enter your phone number">
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Change Password</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="password-form">
+                                <div class="form-group">
+                                    <label class="form-label">Current Password</label>
+                                    <input type="password" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" required>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Update Password</button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            },
+
+            // Modal Functions
+            openModal: function (type) {
+                let modalContent = '';
+
+                switch (type) {
+                    case 'add-client':
+                        modalContent = `
+                            <div class="modal-header">
+                                <h3 class="modal-title">Add New Client</h3>
+                                <button class="modal-close" onclick="app.closeModal()">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="add-client-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" name="name" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Company</label>
+                                            <input type="text" name="company" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" name="email" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Phone</label>
+                                            <input type="tel" name="phone" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Address</label>
+                                        <textarea name="address" class="form-control" rows="2"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" onclick="app.closeModal()">Cancel</button>
+                                <button class="btn btn-primary" onclick="app.addClient()">Add Client</button>
+                            </div>
+                        `;
+                        break;
+
+                    case 'add-editor':
+                        modalContent = `
+                            <div class="modal-header">
+                                <h3 class="modal-title">Add New Editor</h3>
+                                <button class="modal-close" onclick="app.closeModal()">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="add-editor-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" name="name" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" name="email" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" name="password" class="form-control" required>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" onclick="app.closeModal()">Cancel</button>
+                                <button class="btn btn-primary" onclick="app.addEditor()">Add Editor</button>
+                            </div>
+                        `;
+                        break;
+
+                    case 'add-project':
+                        modalContent = `
+                            <div class="modal-header">
+                                <h3 class="modal-title">Create New Project</h3>
+                                <button class="modal-close" onclick="app.closeModal()">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="add-project-form">
+                                    <div class="form-group">
+                                        <label class="form-label">Project Name</label>
+                                        <input type="text" name="name" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Description</label>
+                                        <textarea name="description" class="form-control" rows="2"></textarea>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Client</label>
+                                            <select name="clientId" class="form-control" required>
+                                                <option value="">Select Client</option>
+                                                ${this.data.clients.map(client => `
+                                                    <option value="${client.id}">${client.name}</option>
+                                                `).join('')}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Budget (₹)</label>
+                                            <input type="number" name="budget" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Assign Editor</label>
+                                            <select name="assignedEditorId" class="form-control">
+                                                <option value="">Select Editor (Optional)</option>
+                                                ${this.data.users.filter(u => u.role === 'editor' && u.approved).map(editor => `
+                                                    <option value="${editor.id}">${editor.name}</option>
+                                                `).join('')}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Deadline</label>
+                                            <input type="date" name="deadline" class="form-control">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" onclick="app.closeModal()">Cancel</button>
+                                <button class="btn btn-primary" onclick="app.addProject()">Create Project</button>
+                            </div>
+                        `;
+                        break;
+
+                    case 'join-team':
+                        modalContent = `
+                            <div class="modal-header">
+                                <h3 class="modal-title">Join Our Team</h3>
+                                <button class="modal-close" onclick="app.closeModal()">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="join-team-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" name="name" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" name="email" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" name="password" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Portfolio Link</label>
+                                        <input type="url" name="portfolio" class="form-control" placeholder="https://...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Tell us about yourself</label>
+                                        <textarea name="bio" class="form-control" rows="3" placeholder="Your experience and skills..."></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" onclick="app.closeModal()">Cancel</button>
+                                <button class="btn btn-primary" onclick="app.joinTeam()">Submit Application</button>
+                            </div>
+                        `;
+                        break;
+                }
+
+                const modal = document.createElement('div');
+                modal.className = 'modal active';
+                modal.innerHTML = modalContent;
+                document.body.appendChild(modal);
+                lucide.createIcons();
+            },
+
+            closeModal: function () {
+                const modal = document.querySelector('.modal.active');
+                if (modal) {
+                    modal.remove();
+                }
+            },
+
+            // Action Functions
+            addClient: function () {
+                const form = document.getElementById('add-client-form');
+                const formData = new FormData(form);
+                
+                const client = {
+                    id: Date.now(),
+                    name: formData.get('name'),
+                    company: formData.get('company'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    address: formData.get('address'),
+                    avatar: formData.get('name').split(' ').map(n => n[0]).join('').toUpperCase()
+                };
+
+                this.data.clients.push(client);
+                this.saveData();
+                this.closeModal();
+                this.navigate('clients');
+                this.showToast('success', 'Client Added', 'New client has been added successfully');
+            },
+
+            addEditor: function () {
+                const form = document.getElementById('add-editor-form');
+                const formData = new FormData(form);
+                
+                const editor = {
+                    id: Date.now(),
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    role: 'editor',
+                    approved: false,
+                    avatar: formData.get('name').split(' ').map(n => n[0]).join('').toUpperCase(),
+                    totalWorkTime: 0,
+                    pendingSalary: 0
+                };
+
+                this.data.users.push(editor);
+                this.saveData();
+                this.closeModal();
+                this.navigate('editors');
+                this.showToast('success', 'Editor Added', 'New editor has been added. Waiting for approval.');
+            },
+
+            addProject: function () {
+                const form = document.getElementById('add-project-form');
+                const formData = new FormData(form);
+                
+                const project = {
+                    id: Date.now(),
+                    name: formData.get('name'),
+                    description: formData.get('description'),
+                    clientId: parseInt(formData.get('clientId')),
+                    budget: parseInt(formData.get('budget')),
+                    assignedEditorId: formData.get('assignedEditorId') ? parseInt(formData.get('assignedEditorId')) : null,
+                    deadline: formData.get('deadline'),
+                    status: 'pending'
+                };
+
+                this.data.projects.push(project);
+                
+                // If editor is assigned, create work assignment
+                if (project.assignedEditorId) {
+                    this.createWorkAssignment(project.id, project.assignedEditorId);
+                }
+                
+                this.saveData();
+                this.closeModal();
+                this.navigate('projects');
+                this.showToast('success', 'Project Created', 'New project has been created successfully');
+            },
+
+            createWorkAssignment: function (projectId, editorId) {
+                const project = this.data.projects.find(p => p.id === projectId);
+                const assignment = {
+                    id: Date.now(),
+                    projectId: projectId,
+                    editorId: editorId,
+                    description: project.description,
+                    deadline: project.deadline,
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                };
+
+                this.data.workAssignments.push(assignment);
+                this.addNotification(editorId, 'New Work Assignment', `You have been assigned to project: ${project.name}`);
+            },
+
+            joinTeam: function () {
+                const form = document.getElementById('join-team-form');
+                const formData = new FormData(form);
+                
+                const editor = {
+                    id: Date.now(),
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    role: 'editor',
+                    approved: false,
+                    avatar: formData.get('name').split(' ').map(n => n[0]).join('').toUpperCase(),
+                    totalWorkTime: 0,
+                    pendingSalary: 0,
+                    portfolio: formData.get('portfolio'),
+                    bio: formData.get('bio')
+                };
+
+                this.data.users.push(editor);
+                this.saveData();
+                this.closeModal();
+                this.showToast('success', 'Application Submitted', 'Your application has been submitted. We will review it soon.');
+            },
+
+            approveEditor: function (editorId) {
+                const editor = this.data.users.find(u => u.id === editorId);
+                if (editor) {
+                    editor.approved = true;
+                    this.saveData();
+                    this.addNotification(editorId, 'Account Approved', 'Your account has been approved. You can now login.');
+                    this.navigate('editors');
+                    this.showToast('success', 'Editor Approved', `${editor.name} has been approved`);
+                }
+            },
+
+            updateEditorSalary: function (editorId) {
+                const amount = prompt('Enter amount to add to pending salary:');
+                if (amount && !isNaN(amount)) {
+                    const editor = this.data.users.find(u => u.id === editorId);
+                    if (editor) {
+                        editor.pendingSalary = (editor.pendingSalary || 0) + parseFloat(amount);
+                        this.saveData();
+                        this.navigate('editors');
+                        this.showToast('success', 'Salary Updated', `Pending salary updated for ${editor.name}`);
+                    }
+                }
+            },
+
+            acceptWork: function (workId) {
+                const work = this.data.workAssignments.find(w => w.id === workId);
+                if (work) {
+                    work.status = 'in-progress';
+                    work.acceptedAt = new Date().toISOString();
+                    this.saveData();
+                    
+                    // Notify admin
+                    this.addNotification(1, 'Work Accepted', `${this.currentUser.name} has accepted the work assignment`);
+                    
+                    this.navigate('editor-dashboard');
+                    this.showToast('success', 'Work Accepted', 'You have accepted the work assignment');
+                }
+            },
+
+            rejectWork: function (workId) {
+                const work = this.data.workAssignments.find(w => w.id === workId);
+                if (work) {
+                    work.status = 'rejected';
+                    work.rejectedAt = new Date().toISOString();
+                    this.saveData();
+                    
+                    // Notify admin
+                    this.addNotification(1, 'Work Rejected', `${this.currentUser.name} has rejected the work assignment`);
+                    
+                    this.navigate('editor-dashboard');
+                    this.showToast('info', 'Work Rejected', 'You have rejected the work assignment');
+                }
+            },
+
+            markInvoicePaid: function (invoiceId) {
+                const invoice = this.data.invoices.find(i => i.id === invoiceId);
+                if (invoice) {
+                    invoice.status = 'paid';
+                    this.saveData();
+                    this.navigate('invoices');
+                    this.showToast('success', 'Invoice Paid', 'Invoice has been marked as paid');
+                }
+            },
+
+            // Navigation
+            navigate: function (page) {
+                this.currentPage = page;
+                const pageContent = document.getElementById('page-content');
+                if (pageContent) {
+                    pageContent.innerHTML = this.renderPage();
+                    lucide.createIcons();
+                    this.setupDropdowns();
+                }
+            },
+
+            // Chat Functions
+            openChatWith: function (userId) {
+                const user = this.data.users.find(u => u.id === userId);
+                const messages = this.getMessages(this.currentUser.id, userId);
+                
+                const chatMain = document.getElementById('chat-main');
+                chatMain.innerHTML = `
+                    <div class="chat-header" style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div class="avatar">${user.avatar}</div>
+                            <div>
+                                <div style="font-weight: 600;">${user.name}</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Online</div>
+                            </div>
+                        </div>
+                        <button class="btn-icon" onclick="app.closeChat()">
+                            <i data-lucide="x"></i>
+                        </button>
+                    </div>
+                    <div class="chat-messages" style="flex: 1; padding: 1rem; overflow-y: auto;">
+                        ${messages.map(msg => `
+                            <div class="message ${msg.senderId === this.currentUser.id ? 'sent' : 'received'}">
+                                <div class="message-bubble">
+                                    <div class="message-text">${msg.text}</div>
+                                    <div class="message-time">${this.formatTime(msg.timestamp)}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="chat-input-container">
+                        <div class="chat-input-wrapper">
+                            <input type="text" class="chat-input" placeholder="Type a message..." id="chat-input">
+                            <button class="chat-send-btn" onclick="app.sendMessage(${userId})">
+                                <i data-lucide="send"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('chat-input').focus();
+                lucide.createIcons();
+            },
+
+            closeChat: function () {
+                const chatMain = document.getElementById('chat-main');
+                chatMain.innerHTML = `
+                    <div class="empty-state">
+                        <i data-lucide="message-circle" class="empty-state-icon"></i>
+                        <h3 class="empty-state-title">Select a conversation</h3>
+                        <p class="empty-state-text">Choose a user from the list to start chatting</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            },
+
+            sendMessage: function (receiverId) {
+                const input = document.getElementById('chat-input');
+                const text = input.value.trim();
+                
+                if (!text) return;
+                
+                const message = {
+                    id: Date.now(),
+                    senderId: this.currentUser.id,
+                    receiverId: receiverId,
+                    text: text,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.data.messages.push(message);
+                this.saveData();
+                
+                input.value = '';
+                this.openChatWith(receiverId);
+            },
+
+            getMessages: function (userId1, userId2) {
+                return this.data.messages.filter(m => 
+                    (m.senderId === userId1 && m.receiverId === userId2) || 
+                    (m.senderId === userId2 && m.receiverId === userId1)
+                ).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            },
+
+            getLastMessage: function (userId1, userId2) {
+                const messages = this.getMessages(userId1, userId2);
+                return messages.length > 0 ? messages[messages.length - 1] : null;
+            },
+
+            // Notification Functions
+            addNotification: function (userId, title, message) {
+                const notification = {
+                    id: Date.now(),
+                    userId: userId,
+                    title: title,
+                    message: message,
+                    read: false,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.data.notifications.push(notification);
+                this.saveData();
+                
+                // Show toast if current user
+                if (userId === this.currentUser.id) {
+                    this.showToast('info', title, message);
+                }
+            },
+
+            getUnreadNotifications: function () {
+                return this.data.notifications.filter(n => 
+                    n.userId === this.currentUser.id && !n.read
+                );
+            },
+
+            openNotifications: function () {
+                const notifications = this.getUnreadNotifications();
+                
+                if (notifications.length === 0) {
+                    this.showToast('info', 'No Notifications', 'You have no new notifications');
+                    return;
+                }
+                
+                // Mark as read
+                notifications.forEach(n => n.read = true);
+                this.saveData();
+                
+                // Update UI
+                this.renderApp();
+            },
+
+            // Helper Functions
+            getDashboardStats: function () {
+                return {
+                    totalRevenue: this.data.invoices.reduce((sum, i) => sum + i.amount, 0),
+                    activeProjects: this.data.projects.filter(p => p.status === 'in-progress').length,
+                    totalClients: this.data.clients.length,
+                    activeEditors: this.data.users.filter(u => u.role === 'editor' && u.approved).length
+                };
+            },
+
+            renderRecentWorkAssignments: function () {
+                const recent = this.data.workAssignments
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .slice(0, 5);
+                
+                if (recent.length === 0) {
+                    return '<p style="text-align: center; color: var(--text-muted);">No work assignments yet</p>';
+                }
+                
+                return recent.map(assignment => {
+                    const editor = this.data.users.find(u => u.id === assignment.editorId);
+                    const project = this.data.projects.find(p => p.id === assignment.projectId);
+                    return `
+                        <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <div style="font-weight: 600;">${project ? project.name : 'Unknown'}</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted);">
+                                        Assigned to: ${editor ? editor.name : 'Unknown'}
+                                    </div>
+                                </div>
+                                <span class="badge badge-${assignment.status === 'completed' ? 'success' : assignment.status === 'in-progress' ? 'primary' : 'warning'}">
+                                    ${assignment.status}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            formatTime: function (timestamp) {
+                const date = new Date(timestamp);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+
+                if (diffMins < 1) return 'Just now';
+                if (diffMins < 60) return `${diffMins}m ago`;
+
+                const diffHours = Math.floor(diffMins / 60);
+                if (diffHours < 24) return `${diffHours}h ago`;
+
+                return date.toLocaleDateString();
+            },
+
+            setupDropdowns: function () {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    const toggle = dropdown.querySelector('.dropdown-toggle');
+                    toggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        dropdown.classList.toggle('active');
+                    });
+                });
+
+                document.addEventListener('click', () => {
+                    document.querySelectorAll('.dropdown.active').forEach(d => {
+                        d.classList.remove('active');
+                    });
+                });
+            },
+
+            setupEventListeners: function () {
+                // Form submissions
+                document.addEventListener('submit', (e) => {
+                    if (e.target.id === 'profile-form') {
+                        e.preventDefault();
+                        this.showToast('success', 'Profile Updated', 'Your profile has been updated');
+                    }
+                    
+                    if (e.target.id === 'password-form') {
+                        e.preventDefault();
+                        this.showToast('success', 'Password Changed', 'Your password has been updated');
+                    }
+                    
+                    if (e.target.id === 'support-form') {
+                        e.preventDefault();
+                        const formData = new FormData(e.target);
+                        const ticket = {
+                            id: Date.now(),
+                            editorId: this.currentUser.id,
+                            subject: formData.get('subject'),
+                            priority: formData.get('priority'),
+                            description: formData.get('description'),
+                            createdAt: new Date().toISOString()
+                        };
+                        
+                        this.data.tickets.push(ticket);
+                        this.saveData();
+                        
+                        // Notify admin
+                        this.addNotification(1, 'New Support Ticket', `${this.currentUser.name}: ${ticket.subject}`);
+                        
+                        e.target.reset();
+                        this.showToast('success', 'Ticket Submitted', 'Your support ticket has been submitted');
+                    }
+                    
+                    if (e.target.id === 'submit-work-form') {
+                        e.preventDefault();
+                        this.showToast('success', 'Work Submitted', 'Your work has been submitted for review');
+                    }
+                });
+            },
+
+            showToast: function (type, title, message) {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                let icon = '';
+                switch (type) {
+                    case 'success': icon = 'check-circle'; break;
+                    case 'error': icon = 'x-circle'; break;
+                    case 'warning': icon = 'alert-triangle'; break;
+                    case 'info': icon = 'info'; break;
+                }
+                
+                toast.innerHTML = `
+                    <i data-lucide="${icon}" class="toast-icon"></i>
+                    <div class="toast-content">
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close" onclick="this.parentElement.remove()">
+                        <i data-lucide="x"></i>
+                    </button>
+                `;
+                
+                toastContainer.appendChild(toast);
+                lucide.createIcons();
+                
+                setTimeout(() => {
+                    if (toast.parentElement) {
+                        toast.remove();
+                    }
+                }, 5000);
+            }
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+
+</html>
