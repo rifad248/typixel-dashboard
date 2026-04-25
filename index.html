@@ -7,20 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root{
-  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--sidebar:#010409;
-  --accent:#FF6B35;--accent2:#00C9A7;--accent-glow:rgba(255,107,53,.12);
-  --success:#2EA043;--warning:#D29922;--danger:#F85149;--info:#58A6FF;
-  --fg:#E6EDF3;--fg2:#8B949E;--fg3:#484F58;
-  --border:#30363D;--border2:#21262D;
-  --shadow:0 2px 8px rgba(0,0,0,.4);--radius:10px;
-}
-[data-theme="light"]{
-  --bg:#f0f2f5;--bg2:#ffffff;--bg3:#e8eaed;--sidebar:#1a1d23;
-  --accent:#E05520;--accent2:#009E82;--accent-glow:rgba(224,85,32,.08);
-  --fg:#1f2937;--fg2:#6b7280;--fg3:#9ca3af;
-  --border:#d1d5db;--border2:#e5e7eb;--shadow:0 2px 8px rgba(0,0,0,.08);
-}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--sidebar:#010409;--accent:#FF6B35;--accent2:#00C9A7;--accent-glow:rgba(255,107,53,.12);--success:#2EA043;--warning:#D29922;--danger:#F85149;--info:#58A6FF;--fg:#E6EDF3;--fg2:#8B949E;--fg3:#484F58;--border:#30363D;--border2:#21262D;--shadow:0 2px 8px rgba(0,0,0,.4);--radius:10px}
+[data-theme="light"]{--bg:#f0f2f5;--bg2:#ffffff;--bg3:#e8eaed;--sidebar:#1a1d23;--accent:#E05520;--accent2:#009E82;--accent-glow:rgba(224,85,32,.08);--fg:#1f2937;--fg2:#6b7280;--fg3:#9ca3af;--border:#d1d5db;--border2:#e5e7eb;--shadow:0 2px 8px rgba(0,0,0,.08)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);overflow:hidden;height:100vh;transition:background .3s,color .3s}
 h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
@@ -242,16 +230,10 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 <div class="loading-overlay hidden" id="loader"><div class="spinner"></div><div style="color:var(--fg2);font-size:.9rem">Syncing with Google Sheets...</div></div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-   Typixel — Google Sheets Connected
-   URL pre-configured to your deployment
-   ═══════════════════════════════════════════════════════════ */
-
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyZoXDY7E0-Y4-FAXtBd92oReBsdD_Qeyo0I51xZgPfUQQwVnN6eDV6T56VeGVXHJ1W1w/exec';
-const CACHE_KEY = 'typixel_cache';
-const AUTH_KEY = 'typixel_auth';
-const THEME_KEY = 'typixel_theme';
-
+const SHEET_URL='https://script.google.com/macros/s/AKfycbwREq6lrrN45c4OAMpAAC3MqrSaIVTyaHVisw4dzXPsVfCTuDAeLoQCkD-imBCvQX2OuA/exec';
+const CACHE_KEY='typixel_cache';
+const AUTH_KEY='typixel_auth';
+const THEME_KEY='typixel_theme';
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
@@ -263,11 +245,8 @@ const dlLeft=d=>{if(!d)return null;return Math.ceil((new Date(d)-new Date())/864
 const futureD=n=>new Date(Date.now()+n*864e5).toISOString().split('T')[0];
 const pastD=n=>new Date(Date.now()-n*864e5).toISOString().split('T')[0];
 
-/* ── Database: Google Sheets + localStorage cache ── */
 const DB={
   _data:null,_syncing:false,
-  get url(){return SHEET_URL;},
-
   defaults(){
     return{
       users:[{id:'u1',name:'Admin',email:'rifadwork@gmail.com',password:'123',role:'admin',approved:true,avatar:'AD',phone:'',bio:'',portfolio:'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()}],
@@ -291,11 +270,9 @@ const DB={
       files:[],activityLog:[],notes:[]
     };
   },
-
   get tables(){return['users','clients','projects','workAssignments','messages','notifications','tickets','invoices','files','activityLog','notes'];},
 
   async load(){
-    // Try Google Sheets
     try{
       $('#loader').classList.remove('hidden');
       this._syncing=true;syncDot();
@@ -304,41 +281,55 @@ const DB={
       if(json.ok&&json.data){
         this._data={};
         this.tables.forEach(t=>{this._data[t]=json.data[t]||[];});
+        // If sheet is empty (no users), push defaults
+        if(!this._data.users||this._data.users.length===0){
+          this._data=this.defaults();
+          await this.pushAll();
+        }
         localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
         this._syncing=false;syncDot();
         $('#loader').classList.add('hidden');
         return this._data;
+      }else{
+        console.log('Sheet returned error:',json.error);
+        throw new Error(json.error||'Sheet error');
       }
-    }catch(e){console.log('Sheet fetch failed, using cache:',e.message);}
-    this._syncing=false;syncDot();
-    $('#loader').classList.add('hidden');
-    // Fallback cache
-    try{this._data=JSON.parse(localStorage.getItem(CACHE_KEY));}catch(e){}
-    if(!this._data||!this._data.users){this._data=this.defaults();this._cache();}
-    return this._data;
-  },
-
-  async save(table){
-    if(!this._data)return;
-    localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
-    if(true){
-      try{
-        this._syncing=true;syncDot();
-        await fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:table,data:this._data[table]||[]})});
-        this._syncing=false;syncDot();
-      }catch(e){this._syncing=false;syncDot();console.log('Save failed, cached locally');}
+    }catch(e){
+      console.log('Sheet load failed, using cache:',e.message);
+      this._syncing=false;syncDot();
+      $('#loader').classList.add('hidden');
+      try{this._data=JSON.parse(localStorage.getItem(CACHE_KEY));}catch(err){}
+      if(!this._data||!this._data.users){this._data=this.defaults();this._cache();}
+      return this._data;
     }
   },
 
-  async saveAll(){
+  async push(table){
     if(!this._data)return;
     localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
     try{
       this._syncing=true;syncDot();
-      for(const t of this.tables){await fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:t,data:this._data[t]||[]})});}
+      const res=await fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:table,data:this._data[table]||[]})});
+      const json=await res.json();
+      if(!json.ok) console.log('Push error for',table,':',json.error);
       this._syncing=false;syncDot();
-    }catch(e){this._syncing=false;syncDot();}
+    }catch(e){this._syncing=false;syncDot();console.log('Push failed for',table,':',e.message);}
   },
+
+  async pushAll(){
+    if(!this._data)return;
+    localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
+    try{
+      this._syncing=true;syncDot();
+      for(const t of this.tables){
+        await fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:t,data:this._data[t]||[]})});
+      }
+      this._syncing=false;syncDot();
+    }catch(e){this._syncing=false;syncDot();console.log('PushAll failed:',e.message);}
+  },
+
+  async save(table){await this.push(table);},
+  async saveAll(){await this.pushAll();},
 
   _cache(){localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));},
   log(action,details){if(!this._data)return;this._data.activityLog.unshift({id:uid(),userId:user?.id||'system',action,details,createdAt:new Date().toISOString()});if(this._data.activityLog.length>200)this._data.activityLog.length=200;this.save('activityLog');}
@@ -346,17 +337,14 @@ const DB={
 
 function syncDot(){const d=$('.sync-dot');if(!d)return;d.className='sync-dot'+(DB._syncing?' ing':' on');}
 
-/* ── State ── */
 let db=null,user=JSON.parse(sessionStorage.getItem(AUTH_KEY)||'null');
 let page=user?(user.role==='admin'?'dashboard':'editor-dashboard'):'login';
 let chatWith=null,uploadedFiles=[],searchQuery='';
 
-/* ── Theme ── */
 function applyTheme(){document.documentElement.setAttribute('data-theme',localStorage.getItem(THEME_KEY)||'dark');}
 applyTheme();
 function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem(THEME_KEY,n);}
 
-/* ── Toast ── */
 function toast(type,title,msg){
   const ic={success:'fa-check-circle',error:'fa-times-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle'};
   const cl={success:'ts',error:'te',warning:'tw',info:'ti'};
@@ -365,7 +353,6 @@ function toast(type,title,msg){
   $('#toasts').appendChild(el);setTimeout(()=>{if(el.parentElement)el.remove();},4000);
 }
 
-/* ── Notifications ── */
 function addNotif(uid,title,msg){if(!db)return;db.notifications.unshift({id:uid(),userId:uid,title,msg,read:false,createdAt:new Date().toISOString()});DB.save('notifications');}
 function unreadCount(){return db?db.notifications.filter(n=>n.userId===user?.id&&!n.read).length:0;}
 function toggleNotifPanel(){
@@ -374,18 +361,15 @@ function toggleNotifPanel(){
   else{const ns=db.notifications.filter(n=>n.userId===user?.id).slice(0,15);p.innerHTML=`<div class="notif-ph"><h3>Notifications</h3><span class="text-sm text-muted">${ns.length}</span></div><div class="notif-list">${ns.length?ns.map(n=>`<div class="notif-item ${n.read?'':'unread'}"><div class="notif-item-title">${n.title}</div><div class="notif-item-msg">${n.msg}</div><div class="notif-item-time">${fmtT(n.createdAt)}</div></div>`).join(''):'<div class="notif-empty">No notifications</div>'}</div>`;p.classList.add('open');}
 }
 
-/* ── Modal ── */
 function openModal(html){closeModals();const bg=document.createElement('div');bg.className='modal-bg open';bg.id='modalBg';bg.innerHTML=`<div class="modal">${html}</div>`;bg.addEventListener('click',e=>{if(e.target===bg)closeModals();});document.body.appendChild(bg);}
 function closeModals(){const m=$('#modalBg');if(m)m.remove();}
 
-/* ── CSV Export ── */
 function exportCSV(table,headers){
   const rows=db[table]||[];if(!rows.length){toast('warning','Empty','No data');return;}
   let csv=headers.join(',')+'\n';rows.forEach(r=>{csv+=headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(',')+'\n';});
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=table+'.csv';a.click();toast('success','Exported');
 }
 
-/* ── Print Invoice ── */
 function printInvoice(id){
   const inv=db.invoices.find(i=>i.id===id);if(!inv)return;
   const cl=db.clients.find(c=>c.id===inv.clientId);const pr=db.projects.find(p=>p.id===inv.projectId);
@@ -394,16 +378,13 @@ function printInvoice(id){
   document.body.appendChild(w);window.print();w.remove();
 }
 
-/* ── Auth ── */
-function login(email,pw){const u=db.users.find(x=>x.email===email&&x.password===pw);if(!u){toast('error','Login Failed','Invalid credentials');return;}if(u.role==='editor'&&!u.approved){toast('warning','Pending','Awaiting admin approval');return;}user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));page=u.role==='admin'?'dashboard':'editor-dashboard';DB.log('Login',u.name+' logged in');render();toast('success','Welcome','Hi '+u.name+'!');}
+function login(email,pw){const u=db.users.find(x=>x.email===email&&x.password===pw);if(!u){toast('error','Login Failed','Invalid credentials');return;}if(u.role==='editor'&&!u.approved){toast('warning','Pending','Awaiting approval');return;}user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));page=u.role==='admin'?'dashboard':'editor-dashboard';DB.log('Login',u.name+' logged in');render();toast('success','Welcome','Hi '+u.name+'!');}
 function logout(){user=null;sessionStorage.removeItem(AUTH_KEY);page='login';chatWith=null;render();toast('info','Logged out');}
 function register(name,email,pw,portfolio,bio){if(db.users.find(x=>x.email===email)){toast('error','Taken','Email exists');return;}db.users.push({id:uid(),name,email,password:pw,role:'editor',approved:false,avatar:ini(name),phone:'',bio:bio||'',portfolio:portfolio||'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});addNotif('u1','New Editor Applied',name);DB.log('Register',name);DB.save('users');toast('success','Sent','Application submitted');}
 
-/* ── Nav ── */
 function navigate(p){page=p;chatWith=null;searchQuery='';render();}
 function searchFilter(arr,fields){if(!searchQuery)return arr;const q=searchQuery.toLowerCase();return arr.filter(i=>fields.some(f=>(i[f]||'').toString().toLowerCase().includes(q)));}
 
-/* ── Render ── */
 async function render(){
   if(!user){renderLogin();return;}
   $('#app').innerHTML=`<div class="app">${rSidebar()}<div class="main">${rTopbar()}<div class="page fade-in" id="pc">${rPage()}</div></div></div>`;
@@ -413,7 +394,6 @@ async function render(){
   syncDot();
 }
 
-/* ── Sidebar ── */
 function rSidebar(){
   const items=user.role==='admin'?[
     {s:'MAIN'},{id:'dashboard',i:'fa-gauge-high',l:'Dashboard'},
@@ -432,14 +412,12 @@ function rSidebar(){
   return`<aside class="sidebar" id="sidebar">${h}</aside>`;
 }
 
-/* ── Topbar ── */
 function rTopbar(){
   const t={dashboard:'Dashboard',clients:'Clients',editors:'Editors',projects:'Projects',assignments:'Assignments',invoices:'Invoices',activity:'Activity Log',notes:'Quick Notes',tickets:'Tickets',chat:'Chat','editor-dashboard':'Dashboard','my-work':'My Work','submit-work':'Submit Work','my-invoices':'My Invoices',support:'Get Help',profile:'Settings'};
   const uc=unreadCount();
   return`<header class="topbar"><div class="topbar-left"><span class="sync-dot on"></span><span class="topbar-title">${t[page]||'Typixel'}</span></div><div class="topbar-right"><div class="topbar-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search..." value="${searchQuery}"></div><button class="tb-btn" onclick="toggleTheme()" title="Theme"><i class="fa-solid ${document.documentElement.getAttribute('data-theme')==='dark'?'fa-sun':'fa-moon'}"></i></button><button class="tb-btn" onclick="toggleNotifPanel()"><i class="fa-solid fa-bell"></i>${uc?'<span class="tb-dot"></span>':''}</button><div class="dropdown"><button class="tb-btn" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis-vertical"></i></button><div class="dd-menu"><button class="dd-item" onclick="navigate('profile');this.closest('.dd-menu').classList.remove('open')"><i class="fa-solid fa-gear"></i>Settings</button><div class="dd-sep"></div><button class="dd-item danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i>Logout</button></div></div></div></header>`;
 }
 
-/* ── Page Router ── */
 function rPage(){
   switch(page){
     case'dashboard':return pgDash();case'clients':return pgClients();case'editors':return pgEditors();
@@ -451,7 +429,6 @@ function rPage(){
   }
 }
 
-/* ═══════════ ADMIN ═══════════ */
 function pgDash(){
   const rev=db.invoices.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
   const unp=db.invoices.filter(i=>i.status==='unpaid').reduce((s,i)=>s+i.amount,0);
@@ -476,7 +453,6 @@ function pgDash(){
   </div>`;
 }
 
-/* ── Clients ── */
 function pgClients(){
   const items=searchFilter(db.clients,['name','company','email']);
   return`<div class="ph"><div><h1>Clients</h1><p>${db.clients.length} total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('clients',['id','name','company','email','phone','address'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddClient()"><i class="fa-solid fa-plus"></i>Add Client</button></div></div>
@@ -487,29 +463,27 @@ function modalAddClient(edit=null){
   openModal(`<div class="modal-head"><h3>${c?'Edit':'Add'} Client</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="cf"><div class="frow"><div class="fg"><label>Name</label><input class="fi" name="name" value="${c?.name||''}" required></div><div class="fg"><label>Company</label><input class="fi" name="company" value="${c?.company||''}"></div></div><div class="frow"><div class="fg"><label>Email</label><input class="fi" type="email" name="email" value="${c?.email||''}" required></div><div class="fg"><label>Phone</label><input class="fi" name="phone" value="${c?.phone||''}"></div></div><div class="fg"><label>Address</label><textarea class="fi" name="address" rows="2">${c?.address||''}</textarea></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveClient('${edit||''}')">${c?'Save':'Add'}</button></div>`);
 }
 function modalEditClient(id){modalAddClient(id);}
-function saveClient(eid){
+async function saveClient(eid){
   const f=new FormData($('#cf'));
   if(eid){const c=db.clients.find(x=>x.id===eid);Object.assign(c,{name:f.get('name'),company:f.get('company'),email:f.get('email'),phone:f.get('phone'),address:f.get('address'),avatar:ini(f.get('name'))});DB.log('Edit Client',f.get('name'));}
   else{if(db.clients.find(x=>x.email===f.get('email'))){toast('error','Duplicate','Email exists');return;}db.clients.push({id:uid(),name:f.get('name'),company:f.get('company'),email:f.get('email'),phone:f.get('phone'),address:f.get('address'),avatar:ini(f.get('name'))});DB.log('Add Client',f.get('name'));}
-  DB.save('clients');closeModals();render();toast('success','Done',eid?'Updated':'Added');
+  await DB.save('clients');closeModals();render();toast('success','Done',eid?'Updated':'Added');
 }
-function deleteClient(id){openModal(`<div class="modal-head"><h3>Delete Client</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Removes client and all associated data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(p=>p.clientId!=='${id}');db.invoices=db.invoices.filter(i=>i.clientId!=='${id}');db.clients=db.clients.filter(c=>c.id!=='${id}');DB.saveAll();closeModals();render();toast('success','Deleted')">Delete</button></div>`);}
+async function deleteClient(id){openModal(`<div class="modal-head"><h3>Delete Client</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Removes client and all associated data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(p=>p.clientId!=='${id}');db.invoices=db.invoices.filter(i=>i.clientId!=='${id}');db.clients=db.clients.filter(c=>c.id!=='${id}');await DB.saveAll();closeModals();render();toast('success','Deleted')">Delete</button></div>`);}
 
-/* ── Editors ── */
 function pgEditors(){
   const items=searchFilter(db.users.filter(u=>u.role==='editor'),['name','email']);
   return`<div class="ph"><div><h1>Editors</h1><p>${items.length} members</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('users',['id','name','email','role','totalWorkTime','pendingSalary'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddEditor()"><i class="fa-solid fa-plus"></i>Add Editor</button></div></div>
   <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Editor</th><th>Email</th><th>Hours</th><th>Salary</th><th>Status</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(e=>`<tr><td><div class="cu"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${e.avatar}</div><div><div class="cn">${e.name}</div><div class="cs">${db.workAssignments.filter(w=>w.editorId===e.id&&w.status==='completed').length} done</div></div></div></td><td class="text-muted">${e.email}</td><td>${e.totalWorkTime||0}h</td><td style="font-weight:600">${fmtM(e.pendingSalary||0)}</td><td><span class="badge ${e.approved?'bg-green':'bg-yellow'}">${e.approved?'Active':'Pending'}</span></td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu">${!e.approved?`<button class="dd-item" onclick="approveEditor('${e.id}')"><i class="fa-solid fa-check"></i>Approve</button>`:''}<button class="dd-item" onclick="modalSalary('${e.id}')"><i class="fa-solid fa-indian-rupee-sign"></i>Salary</button><button class="dd-item" onclick="modalAssignProj('${e.id}')"><i class="fa-solid fa-briefcase"></i>Assign</button><button class="dd-item danger" onclick="deleteEditor('${e.id}')"><i class="fa-solid fa-trash"></i>Remove</button></div></div></td></tr>`).join(''):'<tr class="empty-row"><td colspan="6">No editors</td></tr>'}</tbody></table></div></div>`;
 }
 function modalAddEditor(){openModal(`<div class="modal-head"><h3>Add Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="ef"><div class="frow"><div class="fg"><label>Name</label><input class="fi" name="name" required></div><div class="fg"><label>Email</label><input class="fi" type="email" name="email" required></div></div><div class="fg"><label>Password</label><input class="fi" type="password" name="password" required></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveEditor()">Add</button></div>`);}
-function saveEditor(){const f=new FormData($('#ef'));if(db.users.find(x=>x.email===f.get('email'))){toast('error','Duplicate','Email exists');return;}db.users.push({id:uid(),name:f.get('name'),email:f.get('email'),password:f.get('password'),role:'editor',approved:false,avatar:ini(f.get('name')),phone:'',bio:'',portfolio:'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});addNotif('u1','New Editor',f.get('name')+' applied');DB.log('Add Editor',f.get('name'));DB.save('users');closeModals();render();toast('success','Added','Pending approval');}
-function approveEditor(id){const e=db.users.find(u=>u.id===id);if(!e)return;e.approved=true;addNotif(id,'Approved','Your account is approved');DB.log('Approve',e.name);DB.save('users');render();toast('success','Approved',e.name+' can login');}
+async function saveEditor(){const f=new FormData($('#ef'));if(db.users.find(x=>x.email===f.get('email'))){toast('error','Duplicate','Email exists');return;}db.users.push({id:uid(),name:f.get('name'),email:f.get('email'),password:f.get('password'),role:'editor',approved:false,avatar:ini(f.get('name')),phone:'',bio:'',portfolio:'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});addNotif('u1','New Editor',f.get('name')+' applied');DB.log('Add Editor',f.get('name'));await DB.save('users');closeModals();render();toast('success','Added','Pending approval');}
+async function approveEditor(id){const e=db.users.find(u=>u.id===id);if(!e)return;e.approved=true;addNotif(id,'Approved','Your account is approved');DB.log('Approve',e.name);await DB.save('users');render();toast('success','Approved',e.name+' can login');}
 function modalSalary(id){const e=db.users.find(u=>u.id===id);if(!e)return;openModal(`<div class="modal-head"><h3>Update — ${e.name}</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted mb-4">Pending: ${fmtM(e.pendingSalary||0)}</p><div class="frow"><div class="fg"><label>Amount (₹)</label><input class="fi" type="number" id="sAmt" min="0"></div><div class="fg"><label>Hours</label><input class="fi" type="number" id="sHrs" min="0"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const e=db.users.find(u=>u.id==='${id}');e.pendingSalary=(e.pendingSalary||0)+parseFloat($('#sAmt').value||0);e.totalWorkTime=(e.totalWorkTime||0)+parseFloat($('#sHrs').value||0);DB.log('Salary',e.name+': +₹'+$('#sAmt').value);DB.save('users');closeModals();render();toast('success','Updated')">Update</button></div>`);}
 function modalAssignProj(eid){const e=db.users.find(u=>u.id===eid);const av=db.projects.filter(p=>p.status!=='completed'&&!p.assignedEditorId);if(!av.length){toast('warning','None','No unassigned projects');return;}openModal(`<div class="modal-head"><h3>Assign to ${e.name}</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Project</label><select class="fi" id="aProj">${av.map(p=>`<option value="${p.id}">${p.name} (${fmtM(p.budget)})</option>`).join('')}</select></div><div class="fg"><label>Task</label><textarea class="fi" id="aDesc" rows="3"></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="doAssign('${eid}')">Assign</button></div>`);}
-function doAssign(eid){const pid=$('#aProj').value,desc=$('#aDesc').value;const p=db.projects.find(x=>x.id===pid);if(!p)return;p.assignedEditorId=eid;p.status='in-progress';db.workAssignments.push({id:uid(),projectId:pid,editorId:eid,description:desc||p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});addNotif(eid,'New Assignment',p.name);DB.log('Assign',p.name);DB.save('projects');DB.save('workAssignments');closeModals();render();toast('success','Assigned');}
-function deleteEditor(id){openModal(`<div class="modal-head"><h3>Remove Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Unassigns all their work.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.workAssignments.forEach(w=>{if(w.editorId==='${id}')w.editorId=null;});db.users=db.users.filter(u=>u.id!=='${id}');DB.saveAll();closeModals();render();toast('success','Removed')">Remove</button></div>`);}
+async function doAssign(eid){const pid=$('#aProj').value,desc=$('#aDesc').value;const p=db.projects.find(x=>x.id===pid);if(!p)return;p.assignedEditorId=eid;p.status='in-progress';db.workAssignments.push({id:uid(),projectId:pid,editorId:eid,description:desc||p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});addNotif(eid,'New Assignment',p.name);DB.log('Assign',p.name);await DB.save('projects');await DB.save('workAssignments');closeModals();render();toast('success','Assigned');}
+async function deleteEditor(id){openModal(`<div class="modal-head"><h3>Remove Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Unassigns all their work.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.workAssignments.forEach(w=>{if(w.editorId==='${id}')w.editorId=null;});db.users=db.users.filter(u=>u.id!=='${id}');await DB.saveAll();closeModals();render();toast('success','Removed')">Remove</button></div>`);}
 
-/* ── Projects ── */
 function pgProjects(){
   const items=searchFilter(db.projects,['name','description']);
   return`<div class="ph"><div><h1>Projects</h1><p>${db.projects.length} total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('projects',['id','name','description','clientId','budget','status','deadline'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddProject()"><i class="fa-solid fa-plus"></i>New Project</button></div></div>
@@ -519,16 +493,15 @@ function modalAddProject(edit=null){
   const p=edit?db.projects.find(x=>x.id===edit):null;
   openModal(`<div class="modal-head"><h3>${p?'Edit':'New'} Project</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="pf2"><div class="fg"><label>Name</label><input class="fi" name="name" value="${p?.name||''}" required></div><div class="fg"><label>Description</label><textarea class="fi" name="desc" rows="2">${p?.description||''}</textarea></div><div class="frow"><div class="fg"><label>Client</label><select class="fi" name="clientId" required><option value="">Select</option>${db.clients.map(c=>`<option value="${c.id}" ${p?.clientId===c.id?'selected':''}>${c.name}</option>`).join('')}</select></div><div class="fg"><label>Budget (₹)</label><input class="fi" type="number" name="budget" value="${p?.budget||''}" required></div></div><div class="frow"><div class="fg"><label>Editor</label><select class="fi" name="editorId"><option value="">Unassigned</option>${db.users.filter(u=>u.role==='editor'&&u.approved).map(e=>`<option value="${e.id}" ${p?.assignedEditorId===e.id?'selected':''}>${e.name}</option>`).join('')}</select></div><div class="fg"><label>Deadline</label><input class="fi" type="date" name="deadline" value="${p?.deadline||''}"></div></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveProj('${edit||''}')">${p?'Save':'Create'}</button></div>`);}
 function modalEditProject(id){modalAddProject(id);}
-function saveProj(eid){
+async function saveProj(eid){
   const f=new FormData($('#pf2'));
   if(eid){const p=db.projects.find(x=>x.id===eid);const old=p.assignedEditorId;Object.assign(p,{name:f.get('name'),description:f.get('desc'),clientId:f.get('clientId'),budget:+f.get('budget'),assignedEditorId:f.get('editorId')||null,deadline:f.get('deadline')});if(f.get('editorId')&&f.get('editorId')!==old){db.workAssignments.push({id:uid(),projectId:p.id,editorId:f.get('editorId'),description:p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});addNotif(f.get('editorId'),'Assigned',p.name);}DB.log('Edit Project',p.name);}
   else{const id=uid();db.projects.push({id,name:f.get('name'),description:f.get('desc'),clientId:f.get('clientId'),budget:+f.get('budget'),assignedEditorId:f.get('editorId')||null,status:'pending',deadline:f.get('deadline'),createdAt:new Date().toISOString()});if(f.get('editorId')){db.workAssignments.push({id:uid(),projectId:id,editorId:f.get('editorId'),description:f.get('desc'),deadline:f.get('deadline'),status:'pending',createdAt:new Date().toISOString()});addNotif(f.get('editorId'),'Assigned',f.get('name'));}DB.log('Add Project',f.get('name'));}
-  DB.save('projects');DB.save('workAssignments');closeModals();render();toast('success','Done');
+  await DB.save('projects');await DB.save('workAssignments');closeModals();render();toast('success','Done');
 }
-function completeProj(id){const p=db.projects.find(x=>x.id===id);if(!p)return;p.status='completed';db.workAssignments.filter(w=>w.projectId===id).forEach(w=>w.status='completed');db.invoices.push({id:uid(),clientId:p.clientId,projectId:p.id,editorId:p.assignedEditorId,amount:p.budget,status:'unpaid',date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Complete',p.name);DB.saveAll();render();toast('success','Completed','Invoice created');}
-function deleteProj(id){openModal(`<div class="modal-head"><h3>Delete</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Removes project and related data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(x=>x.id!=='${id}');db.workAssignments=db.workAssignments.filter(w=>w.projectId!=='${id}');db.files=db.files.filter(f=>f.projectId!=='${id}');DB.saveAll();closeModals();render();toast('success','Deleted')">Delete</button></div>`);}
+async function completeProj(id){const p=db.projects.find(x=>x.id===id);if(!p)return;p.status='completed';db.workAssignments.filter(w=>w.projectId===id).forEach(w=>w.status='completed');db.invoices.push({id:uid(),clientId:p.clientId,projectId:p.id,editorId:p.assignedEditorId,amount:p.budget,status:'unpaid',date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Complete',p.name);await DB.saveAll();render();toast('success','Completed','Invoice created');}
+async function deleteProj(id){openModal(`<div class="modal-head"><h3>Delete</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Removes project and related data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(x=>x.id!=='${id}');db.workAssignments=db.workAssignments.filter(w=>w.projectId!=='${id}');db.files=db.files.filter(f=>f.projectId!=='${id}');await DB.saveAll();closeModals();render();toast('success','Deleted')">Delete</button></div>`);}
 
-/* ── Assignments ── */
 function pgAssign(){
   return`<div class="ph"><div><h1>Assignments</h1><p>${db.workAssignments.length} total</p></div></div>
   <div class="tabs"><button class="tab-btn active" onclick="filterWA('all',this)">All</button><button class="tab-btn" onclick="filterWA('pending',this)">Pending</button><button class="tab-btn" onclick="filterWA('in-progress',this)">In Progress</button><button class="tab-btn" onclick="filterWA('completed',this)">Completed</button></div>
@@ -541,7 +514,6 @@ function rWACards(items){
 }
 function modalCreateInv(pid){const p=db.projects.find(x=>x.id===pid);if(!p)return;const cl=db.clients.find(c=>c.id===p.clientId);openModal(`<div class="modal-head"><h3>Create Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted mb-4">${p.name} — ${cl?.name||''}</p><div class="frow"><div class="fg"><label>Amount (₹)</label><input class="fi" type="number" id="iAmt" value="${p.budget}"></div><div class="fg"><label>Due Date</label><input class="fi" type="date" id="iDate"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="db.invoices.push({id:uid(),clientId:'${p.clientId}',projectId:'${pid}',editorId:p.assignedEditorId,amount:parseFloat($('#iAmt').value)||${p.budget},status:'unpaid',date:$('#iDate').value||new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Invoice',p.name);DB.save('invoices');closeModals();render();toast('success','Created')">Create</button></div>`);}
 
-/* ── Invoices ── */
 function pgInv(){
   const paid=db.invoices.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
   const unp=db.invoices.filter(i=>i.status==='unpaid').reduce((s,i)=>s+i.amount,0);
@@ -551,16 +523,14 @@ function pgInv(){
   <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Invoice</th><th>Client</th><th>Project</th><th>Amount</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(inv=>{const cl=db.clients.find(c=>c.id===inv.clientId);const pr=db.projects.find(p=>p.id===inv.projectId);return`<tr><td style="font-family:'Space Grotesk';font-weight:600">#${inv.id.slice(-5).toUpperCase()}</td><td>${cl?.name||'—'}</td><td class="text-muted">${pr?.name||'—'}</td><td style="font-weight:600">${fmtM(inv.amount)}</td><td class="text-muted">${fmtD(inv.date)}</td><td><span class="badge bg-${inv.status==='paid'?'green':'yellow'}">${inv.status}</span></td><td style="display:flex;gap:4px">${inv.status==='unpaid'?`<button class="btn btn-sm btn-success" onclick="markPaid('${inv.id}')"><i class="fa-solid fa-check"></i></button>`:''}<button class="btn-icon" onclick="printInvoice('${inv.id}')" title="Print"><i class="fa-solid fa-print"></i></button></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="7">No invoices</td></tr>'}</tbody></table></div></div>`;
 }
 function modalManualInv(){openModal(`<div class="modal-head"><h3>New Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Client</label><select class="fi" id="miCl"><option value="">Select</option>${db.clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select></div><div class="fg"><label>Project</label><select class="fi" id="miPr"><option value="">Select</option>${db.projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div><div class="frow"><div class="fg"><label>Amount (₹)</label><input class="fi" type="number" id="miAmt"></div><div class="fg"><label>Date</label><input class="fi" type="date" id="miDate"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const cl=$('#miCl').value,pr=$('#miPr').value,amt=parseFloat($('#miAmt').value);if(!cl||!amt){toast('error','Error','Client & amount required');return;}db.invoices.push({id:uid(),clientId:cl,projectId:pr,editorId:null,amount:amt,status:'unpaid',date:$('#miDate').value||new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Invoice','Manual: '+amt);DB.save('invoices');closeModals();render();toast('success','Created')">Create</button></div>`);}
-function markPaid(id){const inv=db.invoices.find(i=>i.id===id);if(!inv)return;inv.status='paid';DB.log('Paid','#'+inv.id.slice(-5).toUpperCase());DB.save('invoices');render();toast('success','Paid');}
+async function markPaid(id){const inv=db.invoices.find(i=>i.id===id);if(!inv)return;inv.status='paid';DB.log('Paid','#'+inv.id.slice(-5).toUpperCase());await DB.save('invoices');render();toast('success','Paid');}
 
-/* ── Activity ── */
 function pgAct(){
   const logs=(db.activityLog||[]).slice(0,50);
   return`<div class="ph"><div><h1>Activity Log</h1><p>Audit trail</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="db.activityLog=[];DB.save('activityLog');render();toast('success','Cleared')"><i class="fa-solid fa-trash"></i>Clear</button></div></div>
   <div class="card"><div class="card-body">${logs.length?logs.map(l=>{const u=db.users.find(x=>x.id===l.userId);return`<div class="log-item"><div class="log-dot"></div><div class="log-text"><strong>${u?.name||'System'}</strong> ${l.details||l.action}</div><div class="log-time">${fmtT(l.createdAt)}</div></div>`;}).join(''):'<div style="text-align:center;padding:36px;color:var(--fg3)">No activity</div>'}</div></div>`;
 }
 
-/* ── Notes ── */
 function pgNotes(){
   const my=(db.notes||[]).filter(n=>n.userId===user.id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
   return`<div class="ph"><div><h1>Quick Notes</h1><p>${my.length} notes</p></div><div class="ph-actions"><button class="btn btn-primary" onclick="modalAddNote()"><i class="fa-solid fa-plus"></i>New Note</button></div></div>
@@ -568,14 +538,12 @@ function pgNotes(){
 }
 function modalAddNote(){openModal(`<div class="modal-head"><h3>New Note</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Title</label><input class="fi" id="nTitle" placeholder="Note title"></div><div class="fg"><label>Content</label><textarea class="fi" id="nContent" rows="4" placeholder="Write..."></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="if(!db.notes)db.notes=[];db.notes.push({id:uid(),userId:user.id,title:$('#nTitle').value||'Untitled',content:$('#nContent').value,createdAt:new Date().toISOString()});DB.save('notes');closeModals();render();toast('success','Saved')">Save</button></div>`);}
 
-/* ── Tickets ── */
 function pgTix(){
   return`<div class="ph"><div><h1>Support Tickets</h1><p>${db.tickets.filter(t=>!t.resolved).length} open</p></div></div>
   ${db.tickets.length?db.tickets.slice().reverse().map(t=>{const ed=db.users.find(u=>u.id===t.userId);return`<div class="wk" style="border-left:3px solid ${t.priority==='high'?'var(--danger)':t.priority==='medium'?'var(--warning)':'var(--success)'}"><div class="wk-head"><div><div class="wk-title">${t.subject}</div><div class="text-sm text-muted mt-2">From: ${ed?.name||'Unknown'} — ${fmtT(t.createdAt)}</div></div><div style="display:flex;gap:6px;align-items:center"><span class="badge bg-${t.priority==='high'?'red':t.priority==='medium'?'yellow':'green'}">${t.priority}</span>${t.resolved?'<span class="badge bg-green">Resolved</span>':`<button class="btn btn-sm btn-success" onclick="resolveTix('${t.id}')"><i class="fa-solid fa-check"></i></button>`}</div></div><div class="wk-desc">${t.description}</div></div>`;}).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">No tickets</div>'}`;
 }
-function resolveTix(id){const t=db.tickets.find(x=>x.id===id);if(!t)return;t.resolved=true;addNotif(t.userId,'Resolved',t.subject);DB.log('Resolve',t.subject);DB.save('tickets');render();toast('success','Resolved');}
+async function resolveTix(id){const t=db.tickets.find(x=>x.id===id);if(!t)return;t.resolved=true;addNotif(t.userId,'Resolved',t.subject);DB.log('Resolve',t.subject);await DB.save('tickets');render();toast('success','Resolved');}
 
-/* ═══════════ EDITOR ═══════════ */
 function pgED(){
   const my=db.workAssignments.filter(w=>w.editorId===user.id);
   return`<div class="ph"><div><h1>Dashboard</h1><p>Welcome, ${user.name}</p></div></div>
@@ -591,8 +559,8 @@ function pgMW(){
   <div id="mwList">${my.length?my.slice().reverse().map(rEWK).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">No work</div>'}</div>`;
 }
 function filterMW(s,btn){$$('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const my=db.workAssignments.filter(w=>w.editorId===user.id);const f=s==='all'?my:my.filter(w=>w.status===s);$('#mwList').innerHTML=f.length?f.slice().reverse().map(rEWK).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">None</div>';}
-function acceptW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='in-progress';addNotif('u1','Accepted',user.name+': '+(db.projects.find(p=>p.id===w.projectId)?.name||''));DB.log('Accept',w.projectId);DB.save('workAssignments');render();toast('success','Accepted');}
-function rejectW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='rejected';addNotif('u1','Rejected',user.name+': '+(db.projects.find(p=>p.id===w.projectId)?.name||''));DB.log('Reject',w.projectId);DB.save('workAssignments');render();toast('info','Rejected');}
+async function acceptW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='in-progress';addNotif('u1','Accepted',user.name+': '+(db.projects.find(p=>p.id===w.projectId)?.name||''));DB.log('Accept',w.projectId);await DB.save('workAssignments');render();toast('success','Accepted');}
+async function rejectW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='rejected';addNotif('u1','Rejected',user.name+': '+(db.projects.find(p=>p.id===w.projectId)?.name||''));DB.log('Reject',w.projectId);await DB.save('workAssignments');render();toast('info','Rejected');}
 
 function pgSW(){
   const inp=db.workAssignments.filter(w=>w.editorId===user.id&&w.status==='in-progress');uploadedFiles=[];
@@ -604,7 +572,7 @@ function pgSW(){
 }
 function handleFiles(files){Array.from(files).forEach(f=>{if(f.size>52428800){toast('error','Too Large',f.name);return;}uploadedFiles.push({name:f.name,size:f.size,type:f.type});});renderFL();}
 function renderFL(){$('#fList').innerHTML=uploadedFiles.map((f,i)=>`<div class="file-item"><i class="fa-solid fa-file"></i><span class="fn">${f.name}</span><span class="text-muted text-sm">${(f.size/1024).toFixed(0)}KB</span><button class="fr" onclick="uploadedFiles.splice(${i},1);renderFL()"><i class="fa-solid fa-times"></i></button></div>`).join('');}
-function submitWork(){const wid=$('#swId')?.value;if(!wid){toast('error','Error','Select work');return;}if(!uploadedFiles.length){toast('error','Error','Upload files');return;}const w=db.workAssignments.find(x=>x.id===wid);if(!w)return;if(!db.files)db.files=[];uploadedFiles.forEach(f=>{db.files.push({id:uid(),assignmentId:wid,projectId:w.projectId,editorId:user.id,name:f.name,size:f.size,type:f.type,uploadedAt:new Date().toISOString()});});w.status='completed';const p=db.projects.find(x=>x.id===w.projectId);if(p)p.status='completed';addNotif('u1','Submitted',user.name+': '+(p?.name||''));DB.log('Submit',p?.name||'');DB.saveAll();render();toast('success','Submitted');}
+async function submitWork(){const wid=$('#swId')?.value;if(!wid){toast('error','Error','Select work');return;}if(!uploadedFiles.length){toast('error','Error','Upload files');return;}const w=db.workAssignments.find(x=>x.id===wid);if(!w)return;if(!db.files)db.files=[];uploadedFiles.forEach(f=>{db.files.push({id:uid(),assignmentId:wid,projectId:w.projectId,editorId:user.id,name:f.name,size:f.size,type:f.type,uploadedAt:new Date().toISOString()});});w.status='completed';const p=db.projects.find(x=>x.id===w.projectId);if(p)p.status='completed';addNotif('u1','Submitted',user.name+': '+(p?.name||''));DB.log('Submit',p?.name||'');await DB.saveAll();render();toast('success','Submitted');}
 
 function pgMI(){
   const my=db.invoices.filter(i=>i.editorId===user.id);
@@ -619,7 +587,6 @@ function pgSup(){
   ${my.length?`<div class="card mt-4"><div class="card-head"><h3>My Tickets</h3></div><div class="card-body">${my.slice().reverse().map(t=>`<div class="wk" style="border-left:3px solid ${t.priority==='high'?'var(--danger)':t.priority==='medium'?'var(--warning)':'var(--success)'}"><div class="wk-head"><div class="wk-title">${t.subject}</div><div style="display:flex;gap:6px"><span class="badge bg-${t.priority==='high'?'red':t.priority==='medium'?'yellow':'green'}">${t.priority}</span>${t.resolved?'<span class="badge bg-green">Resolved</span>':'<span class="badge bg-yellow">Open</span>'}</div></div><div class="wk-desc">${t.description}</div><div class="text-sm text-muted">${fmtT(t.createdAt)}</div></div>`).join('')}</div></div>`:''}`;
 }
 
-/* ═══════════ CHAT ═══════════ */
 function pgChat(){
   const ct=db.users.filter(u=>u.id!==user.id);
   return`<div class="chat-wrap"><div class="chat-list"><div class="chat-list-head"><h3>Messages</h3></div><div class="chat-contacts">${ct.map(c=>{const l=getLM(user.id,c.id);return`<div class="chat-c ${chatWith===c.id?'active':''}" onclick="openChat('${c.id}',this)"><div class="sb-avatar" style="width:34px;height:34px;font-size:.7rem;flex-shrink:0">${c.avatar}</div><div class="chat-c-info"><div class="chat-c-name">${c.name}</div><div class="chat-c-prev">${l?l.text:'No messages'}</div></div><div class="chat-c-time">${l?fmtT(l.timestamp):''}</div></div>`;}).join('')}</div></div><div class="chat-main" id="chatMain"><div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--fg3)"><i class="fa-solid fa-comments" style="font-size:2.5rem;margin-bottom:14px;opacity:.25"></i><p>Select a conversation</p></div></div></div>`;
@@ -632,26 +599,23 @@ function openChat(cid,el){
   $('#chatMain').innerHTML=`<div class="chat-top"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${other.avatar}</div><div><div style="font-weight:500;font-size:.88rem">${other.name}</div><div class="text-sm text-muted">Online</div></div></div><div class="chat-msgs" id="chatMsgs">${msgs.length?msgs.map(m=>`<div class="msg ${m.senderId===user.id?'mine':''}"><div><div class="msg-b">${m.text}</div><div class="msg-t">${fmtT(m.timestamp)}</div></div></div>`).join(''):'<div style="text-align:center;color:var(--fg3);padding:36px">Say hello!</div>'}</div><div class="chat-iw"><input class="chat-input" id="chatInput" placeholder="Type..." onkeydown="if(event.key==='Enter')sendMsg('${cid}')"><button class="chat-send" onclick="sendMsg('${cid}')"><i class="fa-solid fa-paper-plane"></i></button></div>`;
   const el2=$('#chatMsgs');if(el2)el2.scrollTop=el2.scrollHeight;
 }
-function sendMsg(rid){const inp=$('#chatInput');if(!inp)return;const txt=inp.value.trim();if(!txt)return;db.messages.push({id:uid(),senderId:user.id,receiverId:rid,text:txt,timestamp:new Date().toISOString()});DB.save('messages');inp.value='';openChat(rid);}
+async function sendMsg(rid){const inp=$('#chatInput');if(!inp)return;const txt=inp.value.trim();if(!txt)return;db.messages.push({id:uid(),senderId:user.id,receiverId:rid,text:txt,timestamp:new Date().toISOString()});await DB.save('messages');inp.value='';openChat(rid);}
 
-/* ═══════════ PROFILE ═══════════ */
 function pgProf(){
   return`<div class="ph"><div><h1>Settings</h1><p>Manage your account</p></div></div>
   <div class="card"><div class="card-head"><h3>Profile</h3></div><div class="card-body"><form id="profileForm"><div class="frow"><div class="fg"><label>Name</label><input class="fi" value="${user.name}" ${user.role==='admin'?'readonly':''} id="pName"></div><div class="fg"><label>Email</label><input class="fi" value="${user.email}" readonly></div></div><div class="fg"><label>Phone</label><input class="fi" value="${user.phone||''}" id="pPhone"></div>${user.role==='editor'?`<div class="fg"><label>Portfolio</label><input class="fi" value="${user.portfolio||''}" id="pPort"></div><div class="fg"><label>Bio</label><textarea class="fi" id="pBio" rows="3">${user.bio||''}</textarea></div>`:''}<button type="submit" class="btn btn-primary mt-4"><i class="fa-solid fa-save"></i>Save</button></form></div></div>
   <div class="card mt-4"><div class="card-head"><h3>Change Password</h3></div><div class="card-body"><form id="pwForm"><div class="fg"><label>Current</label><input class="fi" type="password" id="pwC" required></div><div class="frow"><div class="fg"><label>New</label><input class="fi" type="password" id="pwN" required></div><div class="fg"><label>Confirm</label><input class="fi" type="password" id="pwF" required></div></div><button type="submit" class="btn btn-primary mt-4"><i class="fa-solid fa-key"></i>Update</button></form></div></div>
-  <div class="card mt-4"><div class="card-head"><h3>Google Sheets</h3></div><div class="card-body"><p class="text-muted mb-4">Status: <span class="text-accent">Connected</span></p><div class="fg"><label>Web App URL</label><input class="fi" value="${SHEET_URL}" readonly style="opacity:.6"></div><p class="text-sm text-muted mt-2">Your data syncs to Google Sheets automatically on every action.</p></div></div>
-  ${user.role==='admin'?`<div class="card mt-4" style="border-color:var(--danger)"><div class="card-head"><h3 style="color:var(--danger)">Danger Zone</h3></div><div class="card-body"><p class="text-muted mb-4">Permanently reset all data in Sheets and local cache.</p><button class="btn btn-danger" onclick="openModal('<div class=\\'modal-head\\'><h3>Reset All</h3><button class=\\'modal-close\\' onclick=\\'closeModals()\\'>&times;</button></div><div class=\\'modal-body\\'><p class=\\'text-muted\\' style=\\'color:var(--danger)\\'>Type RESET to confirm.</p><input class=\\'fi mt-4\\' id=\\'resetC\\'></div><div class=\\'modal-foot\\'><button class=\\'btn btn-ghost\\' onclick=\\'closeModals()\\'>Cancel</button><button class=\\'btn btn-danger\\' onclick=\\'if($(\\\"#resetC\\\").value===\"RESET\"){localStorage.removeItem(CACHE_KEY);db=null;init();closeModals();toast(\"success\",\"Reset\",\"Cleared\")}else{toast(\"error\",\"Error\",\"Type RESET\")}\\'>Reset</button></div>')"><i class="fa-solid fa-trash"></i>Reset All Data</button></div></div>`:''}`;
+  <div class="card mt-4"><div class="card-head"><h3>Google Sheets</h3></div><div class="card-body"><p class="text-muted mb-4">Status: <span style="color:var(--success)">Connected</span></p><div class="fg"><label>Web App URL</label><input class="fi" value="${SHEET_URL}" readonly style="opacity:.6"></div><p class="text-sm text-muted mt-2">Data syncs to Google Sheets on every action.</p></div></div>
+  ${user.role==='admin'?`<div class="card mt-4" style="border-color:var(--danger)"><div class="card-head"><h3 style="color:var(--danger)">Danger Zone</h3></div><div class="card-body"><p class="text-muted mb-4">Permanently reset all data.</p><button class="btn btn-danger" onclick="openModal('<div class=\\'modal-head\\'><h3>Reset All</h3><button class=\\'modal-close\\' onclick=\\'closeModals()\\'>&times;</button></div><div class=\\'modal-body\\'><p class=\\'text-muted\\' style=\\'color:var(--danger)\\'>Type RESET to confirm.</p><input class=\\'fi mt-4\\' id=\\'resetC\\'></div><div class=\\'modal-foot\\'><button class=\\'btn btn-ghost\\' onclick=\\'closeModals()\\'>Cancel</button><button class=\\'btn btn-danger\\' onclick=\\'if($(\\\"#resetC\\\").value===\"RESET\"){localStorage.removeItem(CACHE_KEY);db=null;init();closeModals();toast(\"success\",\"Reset\",\"Cleared\")}else{toast(\"error\",\"Error\",\"Type RESET\")}\\'>Reset</button></div>')"><i class="fa-solid fa-trash"></i>Reset All Data</button></div></div>`:''}`;
 }
-function saveProfile(){const u=db.users.find(x=>x.id===user.id);if(!u)return;u.phone=$('#pPhone')?.value||'';if($('#pPort'))u.portfolio=$('#pPort').value;if($('#pBio'))u.bio=$('#pBio').value;u.avatar=ini(u.name);user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));DB.log('Profile',u.name);DB.save('users');render();toast('success','Saved');}
-function changePw(){const c=$('#pwC').value,n=$('#pwN').value,f=$('#pwF').value;if(c!==user.password){toast('error','Error','Wrong password');return;}if(n!==f){toast('error','Error','Mismatch');return;}if(n.length<3){toast('error','Error','Too short');return;}const u=db.users.find(x=>x.id===user.id);u.password=n;user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));DB.save('users');$('#pwForm').reset();toast('success','Updated');}
+async function saveProfile(){const u=db.users.find(x=>x.id===user.id);if(!u)return;u.phone=$('#pPhone')?.value||'';if($('#pPort'))u.portfolio=$('#pPort').value;if($('#pBio'))u.bio=$('#pBio').value;u.avatar=ini(u.name);user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));DB.log('Profile',u.name);await DB.save('users');render();toast('success','Saved');}
+async function changePw(){const c=$('#pwC').value,n=$('#pwN').value,f=$('#pwF').value;if(c!==user.password){toast('error','Error','Wrong password');return;}if(n!==f){toast('error','Error','Mismatch');return;}if(n.length<3){toast('error','Error','Too short');return;}const u=db.users.find(x=>x.id===user.id);u.password=n;user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));await DB.save('users');$('#pwForm').reset();toast('success','Updated');}
 
-/* ═══════════ LOGIN ═══════════ */
 function renderLogin(){
   $('#app').innerHTML=`<div class="login"><div class="login-left"><div class="login-box"><div class="login-logo"><div class="sb-logo-icon">T</div><span>Typixel</span></div><h2>Welcome Back</h2><p class="sub">Sign in to your design studio</p><form onsubmit="event.preventDefault();login($('#lE').value,$('#lP').value)"><div class="fg"><label>Email</label><input class="fi" type="email" id="lE" placeholder="you@example.com" required></div><div class="fg"><label>Password</label><input class="fi" type="password" id="lP" placeholder="Password" required></div><button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:11px"><i class="fa-solid fa-right-to-bracket"></i>Sign In</button></form><div class="login-divider">or</div><button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="modalJoin()"><i class="fa-solid fa-user-plus"></i>Join Our Team</button></div></div><div class="login-right"><div class="login-right-content"><h1>Design. Collaborate.<br><span style="color:var(--accent)">Deliver.</span></h1><p>Typixel streamlines your graphic design workflow — fully synced to Google Sheets.</p><div class="features"><div class="feat"><i class="fa-solid fa-check-circle"></i>Google Sheets as your database</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Deadline tracking with alerts</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Team chat and notifications</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Print invoices and export CSV</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Activity log and quick notes</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Dark and light themes</div></div></div></div></div>`;
 }
 function modalJoin(){openModal(`<div class="modal-head"><h3>Join Our Team</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="jf"><div class="frow"><div class="fg"><label>Name</label><input class="fi" name="name" required></div><div class="fg"><label>Email</label><input class="fi" type="email" name="email" required></div></div><div class="fg"><label>Password</label><input class="fi" type="password" name="password" required></div><div class="fg"><label>Portfolio</label><input class="fi" name="portfolio" placeholder="https://..."></div><div class="fg"><label>About You</label><textarea class="fi" name="bio" rows="3"></textarea></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const f=new FormData($('#jf'));register(f.get('name'),f.get('email'),f.get('password'),f.get('portfolio'),f.get('bio'))">Submit</button></div>`);}
 
-/* ═══════════ GLOBAL ═══════════ */
 document.addEventListener('dragover',e=>e.preventDefault());
 document.addEventListener('drop',e=>{e.preventDefault();if(e.target.closest('.upload-zone'))handleFiles(e.dataTransfer.files);});
 document.addEventListener('click',e=>{
@@ -659,7 +623,6 @@ document.addEventListener('click',e=>{
   if(!e.target.closest('.notif-panel')&&!e.target.closest('.tb-btn')){const p=$('#notifPanel');if(p)p.classList.remove('open');}
 });
 
-/* ═══════════ INIT ═══════════ */
 async function init(){
   db=await DB.load();
   if(user){const f=db.users.find(u=>u.id===user.id);if(f){user=f;sessionStorage.setItem(AUTH_KEY,JSON.stringify(f));}else{user=null;sessionStorage.removeItem(AUTH_KEY);}}
