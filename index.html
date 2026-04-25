@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--sidebar:#010409;--accent:#FF6B35;--accent2:#00C9A7;--accent-glow:rgba(255,107,53,.12);--success:#2EA043;--warning:#D29922;--danger:#F85149;--info:#58A6FF;--fg:#E6EDF3;--fg2:#8B949E;--fg3:#484F58;--border:#30363D;--border2:#21262D;--shadow:0 2px 8px rgba(0,0,0,.4);--radius:10px}
-[data-theme="light"]{--bg:#f0f2f5;--bg2:#ffffff;--bg3:#e8eaed;--sidebar:#1a1d23;--accent:#E05520;--accent2:#009E82;--accent-glow:rgba(224,85,32,.08);--fg:#1f2937;--fg2:#6b7280;--fg3:#9ca3af;--border:#d1d5db;--border2:#e5e7eb;--shadow:0 2px 8px rgba(0,0,0,.08)}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--sidebar:#010409;--accent:#FF6B35;--accent2:#00C9A7;--accent-glow:rgba(255,107,53,.12);--success:#2EA043;--warning:#D29922;--danger:#F85149;--info:#58A6FF;--fg:#E6EDF3;--fg2:#8B949E;--fg3:#484F58;--border:#30363D;--border2:#21262D;--radius:10px}
+[data-theme="light"]{--bg:#f0f2f5;--bg2:#ffffff;--bg3:#e8eaed;--sidebar:#1a1d23;--accent:#E05520;--accent2:#009E82;--accent-glow:rgba(224,85,32,.08);--fg:#1f2937;--fg2:#6b7280;--fg3:#9ca3af;--border:#d1d5db;--border2:#e5e7eb}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);overflow:hidden;height:100vh;transition:background .3s,color .3s}
 h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
@@ -44,7 +44,7 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
 .tb-btn:hover{background:var(--bg3);color:var(--fg);border-color:var(--fg3)}
 .tb-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--danger);border-radius:50%;border:2px solid var(--bg2)}
 .sync-dot{width:6px;height:6px;border-radius:50%;margin-right:6px;flex-shrink:0}
-.sync-dot.on{background:var(--success)}.sync-dot.off{background:var(--danger)}.sync-dot.ing{background:var(--warning);animation:pulse 1s infinite}
+.sync-dot.on{background:var(--success)}.sync-dot.ing{background:var(--warning);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;gap:12px;flex-wrap:wrap}
 .ph h1{font-size:1.5rem;font-weight:700}
@@ -65,8 +65,8 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
 .card-head h3{font-size:.95rem;font-weight:600}
 .card-body{padding:18px}
 .stats{display:grid;gap:14px;margin-bottom:20px}
-.stats-primary{grid-template-columns:1.4fr 1fr;margin-bottom:16px}
-.stats-secondary{grid-template-columns:repeat(3,1fr);margin-bottom:20px}
+.stats-p{grid-template-columns:1.4fr 1fr;margin-bottom:16px}
+.stats-s{grid-template-columns:repeat(3,1fr);margin-bottom:20px}
 .stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all .2s;position:relative;overflow:hidden}
 .stat::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;border-radius:50%;filter:blur(40px);opacity:.08;pointer-events:none}
 .stat:nth-child(1)::after{background:var(--accent)}.stat:nth-child(2)::after{background:var(--accent2)}
@@ -79,8 +79,6 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
 .si-3{background:rgba(210,153,34,.1);color:var(--warning)}.si-4{background:rgba(88,166,255,.1);color:var(--info)}
 .stat-val{font-family:'Space Grotesk';font-size:1.75rem;font-weight:700;line-height:1}
 .stat-sub{font-size:.78rem;margin-top:6px;color:var(--fg2);line-height:1.4}
-.stat-chg{font-size:.75rem;margin-top:5px;display:flex;align-items:center;gap:3px}
-.stat-chg.up{color:var(--success)}.stat-chg.dn{color:var(--danger)}
 .tbl{width:100%;border-collapse:collapse}
 .tbl th{text-align:left;padding:9px 14px;font-size:.72rem;font-weight:600;color:var(--fg2);text-transform:uppercase;letter-spacing:.04em;background:var(--bg3);border-bottom:1px solid var(--border)}
 .tbl td{padding:10px 14px;border-bottom:1px solid var(--border2);font-size:.85rem;vertical-align:middle}
@@ -88,7 +86,7 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
 .tbl .cu{display:flex;align-items:center;gap:9px}
 .tbl .cn{font-weight:500}.tbl .cs{font-size:.72rem;color:var(--fg2)}
 .empty-row td{text-align:center;color:var(--fg3);padding:36px 14px!important}
-.badge{display:inline-flex;padding:2px 9px;border-radius:20px;font-size:.7rem;font-weight:600;letter-spacing:.01em}
+.badge{display:inline-flex;padding:2px 9px;border-radius:20px;font-size:.7rem;font-weight:600}
 .bg-green{background:rgba(46,160,67,.12);color:var(--success)}.bg-yellow{background:rgba(210,153,34,.12);color:var(--warning)}
 .bg-red{background:rgba(248,81,73,.12);color:var(--danger)}.bg-blue{background:rgba(88,166,255,.12);color:var(--info)}
 .bg-orange{background:rgba(255,107,53,.12);color:var(--accent)}
@@ -182,8 +180,6 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .dd-item:hover{background:var(--bg3);color:var(--fg)}
 .dd-item.danger{color:var(--danger)}.dd-item.danger:hover{background:rgba(248,81,73,.08)}
 .dd-sep{height:1px;background:var(--border);margin:3px 0}
-
-/* LOGIN */
 .login{display:flex;height:100vh;background:var(--bg)}
 .login-left{width:440px;display:flex;align-items:center;justify-content:center;padding:36px;flex-shrink:0;border-right:1px solid var(--border2)}
 .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:36px;width:100%;max-width:380px}
@@ -211,18 +207,12 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .login-feat{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:9px}
 .login-feat i{color:var(--accent);font-size:.85rem;width:16px;text-align:center;flex-shrink:0}
 .login-feat span{font-size:.83rem;color:var(--fg2)}
-
-/* QUICK ACTIONS */
 .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
 .qa-btn{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .15s;color:var(--fg2);font-family:inherit;font-size:.8rem;font-weight:500}
 .qa-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,107,53,.08)}
 .qa-btn i{font-size:1.1rem}
-.qa-btn .qa-label{font-size:.78rem}
-
-/* DASHBOARD GRID */
 .dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-
-.note{padding:14px;border-radius:9px;border-left:3px solid var(--accent);background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);margin-bottom:10px;transition:all .15s}
+.note{padding:14px;border-radius:9px;background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);margin-bottom:10px;transition:all .15s}
 .note:hover{border-left-color:var(--accent2)}
 .note-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .note-title{font-weight:600;font-size:.85rem}
@@ -233,6 +223,12 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .log-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0}
 .log-text{flex:1;color:var(--fg2)}.log-text strong{color:var(--fg);font-weight:500}
 .log-time{font-size:.72rem;color:var(--fg3);flex-shrink:0;white-space:nowrap}
+.mini-stat{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2)}
+.mini-stat:last-child{border-bottom:none}
+.mini-stat-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+.mini-stat-info{flex:1;min-width:0}
+.mini-stat-name{font-weight:500;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-stat-val{font-size:.78rem;color:var(--fg2)}
 .loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -242,20 +238,13 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .print-invoice th{background:#f5f5f5}
 .fade-in{animation:fadeIn .25s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .text-muted{color:var(--fg2)}.text-sm{font-size:.8rem}.mt-2{margin-top:6px}.mt-4{margin-top:14px}.mb-4{margin-bottom:14px}
-.flex{display:flex}.items-center{align-items:center}.gap-2{gap:7px}.gap-3{gap:10px}
-.flex-1{flex:1}.justify-between{justify-content:space-between}.hidden{display:none!important}
-.overdue-badge{display:inline-flex;align-items:center;gap:3px;color:var(--danger);font-size:.75rem;font-weight:600;background:rgba(248,81,73,.08);padding:2px 8px;border-radius:12px}
-.alert-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:8px;font-size:.83rem;margin-bottom:16px;border:1px solid}
+.hidden{display:none!important}
+.alert-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:8px;font-size:.83rem;margin-bottom:12px;border:1px solid}
 .alert-bar.alert-danger{background:rgba(248,81,73,.06);border-color:rgba(248,81,73,.15);color:var(--danger)}
 .alert-bar.alert-warning{background:rgba(210,153,34,.06);border-color:rgba(210,153,34,.15);color:var(--warning)}
 .alert-bar i{font-size:.9rem;flex-shrink:0}
-.mini-stat{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2)}
-.mini-stat:last-child{border-bottom:none}
-.mini-stat-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
-.mini-stat-info{flex:1;min-width:0}
-.mini-stat-name{font-weight:500;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mini-stat-val{font-size:.78rem;color:var(--fg2)}
-@media(max-width:768px){.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:60}.sidebar.open{transform:none}.stats-primary,.stats-secondary{grid-template-columns:1fr}.quick-actions{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:1fr}.frow{grid-template-columns:1fr}.chat-list{width:200px}.login{flex-direction:column}.login-right{display:none}.login-left{width:100%;border-right:none}.topbar-search{width:140px}.ph{flex-direction:column}.login-features{grid-template-columns:1fr}}
+.overdue-badge{display:inline-flex;align-items:center;gap:3px;color:var(--danger);font-size:.75rem;font-weight:600;background:rgba(248,81,73,.08);padding:2px 8px;border-radius:12px}
+@media(max-width:768px){.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:60}.sidebar.open{transform:none}.stats-p,.stats-s{grid-template-columns:1fr}.quick-actions{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:1fr}.frow{grid-template-columns:1fr}.chat-list{width:200px}.login{flex-direction:column}.login-right{display:none}.login-left{width:100%;border-right:none}.topbar-search{width:140px}.ph{flex-direction:column}.login-features{grid-template-columns:1fr}}
 @media(max-width:480px){.quick-actions{grid-template-columns:1fr 1fr}.page{padding:14px}}
 @media print{.sidebar,.topbar,.toast-wrap,.notif-panel{display:none!important}.main{margin:0}.page{padding:0;overflow:visible}}
 </style>
@@ -267,36 +256,37 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 <div class="loading-overlay hidden" id="loader"><div class="spinner"></div><div style="color:var(--fg2);font-size:.9rem">Connecting...</div></div>
 
 <script>
-const SHEET_URL='https://script.google.com/macros/s/AKfycbzc5eG28Od3nVYpzr2a5pmef4FZOGFTgZRF7EX_o273r2lRvb449JDzp_kealYBJCFbJQ/exec';
-const CACHE_KEY='typixel_cache';
-const AUTH_KEY='typixel_auth';
-const THEME_KEY='typixel_theme';
-const $=s=>document.querySelector(s);
-const $$=s=>document.querySelectorAll(s);
-const genId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const ini=n=>(n||'').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-const fmtD=d=>d?new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';
-const fmtM=n=>'₹'+Number(n||0).toLocaleString('en-IN');
-const fmtT=t=>{if(!t)return'';const d=new Date(t),n=new Date(),m=Math.floor((n-d)/60000);if(m<1)return'Just now';if(m<60)return m+'m ago';const h=Math.floor(m/60);if(h<24)return h+'h ago';return fmtD(t);};
-const dlLeft=d=>{if(!d)return null;return Math.ceil((new Date(d)-new Date())/86400000);};
-const futureD=n=>new Date(Date.now()+n*864e5).toISOString().split('T')[0];
-const pastD=n=>new Date(Date.now()-n*864e5).toISOString().split('T')[0];
+var SHEET_URL='https://script.google.com/macros/s/AKfycbzc5eG28Od3nVYpzr2a5pmef4FZOGFTgZRF7EX_o273r2lRvb449JDzp_kealYBJCFbJQ/exec';
+var CACHE_KEY='typixel_cache';
+var AUTH_KEY='typixel_auth';
+var THEME_KEY='typixel_theme';
 
-const DB={
+function $(s){return document.querySelector(s);}
+function $$(s){return document.querySelectorAll(s);}
+function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function ini(n){return(n||'').split(' ').map(function(w){return w[0]}).join('').toUpperCase().slice(0,2);}
+function fmtD(d){return d?new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';}
+function fmtM(n){return '\u20B9'+Number(n||0).toLocaleString('en-IN');}
+function fmtT(t){if(!t)return'';var d=new Date(t),n=new Date(),m=Math.floor((n-d)/60000);if(m<1)return'Just now';if(m<60)return m+'m ago';var h=Math.floor(m/60);if(h<24)return h+'h ago';return fmtD(t);}
+function dlLeft(d){if(!d)return null;return Math.ceil((new Date(d)-new Date())/86400000);}
+function futureD(n){return new Date(Date.now()+n*864e5).toISOString().split('T')[0];}
+function pastD(n){return new Date(Date.now()-n*864e5).toISOString().split('T')[0];}
+
+var DB={
   _data:null,_syncing:false,
-  defaults(){
+  defaults:function(){
     return{
       users:[{id:'u1',name:'Admin',email:'rifadwork@gmail.com',password:'123',role:'admin',approved:true,avatar:'AD',phone:'',bio:'',portfolio:'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()}],
       clients:[
-        {id:'c1',name:'Priya Sharma',company:'Sharma Enterprises',email:'priya@example.com',phone:'9876543210',address:'Mumbai, Maharashtra',avatar:'PS'},
-        {id:'c2',name:'Rahul Mehta',company:'Mehta Designs',email:'rahul@example.com',phone:'9876543211',address:'Delhi NCR',avatar:'RM'},
-        {id:'c3',name:'Anita Desai',company:'Desai Media',email:'anita@example.com',phone:'9876543212',address:'Bangalore, Karnataka',avatar:'AD'}
+        {id:'c1',name:'Priya Sharma',company:'Sharma Enterprises',email:'priya@example.com',phone:'9876543210',address:'Mumbai',avatar:'PS'},
+        {id:'c2',name:'Rahul Mehta',company:'Mehta Designs',email:'rahul@example.com',phone:'9876543211',address:'Delhi',avatar:'RM'},
+        {id:'c3',name:'Anita Desai',company:'Desai Media',email:'anita@example.com',phone:'9876543212',address:'Bangalore',avatar:'AD'}
       ],
       projects:[
-        {id:'p1',name:'Brand Identity Package',description:'Complete brand identity including logo, color palette, typography system, and brand guidelines document',clientId:'c1',budget:45000,assignedEditorId:null,status:'pending',deadline:futureD(14),createdAt:new Date().toISOString()},
-        {id:'p2',name:'Social Media Kit',description:'Instagram and Facebook post templates with 20+ ready-to-use designs',clientId:'c2',budget:25000,assignedEditorId:null,status:'pending',deadline:futureD(7),createdAt:new Date().toISOString()},
-        {id:'p3',name:'Product Packaging',description:'Packaging design for organic food product line — 3 SKUs',clientId:'c3',budget:60000,assignedEditorId:null,status:'in-progress',deadline:futureD(21),createdAt:pastD(5)},
-        {id:'p4',name:'Website Redesign',description:'Full website UI/UX redesign with responsive layouts for 12 pages',clientId:'c1',budget:80000,assignedEditorId:null,status:'completed',deadline:pastD(2),createdAt:pastD(30)}
+        {id:'p1',name:'Brand Identity Package',description:'Complete brand identity including logo, colors, typography',clientId:'c1',budget:45000,assignedEditorId:null,status:'pending',deadline:futureD(14),createdAt:new Date().toISOString()},
+        {id:'p2',name:'Social Media Kit',description:'Instagram and Facebook post templates',clientId:'c2',budget:25000,assignedEditorId:null,status:'pending',deadline:futureD(7),createdAt:new Date().toISOString()},
+        {id:'p3',name:'Product Packaging',description:'Packaging design for organic food products',clientId:'c3',budget:60000,assignedEditorId:null,status:'in-progress',deadline:futureD(21),createdAt:pastD(5)},
+        {id:'p4',name:'Website Redesign',description:'Full website UI/UX redesign',clientId:'c1',budget:80000,assignedEditorId:null,status:'completed',deadline:pastD(2),createdAt:pastD(30)}
       ],
       workAssignments:[],messages:[],notifications:[],tickets:[],
       invoices:[
@@ -304,175 +294,217 @@ const DB={
         {id:'inv2',clientId:'c2',projectId:'p2',editorId:null,amount:25000,status:'unpaid',date:futureD(7),createdAt:pastD(10)},
         {id:'inv3',clientId:'c3',projectId:'p3',editorId:null,amount:60000,status:'unpaid',date:futureD(21),createdAt:pastD(5)}
       ],
-      files:[],activityLog:[
-        {id:genId(),userId:'u1',action:'System',details:'Typixel initialized with sample data',createdAt:new Date().toISOString()},
-        {id:genId(),userId:'u1',action:'Invoice',details:'Received ₹80,000 — Website Redesign',createdAt:pastD(2).toISOString()},
-        {id:genId(),userId:'u1',action:'Project',details:'Created Product Packaging for Desai Media',createdAt:pastD(5).toISOString()}
-      ],notes:[]
+      files:[],
+      activityLog:[
+        {id:gid(),userId:'u1',action:'System',details:'Typixel initialized with sample data',createdAt:new Date().toISOString()},
+        {id:gid(),userId:'u1',action:'Invoice',details:'Received \u20B980,000 \u2014 Website Redesign',createdAt:new Date(pastD(2)).toISOString()},
+        {id:gid(),userId:'u1',action:'Project',details:'Created Product Packaging for Desai Media',createdAt:new Date(pastD(5)).toISOString()}
+      ],
+      notes:[]
     };
   },
-  get tables(){return['users','clients','projects','workAssignments','messages','notifications','tickets','invoices','files','activityLog','notes'];},
+  tables:['users','clients','projects','workAssignments','messages','notifications','tickets','invoices','files','activityLog','notes'],
 
-  async load(){
+  load:function(){
+    var self=this;
     try{
       $('#loader').classList.remove('hidden');
-      this._syncing=true;syncDot();
-      const res=await fetch(SHEET_URL+'?t='+Date.now());
-      const json=await res.json();
-      if(json.ok&&json.data){
-        this._data={};
-        this.tables.forEach(t=>{this._data[t]=json.data[t]||[];});
-        if(!this._data.users||this._data.users.length===0){
-          this._data=this.defaults();
-          await this.pushAll();
+      self._syncing=true;syncDot();
+      return fetch(SHEET_URL+'?t='+Date.now()).then(function(r){return r.json();}).then(function(json){
+        if(json.ok&&json.data){
+          self._data={};
+          self.tables.forEach(function(t){self._data[t]=json.data[t]||[];});
+          if(!self._data.users||self._data.users.length===0){
+            self._data=self.defaults();
+            return self.pushAll().then(function(){return self._data;});
+          }
+          localStorage.setItem(CACHE_KEY,JSON.stringify(self._data));
+          self._syncing=false;syncDot();
+          $('#loader').classList.add('hidden');
+          return self._data;
+        }else{
+          throw new Error(json.error||'Sheet error');
         }
-        localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
-        this._syncing=false;syncDot();
+      }).catch(function(e){
+        console.log('Sheet failed, using cache:',e.message);
+        self._syncing=false;syncDot();
         $('#loader').classList.add('hidden');
-        return this._data;
-      }else throw new Error(json.error||'Sheet error');
+        try{self._data=JSON.parse(localStorage.getItem(CACHE_KEY));}catch(err){}
+        if(!self._data||!self._data.users){self._data=self.defaults();self._cache();}
+        return self._data;
+      });
     }catch(e){
-      console.log('Sheet load failed, using cache:',e.message);
-      this._syncing=false;syncDot();
+      self._syncing=false;syncDot();
       $('#loader').classList.add('hidden');
-      try{this._data=JSON.parse(localStorage.getItem(CACHE_KEY));}catch(err){}
-      if(!this._data||!this._data.users){this._data=this.defaults();this._cache();}
-      return this._data;
+      self._data=self.defaults();self._cache();
+      return Promise.resolve(self._data);
     }
   },
 
-  async push(table){
-    if(!this._data)return;
-    localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
-    try{
-      this._syncing=true;syncDot();
-      const res=await fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:table,data:this._data[table]||[]})});
-      const json=await res.json();
-      if(!json.ok)console.log('Push error for',table,':',json.error);
-      this._syncing=false;syncDot();
-    }catch(e){this._syncing=false;syncDot();}
+  push:function(table){
+    var self=this;
+    if(!self._data)return Promise.resolve();
+    localStorage.setItem(CACHE_KEY,JSON.stringify(self._data));
+    self._syncing=true;syncDot();
+    return fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:table,data:self._data[table]||[]})}).then(function(r){return r.json();}).then(function(json){
+      if(!json.ok)console.log('Push err',table,json.error);
+      self._syncing=false;syncDot();
+    }).catch(function(e){self._syncing=false;syncDot();});
   },
 
-  async pushAll(){
-    if(!this._data)return;
-    localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
-    try{
-      this._syncing=true;syncDot();
-      for(const t of this.tables){
-        await fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:t,data:this._data[t]||[]})});
-      }
-      this._syncing=false;syncDot();
-    }catch(e){this._syncing=false;syncDot();}
+  pushAll:function(){
+    var self=this;
+    if(!self._data)return Promise.resolve();
+    localStorage.setItem(CACHE_KEY,JSON.stringify(self._data));
+    self._syncing=true;syncDot();
+    var chain=Promise.resolve();
+    self.tables.forEach(function(t){
+      chain=chain.then(function(){return fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:t,data:self._data[t]||[]})});});
+    });
+    return chain.then(function(){self._syncing=false;syncDot();}).catch(function(e){self._syncing=false;syncDot();});
   },
 
-  async save(table){await this.push(table);},
-  async saveAll(){await this.pushAll();},
-  _cache(){localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));},
-  log(action,details){
+  save:function(table){return this.push(table);},
+  saveAll:function(){return this.pushAll();},
+  _cache:function(){localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));},
+  log:function(action,details){
     if(!this._data)return;
     if(!this._data.activityLog)this._data.activityLog=[];
-    this._data.activityLog.unshift({id:genId(),userId:user?.id||'system',action,details,createdAt:new Date().toISOString()});
+    this._data.activityLog.unshift({id:gid(),userId:user?user.id:'system',action:action,details:details,createdAt:new Date().toISOString()});
     if(this._data.activityLog.length>200)this._data.activityLog.length=200;
     this.save('activityLog');
   }
 };
 
-function syncDot(){const d=$('.sync-dot');if(!d)return;d.className='sync-dot'+(DB._syncing?' ing':' on');}
+function syncDot(){var d=$('.sync-dot');if(!d)return;d.className='sync-dot'+(DB._syncing?' ing':' on');}
 
-let db=null,user=JSON.parse(sessionStorage.getItem(AUTH_KEY)||'null');
-let page=user?(user.role==='admin'?'dashboard':'editor-dashboard'):'login';
-let chatWith=null,uploadedFiles=[],searchQuery='';
+var db=null;
+var user=null;
+try{user=JSON.parse(sessionStorage.getItem(AUTH_KEY)||'null');}catch(e){user=null;}
+var page=user?(user.role==='admin'?'dashboard':'editor-dashboard'):'login';
+var chatWith=null,uploadedFiles=[],searchQuery='';
 
 function applyTheme(){document.documentElement.setAttribute('data-theme',localStorage.getItem(THEME_KEY)||'dark');}
 applyTheme();
-function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem(THEME_KEY,n);}
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem(THEME_KEY,n);}
 
 function toast(type,title,msg){
-  const ic={success:'fa-check-circle',error:'fa-times-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle'};
-  const cl={success:'ts',error:'te',warning:'tw',info:'ti'};
-  const el=document.createElement('div');el.className=`toast ${cl[type]}`;
-  el.innerHTML=`<i class="fa-solid ${ic[type]} toast-icon"></i><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div><button class="toast-x" onclick="this.parentElement.remove()"><i class="fa-solid fa-times"></i></button>`;
-  $('#toasts').appendChild(el);setTimeout(()=>{if(el.parentElement)el.remove();},4000);
+  var ic={success:'fa-check-circle',error:'fa-times-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle'};
+  var cl={success:'ts',error:'te',warning:'tw',info:'ti'};
+  var el=document.createElement('div');el.className='toast '+cl[type];
+  el.innerHTML='<i class="fa-solid '+ic[type]+' toast-icon"></i><div class="toast-body"><div class="toast-title">'+title+'</div><div class="toast-msg">'+msg+'</div></div><button class="toast-x" onclick="this.parentElement.remove()"><i class="fa-solid fa-times"></i></button>';
+  $('#toasts').appendChild(el);
+  setTimeout(function(){if(el.parentElement)el.remove();},4000);
 }
 
-/* FIXED: parameter renamed from 'uid' to 'targetUserId' to avoid shadowing global genId() */
 function addNotif(targetUserId,title,msg){
   if(!db)return;
   if(!db.notifications)db.notifications=[];
-  db.notifications.unshift({id:genId(),userId:targetUserId,title,msg,read:false,createdAt:new Date().toISOString()});
+  db.notifications.unshift({id:gid(),userId:targetUserId,title:title,msg:msg,read:false,createdAt:new Date().toISOString()});
   DB.save('notifications');
 }
 
-function unreadCount(){return db?db.notifications.filter(n=>n.userId===user?.id&&!n.read).length:0;}
+function unreadCount(){return db?db.notifications.filter(function(n){return n.userId===user.id&&!n.read;}).length:0;}
+
 function toggleNotifPanel(){
-  const p=$('#notifPanel');
+  var p=$('#notifPanel');
   if(p.classList.contains('open')){
     p.classList.remove('open');
     if(db&&db.notifications){
-      db.notifications.filter(n=>n.userId===user?.id&&!n.read).forEach(n=>n.read=true);
+      db.notifications.filter(function(n){return n.userId===user.id&&!n.read;}).forEach(function(n){n.read=true;});
       DB.save('notifications');
     }
     render();
   }else{
-    const ns=(db?db.notifications:[]).filter(n=>n.userId===user?.id).slice(0,15);
-    p.innerHTML=`<div class="notif-ph"><h3>Notifications</h3><span class="text-sm text-muted">${ns.length}</span></div><div class="notif-list">${ns.length?ns.map(n=>`<div class="notif-item ${n.read?'':'unread'}"><div class="notif-item-title">${n.title}</div><div class="notif-item-msg">${n.msg}</div><div class="notif-item-time">${fmtT(n.createdAt)}</div></div>`).join(''):'<div class="notif-empty"><i class="fa-solid fa-bell-slash" style="font-size:1.5rem;opacity:.3;display:block;margin-bottom:8px"></i>No notifications</div>'}</div>`;
+    var ns=(db?db.notifications:[]).filter(function(n){return n.userId===user.id;}).slice(0,15);
+    var html='<div class="notif-ph"><h3>Notifications</h3></div><div class="notif-list">';
+    if(ns.length){
+      ns.forEach(function(n){html+='<div class="notif-item '+(n.read?'':'unread')+'"><div class="notif-item-title">'+n.title+'</div><div class="notif-item-msg">'+n.msg+'</div><div class="notif-item-time">'+fmtT(n.createdAt)+'</div></div>';});
+    }else{
+      html+='<div class="notif-empty"><i class="fa-solid fa-bell-slash" style="font-size:1.5rem;opacity:.3;display:block;margin-bottom:8px"></i>No notifications</div>';
+    }
+    html+='</div>';
+    p.innerHTML=html;
     p.classList.add('open');
   }
 }
 
-function openModal(html){closeModals();const bg=document.createElement('div');bg.className='modal-bg open';bg.id='modalBg';bg.innerHTML=`<div class="modal">${html}</div>`;bg.addEventListener('click',e=>{if(e.target===bg)closeModals();});document.body.appendChild(bg);}
-function closeModals(){const m=$('#modalBg');if(m)m.remove();}
+function openModal(html){
+  closeModals();
+  var bg=document.createElement('div');bg.className='modal-bg open';bg.id='modalBg';
+  bg.innerHTML='<div class="modal">'+html+'</div>';
+  bg.addEventListener('click',function(e){if(e.target===bg)closeModals();});
+  document.body.appendChild(bg);
+}
+function closeModals(){var m=$('#modalBg');if(m)m.remove();}
 
 function exportCSV(table,headers){
-  const rows=db[table]||[];if(!rows.length){toast('warning','Empty','No data to export');return;}
-  let csv=headers.join(',')+'\n';rows.forEach(r=>{csv+=headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(',')+'\n';});
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=table+'.csv';a.click();toast('success','Exported',table+'.csv downloaded');
+  var rows=db[table]||[];
+  if(!rows.length){toast('warning','Empty','No data');return;}
+  var csv=headers.join(',')+'\n';
+  rows.forEach(function(r){csv+=headers.map(function(h){return '"'+(r[h]||'').toString().replace(/"/g,'""')+'"';}).join(',')+'\n';});
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=table+'.csv';a.click();
+  toast('success','Exported');
 }
 
 function printInvoice(id){
-  const inv=db.invoices.find(i=>i.id===id);if(!inv)return;
-  const cl=db.clients.find(c=>c.id===inv.clientId);const pr=db.projects.find(p=>p.id===inv.projectId);
-  const w=document.createElement('div');
-  w.innerHTML=`<div class="print-invoice"><div style="display:flex;justify-content:space-between;margin-bottom:30px"><div><h1 style="font-size:1.8rem;margin-bottom:4px">Typixel</h1><p style="color:#666">Design Studio</p></div><div style="text-align:right"><h2 style="font-size:1.4rem;margin-bottom:4px">INVOICE</h2><p style="color:#666">#${inv.id.slice(-5).toUpperCase()}</p></div></div><div style="display:flex;justify-content:space-between;margin-bottom:30px"><div><strong>Bill To:</strong><br>${cl?.name||'—'}<br>${cl?.company||''}<br>${cl?.email||''}</div><div style="text-align:right"><strong>Date:</strong> ${fmtD(inv.date)}<br><strong>Status:</strong> ${inv.status.toUpperCase()}</div></div><table><thead><tr><th>Description</th><th style="text-align:right">Amount</th></tr></thead><tbody><tr><td>${pr?.name||'Project'}</td><td style="text-align:right;font-weight:600">${fmtM(inv.amount)}</td></tr></tbody><tfoot><tr><td style="text-align:right;font-weight:700;border-top:2px solid #111;padding-top:10px">Total</td><td style="text-align:right;font-weight:700;font-size:1.1rem;border-top:2px solid #111;padding-top:10px">${fmtM(inv.amount)}</td></tr></tfoot></table><div style="margin-top:40px;text-align:center;color:#999;font-size:.85rem">Thank you for your business — Typixel</div></div>`;
+  var inv=db.invoices.find(function(i){return i.id===id;});
+  if(!inv)return;
+  var cl=db.clients.find(function(c){return c.id===inv.clientId;});
+  var pr=db.projects.find(function(p){return p.id===inv.projectId;});
+  var w=document.createElement('div');
+  w.innerHTML='<div class="print-invoice"><div style="display:flex;justify-content:space-between;margin-bottom:30px"><div><h1 style="font-size:1.8rem;margin-bottom:4px">Typixel</h1><p style="color:#666">Design Studio</p></div><div style="text-align:right"><h2 style="font-size:1.4rem;margin-bottom:4px">INVOICE</h2><p style="color:#666">#'+inv.id.slice(-5).toUpperCase()+'</p></div></div><div style="display:flex;justify-content:space-between;margin-bottom:30px"><div><strong>Bill To:</strong><br>'+(cl?cl.name:'\u2014')+'<br>'+(cl?cl.company:'')+'<br>'+(cl?cl.email:'')+'</div><div style="text-align:right"><strong>Date:</strong> '+fmtD(inv.date)+'<br><strong>Status:</strong> '+inv.status.toUpperCase()+'</div></div><table><thead><tr><th>Description</th><th style="text-align:right">Amount</th></tr></thead><tbody><tr><td>'+(pr?pr.name:'Project')+'</td><td style="text-align:right;font-weight:600">'+fmtM(inv.amount)+'</td></tr></tbody><tfoot><tr><td style="text-align:right;font-weight:700;border-top:2px solid #111;padding-top:10px">Total</td><td style="text-align:right;font-weight:700;font-size:1.1rem;border-top:2px solid #111;padding-top:10px">'+fmtM(inv.amount)+'</td></tr></tfoot></table><div style="margin-top:40px;text-align:center;color:#999;font-size:.85rem">Thank you \u2014 Typixel</div></div>';
   document.body.appendChild(w);window.print();w.remove();
 }
 
 function login(email,pw){
-  const u=db.users.find(x=>x.email===email&&x.password===pw);
+  var u=db.users.find(function(x){return x.email===email&&x.password===pw;});
   if(!u){toast('error','Login Failed','Invalid email or password');return;}
-  if(u.role==='editor'&&!u.approved){toast('warning','Pending Approval','Your account is awaiting admin review');return;}
+  if(u.role==='editor'&&!u.approved){toast('warning','Pending','Your account is awaiting admin approval');return;}
   user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));
   page=u.role==='admin'?'dashboard':'editor-dashboard';
-  DB.log('Login',u.name+' logged in');render();toast('success','Welcome back','Hi '+u.name+'!');
+  DB.log('Login',u.name+' logged in');render();toast('success','Welcome back','Hi '+u.name);
 }
+
 function logout(){user=null;sessionStorage.removeItem(AUTH_KEY);page='login';chatWith=null;render();}
 
 function register(name,email,pw,portfolio,bio){
-  if(!name||!email||!pw){toast('error','Missing Fields','Name, email, and password are required');return;}
-  if(pw.length<4){toast('error','Weak Password','Use at least 4 characters');return;}
-  if(db.users.find(x=>x.email===email)){toast('error','Email Taken','An account with this email already exists');return;}
-  const newId=genId();
-  db.users.push({id:newId,name,email,password:pw,role:'editor',approved:false,avatar:ini(name),phone:'',bio:bio||'',portfolio:portfolio||'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});
+  if(!name||!email||!pw){toast('error','Missing','Name, email, and password required');return;}
+  if(pw.length<4){toast('error','Weak','Password must be at least 4 characters');return;}
+  if(db.users.find(function(x){return x.email===email;})){toast('error','Taken','An account with this email already exists');return;}
+  db.users.push({id:gid(),name:name,email:email,password:pw,role:'editor',approved:false,avatar:ini(name),phone:'',bio:bio||'',portfolio:portfolio||'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});
   addNotif('u1','New Editor Applied',name+' wants to join the team');
   DB.log('Register','New application from '+name);
   DB.save('users');
-  toast('success','Application Sent','We\'ll review your profile shortly');
+  toast('success','Application Sent','We will review your profile shortly');
 }
 
 function navigate(p){page=p;chatWith=null;searchQuery='';render();}
-function searchFilter(arr,fields){if(!searchQuery)return arr;const q=searchQuery.toLowerCase();return arr.filter(i=>fields.some(f=>(i[f]||'').toString().toLowerCase().includes(q)));}
 
-async function render(){
+function searchFilter(arr,fields){
+  if(!searchQuery)return arr;
+  var q=searchQuery.toLowerCase();
+  return arr.filter(function(i){return fields.some(function(f){return(i[f]||'').toString().toLowerCase().indexOf(q)!==-1;});});
+}
+
+function render(){
   if(!user){renderLogin();return;}
-  $('#app').innerHTML=`<div class="app">${rSidebar()}<div class="main">${rTopbar()}<div class="page fade-in" id="pc">${rPage()}</div></div></div>`;
-  const si=$('.topbar-search input');if(si)si.oninput=e=>{searchQuery=e.target.value;const pc=$('#pc');if(pc)pc.innerHTML=rPage();};
-  const pf=$('#profileForm');if(pf)pf.onsubmit=e=>{e.preventDefault();saveProfile();};
-  const pwf=$('#pwForm');if(pwf)pwf.onsubmit=e=>{e.preventDefault();changePw();};
+  var sidebarHtml=rSidebar();
+  var topbarHtml=rTopbar();
+  var pageHtml=rPage();
+  $('#app').innerHTML='<div class="app">'+sidebarHtml+'<div class="main">'+topbarHtml+'<div class="page fade-in" id="pc">'+pageHtml+'</div></div></div>';
+  var si=$('.topbar-search input');
+  if(si)si.oninput=function(e){searchQuery=e.target.value;var pc=$('#pc');if(pc)pc.innerHTML=rPage();};
+  var pf=$('#profileForm');
+  if(pf)pf.onsubmit=function(e){e.preventDefault();saveProfile();};
+  var pwf=$('#pwForm');
+  if(pwf)pwf.onsubmit=function(e){e.preventDefault();changePw();};
   syncDot();
 }
 
 function rSidebar(){
-  const items=user.role==='admin'?[
+  var isAdmin=user.role==='admin';
+  var items=isAdmin?[
     {s:'OVERVIEW'},{id:'dashboard',i:'fa-gauge-high',l:'Dashboard'},
     {s:'MANAGE'},{id:'clients',i:'fa-users',l:'Clients'},{id:'editors',i:'fa-user-pen',l:'Editors'},{id:'projects',i:'fa-briefcase',l:'Projects'},{id:'assignments',i:'fa-clipboard-list',l:'Assignments'},
     {s:'FINANCE'},{id:'invoices',i:'fa-file-invoice-dollar',l:'Invoices'},
@@ -483,385 +515,493 @@ function rSidebar(){
     {s:'TOOLS'},{id:'notes',i:'fa-note-sticky',l:'Quick Notes'},{id:'support',i:'fa-life-ring',l:'Get Help'},{id:'chat',i:'fa-comments',l:'Messages'}
   ];
   items.push({s:''},{id:'profile',i:'fa-gear',l:'Settings'});
-  const openTix=db.tickets?db.tickets.filter(t=>!t.resolved).length:0;
-  let h=`<div class="sb-logo"><div class="sb-logo-icon">T</div><span>Typixel</span></div><nav class="sb-nav">`;
-  items.forEach(it=>{if(it.s)h+=`<div class="sb-sec">${it.s}</div>`;else h+=`<button class="sb-item ${page===it.id?'active':''}" onclick="navigate('${it.id}')"><i class="fa-solid ${it.i}"></i>${it.l}${it.id==='tickets'&&openTix?`<span class="sb-badge">${openTix}</span>`:''}</button>`;});
-  h+=`</nav><div class="sb-footer"><div class="sb-user"><div class="sb-avatar">${user.avatar}</div><div><div class="sb-user-name">${user.name}</div><div class="sb-user-role">${user.role==='admin'?'Admin':'Editor'}</div></div></div></div>`;
-  return`<aside class="sidebar" id="sidebar">${h}</aside>`;
+  var openTix=db.tickets?db.tickets.filter(function(t){return !t.resolved;}).length:0;
+  var h='<div class="sb-logo"><div class="sb-logo-icon">T</div><span>Typixel</span></div><nav class="sb-nav">';
+  items.forEach(function(it){
+    if(it.s)h+='<div class="sb-sec">'+it.s+'</div>';
+    else{
+      var badge=it.id==='tickets'&&openTix?'<span class="sb-badge">'+openTix+'</span>':'';
+      h+='<button class="sb-item '+(page===it.id?'active':'')+'" onclick="navigate(\''+it.id+'\')"><i class="fa-solid '+it.i+'"></i>'+it.l+badge+'</button>';
+    }
+  });
+  h+='</nav><div class="sb-footer"><div class="sb-user"><div class="sb-avatar">'+user.avatar+'</div><div><div class="sb-user-name">'+user.name+'</div><div class="sb-user-role">'+(user.role==='admin'?'Admin':'Editor')+'</div></div></div></div>';
+  return '<aside class="sidebar" id="sidebar">'+h+'</aside>';
 }
 
 function rTopbar(){
-  const t={dashboard:'Dashboard',clients:'Clients',editors:'Editors',projects:'Projects',assignments:'Assignments',invoices:'Invoices',activity:'Activity Log',notes:'Quick Notes',tickets:'Tickets',chat:'Messages','editor-dashboard':'Dashboard','my-work':'My Work','submit-work':'Submit Work','my-invoices':'My Invoices',support:'Get Help',profile:'Settings'};
-  const uc=unreadCount();
-  return`<header class="topbar"><div class="topbar-left"><span class="sync-dot on"></span><span class="topbar-title">${t[page]||'Typixel'}</span></div><div class="topbar-right"><div class="topbar-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search..." value="${searchQuery}"></div><button class="tb-btn" onclick="toggleTheme()" title="Toggle theme"><i class="fa-solid ${document.documentElement.getAttribute('data-theme')==='dark'?'fa-sun':'fa-moon'}"></i></button><button class="tb-btn" onclick="toggleNotifPanel()"><i class="fa-solid fa-bell"></i>${uc?'<span class="tb-dot"></span>':''}</button><div class="dropdown"><button class="tb-btn" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis-vertical"></i></button><div class="dd-menu"><button class="dd-item" onclick="navigate('profile');this.closest('.dd-menu').classList.remove('open')"><i class="fa-solid fa-gear"></i>Settings</button><div class="dd-sep"></div><button class="dd-item danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i>Logout</button></div></div></div></header>`;
+  var titles={dashboard:'Dashboard',clients:'Clients',editors:'Editors',projects:'Projects',assignments:'Assignments',invoices:'Invoices',activity:'Activity Log',notes:'Quick Notes',tickets:'Tickets',chat:'Messages','editor-dashboard':'Dashboard','my-work':'My Work','submit-work':'Submit Work','my-invoices':'My Invoices',support:'Get Help',profile:'Settings'};
+  var uc=unreadCount();
+  var themeIcon=document.documentElement.getAttribute('data-theme')==='dark'?'fa-sun':'fa-moon';
+  return '<header class="topbar"><div class="topbar-left"><span class="sync-dot on"></span><span class="topbar-title">'+(titles[page]||'Typixel')+'</span></div><div class="topbar-right"><div class="topbar-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search..." value="'+searchQuery+'"></div><button class="tb-btn" onclick="toggleTheme()" title="Toggle theme"><i class="fa-solid '+themeIcon+'"></i></button><button class="tb-btn" onclick="toggleNotifPanel()"><i class="fa-solid fa-bell"></i>'+(uc?'<span class="tb-dot"></span>':'')+'</button><div class="dropdown"><button class="tb-btn" onclick="this.nextElementSibling.classList.toggle(\'open\')"><i class="fa-solid fa-ellipsis-vertical"></i></button><div class="dd-menu"><button class="dd-item" onclick="navigate(\'profile\');this.closest(\'.dd-menu\').classList.remove(\'open\')"><i class="fa-solid fa-gear"></i>Settings</button><div class="dd-sep"></div><button class="dd-item danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i>Logout</button></div></div></div></header>';
 }
 
 function rPage(){
   switch(page){
-    case'dashboard':return pgDash();case'clients':return pgClients();case'editors':return pgEditors();
-    case'projects':return pgProjects();case'assignments':return pgAssign();case'invoices':return pgInv();
-    case'activity':return pgAct();case'notes':return pgNotes();case'tickets':return pgTix();case'chat':return pgChat();
-    case'editor-dashboard':return pgED();case'my-work':return pgMW();case'submit-work':return pgSW();
-    case'my-invoices':return pgMI();case'support':return pgSup();case'profile':return pgProf();
+    case 'dashboard':return pgDash();
+    case 'clients':return pgClients();
+    case 'editors':return pgEditors();
+    case 'projects':return pgProjects();
+    case 'assignments':return pgAssign();
+    case 'invoices':return pgInv();
+    case 'activity':return pgAct();
+    case 'notes':return pgNotes();
+    case 'tickets':return pgTix();
+    case 'chat':return pgChat();
+    case 'editor-dashboard':return pgED();
+    case 'my-work':return pgMW();
+    case 'submit-work':return pgSW();
+    case 'my-invoices':return pgMI();
+    case 'support':return pgSup();
+    case 'profile':return pgProf();
     default:return pgDash();
   }
 }
 
-/* ============ ADMIN DASHBOARD — REDESIGNED ============ */
 function pgDash(){
-  const rev=db.invoices.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
-  const unp=db.invoices.filter(i=>i.status==='unpaid').reduce((s,i)=>s+i.amount,0);
-  const unpCount=db.invoices.filter(i=>i.status==='unpaid').length;
-  const act=db.projects.filter(p=>p.status==='in-progress').length;
-  const pend=db.projects.filter(p=>p.status==='pending').length;
-  const comp=db.projects.filter(p=>p.status==='completed').length;
-  const tp=db.projects.length;
-  const eds=db.users.filter(u=>u.role==='editor'&&u.approved).length;
-  const pa=db.users.filter(u=>u.role==='editor'&&!u.approved).length;
+  var rev=db.invoices.filter(function(i){return i.status==='paid';}).reduce(function(s,i){return s+i.amount;},0);
+  var unp=db.invoices.filter(function(i){return i.status==='unpaid';}).reduce(function(s,i){return s+i.amount;},0);
+  var unpCount=db.invoices.filter(function(i){return i.status==='unpaid';}).length;
+  var act=db.projects.filter(function(p){return p.status==='in-progress';}).length;
+  var pend=db.projects.filter(function(p){return p.status==='pending';}).length;
+  var comp=db.projects.filter(function(p){return p.status==='completed';}).length;
+  var tp=db.projects.length;
+  var eds=db.users.filter(function(u){return u.role==='editor'&&u.approved;}).length;
+  var pa=db.users.filter(function(u){return u.role==='editor'&&!u.approved;}).length;
+  var overdue=db.projects.filter(function(p){var d=dlLeft(p.deadline);return d!==null&&d<=0&&p.status!=='completed';});
+  var openTix=db.tickets?db.tickets.filter(function(t){return !t.resolved;}).length:0;
+  var recentAct=(db.activityLog||[]).slice(0,6);
+  var clientSpend=db.clients.map(function(c){var invs=db.invoices.filter(function(i){return i.clientId===c.id&&i.status==='paid';});return{id:c.id,name:c.name,avatar:c.avatar,total:invs.reduce(function(s,i){return s+i.amount;},0),count:invs.length};}).sort(function(a,b){return b.total-a.total;}).slice(0,5);
 
-  // Overdue projects
-  const overdue=db.projects.filter(p=>{const d=dlLeft(p.deadline);return d!==null&&d<=0&&p.status!=='completed';});
-  const openTix=db.tickets.filter(t=>!t.resolved).length;
+  var alerts='';
+  if(overdue.length)alerts+='<div class="alert-bar alert-danger"><i class="fa-solid fa-triangle-exclamation"></i><span><strong>'+overdue.length+' project'+(overdue.length>1?'s':'')+' overdue</strong> \u2014 '+overdue.map(function(p){return p.name;}).join(', ')+'</span></div>';
+  if(unpCount>0)alerts+='<div class="alert-bar alert-warning"><i class="fa-solid fa-clock"></i><span><strong>'+fmtM(unp)+' pending</strong> across '+unpCount+' unpaid invoice'+(unpCount>1?'s':'')+'</span></div>';
+  if(pa>0)alerts+='<div class="alert-bar alert-warning"><i class="fa-solid fa-user-clock"></i><span><strong>'+pa+' editor'+(pa>1?'s':'')+' awaiting approval</strong></span></div>';
+  if(openTix>0)alerts+='<div class="alert-bar alert-danger"><i class="fa-solid fa-life-ring"></i><span><strong>'+openTix+' open ticket'+(openTix>1?'s':''+'</strong>')+'</span></div>';
 
-  // Recent activity
-  const recentAct=(db.activityLog||[]).slice(0,6);
-  // Top clients
-  const clientSpend=db.clients.map(c=>{const invs=db.invoices.filter(i=>i.clientId===c.id&&i.status==='paid');return{...c,total:invs.reduce((s,i)=>s+i.amount,0),count:invs.length};}).sort((a,b)=>b.total-a.total).slice(0,5);
+  var recentHtml='';
+  if(recentAct.length){
+    recentAct.forEach(function(l){
+      var u=db.users.find(function(x){return x.id===l.userId;});
+      recentHtml+='<div class="log-item"><div class="log-dot"></div><div class="log-text"><strong>'+(u?u.name:'System')+'</strong> '+(l.details||l.action)+'</div><div class="log-time">'+fmtT(l.createdAt)+'</div></div>';
+    });
+  }else{recentHtml='<div style="text-align:center;padding:20px;color:var(--fg3)">No activity yet</div>';}
 
-  let alerts='';
-  if(overdue.length)alerts+=`<div class="alert-bar alert-danger"><i class="fa-solid fa-triangle-exclamation"></i><span><strong>${overdue.length} project${overdue.length>1?'s':''} overdue</strong> — ${overdue.map(p=>p.name).join(', ')}</span></div>`;
-  if(unpCount>0)alerts+=`<div class="alert-bar alert-warning"><i class="fa-solid fa-clock"></i><span><strong>${fmtM(unp)} pending</strong> across ${unpCount} unpaid invoice${unpCount>1?'s':''}</span></div>`;
-  if(pa>0)alerts+=`<div class="alert-bar alert-warning"><i class="fa-solid fa-user-clock"></i><span><strong>${pa} editor${pa>1?'s':''} awaiting approval</strong> — go to Editors to review</span></div>`;
-  if(openTix>0)alerts+=`<div class="alert-bar alert-danger"><i class="fa-solid fa-life-ring"></i><span><strong>${openTix} open support ticket${openTix>1?'s':''}</strong> — needs attention</span></div>`;
+  var clientHtml='';
+  if(clientSpend.length){
+    clientSpend.forEach(function(c,i){
+      var bg=i===0?'rgba(255,107,53,.1)':'rgba(255,255,255,.03)';
+      var col=i===0?'var(--accent)':'var(--fg3)';
+      var ico=i===0?'fa-trophy':'fa-user';
+      clientHtml+='<div class="mini-stat"><div class="mini-stat-icon" style="background:'+bg+';color:'+col+'"><i class="fa-solid '+ico+'"></i></div><div class="mini-stat-info"><div class="mini-stat-name">'+c.name+'</div><div class="mini-stat-val">'+c.count+' paid invoice'+(c.count!==1?'s':'')+'</div></div><div style="font-weight:600;font-size:.88rem;color:var(--accent2)">'+fmtM(c.total)+'</div></div>';
+    });
+  }else{clientHtml='<div style="text-align:center;padding:20px;color:var(--fg3)">No clients</div>';}
 
-  return`<div class="ph"><div><h1>Dashboard</h1><p>${tp} projects, ${db.clients.length} clients, ${eds} editors</p></div></div>
-  ${alerts}
-  <div class="quick-actions">
-    <button class="qa-btn" onclick="modalAddProject()"><i class="fa-solid fa-plus"></i><span class="qa-label">New Project</span></button>
-    <button class="qa-btn" onclick="modalAddClient()"><i class="fa-solid fa-user-plus"></i><span class="qa-label">Add Client</span></button>
-    <button class="qa-btn" onclick="modalManualInv()"><i class="fa-solid fa-file-invoice"></i><span class="qa-label">Create Invoice</span></button>
-    <button class="qa-btn" onclick="navigate('assignments')"><i class="fa-solid fa-list-check"></i><span class="qa-label">View Tasks</span></button>
-  </div>
-  <div class="stats stats-primary">
-    <div class="stat"><div class="stat-top"><span class="stat-label">Revenue Collected</span><div class="stat-icon si-2"><i class="fa-solid fa-arrow-trend-up"></i></div></div><div class="stat-val" style="color:var(--accent2)">${fmtM(rev)}</div><div class="stat-sub">${comp} completed project${comp!==1?'s':''} generating revenue</div></div>
-    <div class="stat"><div class="stat-top"><span class="stat-label">Pending Payments</span><div class="stat-icon si-3"><i class="fa-solid fa-hourglass-half"></i></div></div><div class="stat-val" style="color:var(--warning)">${fmtM(unp)}</div><div class="stat-sub">${unpCount} invoice${unpCount!==1?'s':''} awaiting payment${overdue.length?' — <span style="color:var(--danger)">'+overdue.length+' overdue</span>':''}</div></div>
-  </div>
-  <div class="stats stats-secondary">
-    <div class="stat"><div class="stat-top"><span class="stat-label">Active Projects</span><div class="stat-icon si-1"><i class="fa-solid fa-briefcase"></i></div></div><div class="stat-val">${act}</div><div class="stat-sub">${pend} pending, ${comp} done</div></div>
-    <div class="stat"><div class="stat-top"><span class="stat-label">Team Editors</span><div class="stat-icon si-4"><i class="fa-solid fa-users"></i></div></div><div class="stat-val">${eds}</div><div class="stat-sub">${pa?'<span style="color:var(--warning)">'+pa+' pending</span>':'All active'}</div></div>
-    <div class="stat"><div class="stat-top"><span class="stat-label">Completion</span><div class="stat-icon si-2"><i class="fa-solid fa-chart-pie"></i></div></div><div class="stat-val">${tp?Math.round(comp/tp*100):0}%</div><div class="progress" style="margin-top:8px"><div class="progress-fill" style="width:${tp?Math.round(comp/tp*100):0}%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
-  </div>
-  <div class="dash-grid">
-    <div class="card"><div class="card-head"><h3>Recent Activity</h3><button class="btn btn-sm btn-ghost" onclick="navigate('activity')">View All</button></div><div class="card-body">${recentAct.length?recentAct.map(l=>{const u=db.users.find(x=>x.id===l.userId);return`<div class="log-item"><div class="log-dot"></div><div class="log-text"><strong>${u?.name||'System'}</strong> ${l.details||l.action}</div><div class="log-time">${fmtT(l.createdAt)}</div></div>`;}).join(''):'<div style="text-align:center;padding:20px;color:var(--fg3)">No activity yet</div>'}</div></div>
-    <div class="card"><div class="card-head"><h3>Top Clients</h3><button class="btn btn-sm btn-ghost" onclick="navigate('clients')">View All</button></div><div class="card-body">${clientSpend.length?clientSpend.map((c,i)=>`<div class="mini-stat"><div class="mini-stat-icon" style="background:${i===0?'rgba(255,107,53,.1)':'rgba(255,255,255,.03)'};color:${i===0?'var(--accent)':'var(--fg3)'}"><i class="fa-solid fa-${i===0?'trophy':'user'}"></i></div><div class="mini-stat-info"><div class="mini-stat-name">${c.name}</div><div class="mini-stat-val">${c.count} paid invoice${c.count!==1?'s':''}</div></div><div style="font-weight:600;font-size:.88rem;color:var(--accent2)">${fmtM(c.total)}</div></div>`).join(''):'<div style="text-align:center;padding:20px;color:var(--fg3)">No clients</div>'}</div></div>
-  </div>`;
+  return '<div class="ph"><div><h1>Dashboard</h1><p>'+tp+' projects, '+db.clients.length+' clients, '+eds+' editors</p></div></div>'
+    +alerts
+    +'<div class="quick-actions">'
+    +'<button class="qa-btn" onclick="modalAddProject()"><i class="fa-solid fa-plus"></i>New Project</button>'
+    +'<button class="qa-btn" onclick="modalAddClient()"><i class="fa-solid fa-user-plus"></i>Add Client</button>'
+    +'<button class="qa-btn" onclick="modalManualInv()"><i class="fa-solid fa-file-invoice"></i>Create Invoice</button>'
+    +'<button class="qa-btn" onclick="navigate(\'assignments\')"><i class="fa-solid fa-list-check"></i>View Tasks</button>'
+    +'</div>'
+    +'<div class="stats stats-p">'
+    +'<div class="stat"><div class="stat-top"><span class="stat-label">Revenue Collected</span><div class="stat-icon si-2"><i class="fa-solid fa-arrow-trend-up"></i></div></div><div class="stat-val" style="color:var(--accent2)">'+fmtM(rev)+'</div><div class="stat-sub">'+comp+' completed project'+(comp!==1?'s':'')+' generating revenue</div></div>'
+    +'<div class="stat"><div class="stat-top"><span class="stat-label">Pending Payments</span><div class="stat-icon si-3"><i class="fa-solid fa-hourglass-half"></i></div></div><div class="stat-val" style="color:var(--warning)">'+fmtM(unp)+'</div><div class="stat-sub">'+unpCount+' invoice'+(unpCount!==1?'s':'')+' awaiting payment'+(overdue.length?' \u2014 <span style="color:var(--danger)">'+overdue.length+' overdue</span>':'')+'</div></div>'
+    +'</div>'
+    +'<div class="stats stats-s">'
+    +'<div class="stat"><div class="stat-top"><span class="stat-label">Active Projects</span><div class="stat-icon si-1"><i class="fa-solid fa-briefcase"></i></div></div><div class="stat-val">'+act+'</div><div class="stat-sub">'+pend+' pending, '+comp+' done</div></div>'
+    +'<div class="stat"><div class="stat-top"><span class="stat-label">Team Editors</span><div class="stat-icon si-4"><i class="fa-solid fa-users"></i></div></div><div class="stat-val">'+eds+'</div><div class="stat-sub">'+(pa?'<span style="color:var(--warning)">'+pa+' pending</span>':'All active')+'</div></div>'
+    +'<div class="stat"><div class="stat-top"><span class="stat-label">Completion</span><div class="stat-icon si-2"><i class="fa-solid fa-chart-pie"></i></div></div><div class="stat-val">'+(tp?Math.round(comp/tp*100):0)+'%</div><div class="progress" style="margin-top:8px"><div class="progress-fill" style="width:'+(tp?Math.round(comp/tp*100):0)+'%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>'
+    +'</div>'
+    +'<div class="dash-grid">'
+    +'<div class="card"><div class="card-head"><h3>Recent Activity</h3><button class="btn btn-sm btn-ghost" onclick="navigate(\'activity\')">View All</button></div><div class="card-body">'+recentHtml+'</div></div>'
+    +'<div class="card"><div class="card-head"><h3>Top Clients</h3><button class="btn btn-sm btn-ghost" onclick="navigate(\'clients\')">View All</button></div><div class="card-body">'+clientHtml+'</div></div>'
+    +'</div>';
 }
 
-/* ============ CLIENTS ============ */
 function pgClients(){
-  const items=searchFilter(db.clients,['name','company','email']);
-  return`<div class="ph"><div><h1>Clients</h1><p>${db.clients.length} total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('clients',['id','name','company','email','phone','address'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddClient()"><i class="fa-solid fa-plus"></i>Add Client</button></div></div>
-  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Client</th><th>Company</th><th>Email</th><th>Phone</th><th>Projects</th><th>Total Spent</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(c=>{const cp=db.projects.filter(p=>p.clientId===c.id);const sp=cp.reduce((s,p)=>s+(p.budget||0),0);return`<tr><td><div class="cu"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${c.avatar}</div><span class="cn">${c.name}</span></div></td><td>${c.company||'—'}</td><td class="text-muted">${c.email}</td><td class="text-muted">${c.phone||'—'}</td><td>${cp.length}</td><td style="font-weight:600">${fmtM(sp)}</td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu"><button class="dd-item" onclick="modalEditClient('${c.id}')"><i class="fa-solid fa-pen"></i>Edit</button><button class="dd-item danger" onclick="deleteClient('${c.id}')"><i class="fa-solid fa-trash"></i>Delete</button></div></div></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="7">No clients yet — add your first client to get started</td></tr>'}</tbody></table></div></div>`;
+  var items=searchFilter(db.clients,['name','company','email']);
+  var rows='';
+  items.forEach(function(c){
+    var cp=db.projects.filter(function(p){return p.clientId===c.id;});
+    var sp=cp.reduce(function(s,p){return s+(p.budget||0);},0);
+    rows+='<tr><td><div class="cu"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">'+c.avatar+'</div><span class="cn">'+c.name+'</span></div></td><td>'+(c.company||'\u2014')+'</td><td class="text-muted">'+c.email+'</td><td class="text-muted">'+(c.phone||'\u2014')+'</td><td>'+cp.length+'</td><td style="font-weight:600">'+fmtM(sp)+'</td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle(\'open\')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu"><button class="dd-item" onclick="modalEditClient(\''+c.id+'\')"><i class="fa-solid fa-pen"></i>Edit</button><button class="dd-item danger" onclick="deleteClient(\''+c.id+'\')"><i class="fa-solid fa-trash"></i>Delete</button></div></div></td></tr>';
+  });
+  if(!items.length)rows='<tr class="empty-row"><td colspan="7">No clients yet</td></tr>';
+  return '<div class="ph"><div><h1>Clients</h1><p>'+db.clients.length+' total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV(\'clients\',[\'id\',\'name\',\'company\',\'email\',\'phone\',\'address\'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddClient()"><i class="fa-solid fa-plus"></i>Add Client</button></div></div><div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Client</th><th>Company</th><th>Email</th><th>Phone</th><th>Projects</th><th>Total Spent</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
-function modalAddClient(edit=null){
-  const c=edit?db.clients.find(x=>x.id===edit):null;
-  openModal(`<div class="modal-head"><h3>${c?'Edit':'Add'} Client</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="cf"><div class="frow"><div class="fg"><label>Name *</label><input class="fi" name="name" value="${c?.name||''}" required></div><div class="fg"><label>Company</label><input class="fi" name="company" value="${c?.company||''}"></div></div><div class="frow"><div class="fg"><label>Email *</label><input class="fi" type="email" name="email" value="${c?.email||''}" required></div><div class="fg"><label>Phone</label><input class="fi" name="phone" value="${c?.phone||''}"></div></div><div class="fg"><label>Address</label><textarea class="fi" name="address" rows="2">${c?.address||''}</textarea></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveClient('${edit||''}')">${c?'Save':'Add Client'}</button></div>`);
+
+function modalAddClient(editId){
+  var c=editId?db.clients.find(function(x){return x.id===editId;}):null;
+  openModal('<div class="modal-head"><h3>'+(c?'Edit':'Add')+' Client</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="cf"><div class="frow"><div class="fg"><label>Name *</label><input class="fi" name="name" value="'+(c?c.name:'')+'" required></div><div class="fg"><label>Company</label><input class="fi" name="company" value="'+(c?c.company:'')+'"></div></div><div class="frow"><div class="fg"><label>Email *</label><input class="fi" type="email" name="email" value="'+(c?c.email:'')+'" required></div><div class="fg"><label>Phone</label><input class="fi" name="phone" value="'+(c?c.phone:'')+'"></div></div><div class="fg"><label>Address</label><textarea class="fi" name="address" rows="2">'+(c?c.address:'')+'</textarea></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveClient(\''+(editId||'')+'\')">'+(c?'Save':'Add Client')+'</button></div>');
 }
 function modalEditClient(id){modalAddClient(id);}
-async function saveClient(eid){
-  const f=new FormData($('#cf'));
+
+function saveClient(eid){
+  var f=new FormData($('#cf'));
   if(!f.get('name')||!f.get('email')){toast('error','Error','Name and email required');return;}
-  if(eid){const c=db.clients.find(x=>x.id===eid);Object.assign(c,{name:f.get('name'),company:f.get('company'),email:f.get('email'),phone:f.get('phone'),address:f.get('address'),avatar:ini(f.get('name'))});DB.log('Edit Client',f.get('name'));}
-  else{if(db.clients.find(x=>x.email===f.get('email'))){toast('error','Duplicate','A client with this email already exists');return;}db.clients.push({id:genId(),name:f.get('name'),company:f.get('company'),email:f.get('email'),phone:f.get('phone'),address:f.get('address'),avatar:ini(f.get('name'))});DB.log('Add Client',f.get('name'));}
-  await DB.save('clients');closeModals();render();toast('success','Done',eid?'Client updated':'Client added');
+  if(eid){
+    var c=db.clients.find(function(x){return x.id===eid;});
+    c.name=f.get('name');c.company=f.get('company');c.email=f.get('email');c.phone=f.get('phone');c.address=f.get('address');c.avatar=ini(f.get('name'));
+    DB.log('Edit Client',f.get('name'));
+  }else{
+    if(db.clients.find(function(x){return x.email===f.get('email');})){toast('error','Duplicate','Email already exists');return;}
+    db.clients.push({id:gid(),name:f.get('name'),company:f.get('company'),email:f.get('email'),phone:f.get('phone'),address:f.get('address'),avatar:ini(f.get('name'))});
+    DB.log('Add Client',f.get('name'));
+  }
+  DB.save('clients');closeModals();render();toast('success','Done');
 }
-async function deleteClient(id){openModal(`<div class="modal-head"><h3>Delete Client</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">This will also remove all associated projects, invoices, and assignments.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(p=>p.clientId!=='${id}');db.invoices=db.invoices.filter(i=>i.clientId!=='${id}');db.workAssignments=db.workAssignments.filter(w=>{const p=db.projects.find(x=>x.id===w.projectId);return p&&p.clientId!=='${id}';});db.clients=db.clients.filter(c=>c.id!=='${id}');await DB.saveAll();closeModals();render();toast('success','Deleted')">Delete</button></div>`);}
 
-/* ============ EDITORS ============ */
+function deleteClient(id){
+  openModal('<div class="modal-head"><h3>Delete Client</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Removes client and all associated data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(function(p){return p.clientId!==\''+id+'\';});db.invoices=db.invoices.filter(function(i){return i.clientId!==\''+id+'\';});db.clients=db.clients.filter(function(c){return c.id!==\''+id+'\';});DB.saveAll();closeModals();render();toast(\'success\',\'Deleted\')">Delete</button></div>');
+}
+
 function pgEditors(){
-  const items=searchFilter(db.users.filter(u=>u.role==='editor'),['name','email']);
-  return`<div class="ph"><div><h1>Editors</h1><p>${items.length} members</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('users',['id','name','email','role','approved','totalWorkTime','pendingSalary'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddEditor()"><i class="fa-solid fa-plus"></i>Add Editor</button></div></div>
-  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Editor</th><th>Email</th><th>Hours</th><th>Pending Salary</th><th>Status</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(e=>`<tr><td><div class="cu"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${e.avatar}</div><div><div class="cn">${e.name}</div><div class="cs">${db.workAssignments.filter(w=>w.editorId===e.id&&w.status==='completed').length} completed</div></div></div></td><td class="text-muted">${e.email}</td><td>${e.totalWorkTime||0}h</td><td style="font-weight:600">${fmtM(e.pendingSalary||0)}</td><td><span class="badge ${e.approved?'bg-green':'bg-yellow'}">${e.approved?'Active':'Pending'}</span></td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu">${!e.approved?`<button class="dd-item" onclick="approveEditor('${e.id}')"><i class="fa-solid fa-check"></i>Approve</button><button class="dd-item danger" onclick="deleteEditor('${e.id}')"><i class="fa-solid fa-trash"></i>Reject</button>`:`<button class="dd-item" onclick="modalSalary('${e.id}')"><i class="fa-solid fa-indian-rupee-sign"></i>Update Salary</button><button class="dd-item" onclick="modalAssignProj('${e.id}')"><i class="fa-solid fa-briefcase"></i>Assign Project</button><button class="dd-item danger" onclick="deleteEditor('${e.id}')"><i class="fa-solid fa-trash"></i>Remove</button>`}</div></div></td></tr>`).join(''):'<tr class="empty-row"><td colspan="6">No editors — add team members or share the join link</td></tr>'}</tbody></table></div></div>`;
+  var items=searchFilter(db.users.filter(function(u){return u.role==='editor';}),['name','email']);
+  var rows='';
+  items.forEach(function(e){
+    var done=db.workAssignments.filter(function(w){return w.editorId===e.id&&w.status==='completed';}).length;
+    var menuItems='';
+    if(!e.approved){
+      menuItems+='<button class="dd-item" onclick="approveEditor(\''+e.id+'\')"><i class="fa-solid fa-check"></i>Approve</button>';
+      menuItems+='<button class="dd-item danger" onclick="deleteEditor(\''+e.id+'\')"><i class="fa-solid fa-trash"></i>Reject</button>';
+    }else{
+      menuItems+='<button class="dd-item" onclick="modalSalary(\''+e.id+'\')"><i class="fa-solid fa-indian-rupee-sign"></i>Salary</button>';
+      menuItems+='<button class="dd-item" onclick="modalAssignProj(\''+e.id+'\')"><i class="fa-solid fa-briefcase"></i>Assign</button>';
+      menuItems+='<button class="dd-item danger" onclick="deleteEditor(\''+e.id+'\')"><i class="fa-solid fa-trash"></i>Remove</button>';
+    }
+    rows+='<tr><td><div class="cu"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">'+e.avatar+'</div><div><div class="cn">'+e.name+'</div><div class="cs">'+done+' completed</div></div></div></td><td class="text-muted">'+e.email+'</td><td>'+(e.totalWorkTime||0)+'h</td><td style="font-weight:600">'+fmtM(e.pendingSalary||0)+'</td><td><span class="badge '+(e.approved?'bg-green':'bg-yellow')+'">'+(e.approved?'Active':'Pending')+'</span></td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle(\'open\')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu">'+menuItems+'</div></div></td></tr>';
+  });
+  if(!items.length)rows='<tr class="empty-row"><td colspan="6">No editors</td></tr>';
+  return '<div class="ph"><div><h1>Editors</h1><p>'+items.length+' members</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV(\'users\',[\'id\',\'name\',\'email\',\'role\',\'approved\'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddEditor()"><i class="fa-solid fa-plus"></i>Add Editor</button></div></div><div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Editor</th><th>Email</th><th>Hours</th><th>Salary</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
-function modalAddEditor(){openModal(`<div class="modal-head"><h3>Add Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="ef"><div class="frow"><div class="fg"><label>Name *</label><input class="fi" name="name" required></div><div class="fg"><label>Email *</label><input class="fi" type="email" name="email" required></div></div><div class="fg"><label>Password *</label><input class="fi" type="password" name="password" required minlength="4"></div><p class="text-sm text-muted">They will need admin approval before accessing the system.</p></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveEditor()">Add Editor</button></div>`);}
-async function saveEditor(){
-  const f=new FormData($('#ef'));
-  if(!f.get('name')||!f.get('email')||!f.get('password')){toast('error','Error','All fields required');return;}
-  if(db.users.find(x=>x.email===f.get('email'))){toast('error','Duplicate','An account with this email already exists');return;}
-  db.users.push({id:genId(),name:f.get('name'),email:f.get('email'),password:f.get('password'),role:'editor',approved:false,avatar:ini(f.get('name')),phone:'',bio:'',portfolio:'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});
-  addNotif('u1','New Editor Added',f.get('name')+' added by admin — awaiting approval');
-  DB.log('Add Editor',f.get('name'));await DB.save('users');closeModals();render();toast('success','Added','Editor requires approval');
-}
-async function approveEditor(id){
-  const e=db.users.find(u=>u.id===id);if(!e)return;e.approved=true;
-  addNotif(id,'Account Approved','Your editor account has been approved. You can now log in.');
-  DB.log('Approve Editor',e.name);await DB.save('users');render();toast('success','Approved',e.name+' can now log in');
-}
-function modalSalary(id){
-  const e=db.users.find(u=>u.id===id);if(!e)return;
-  openModal(`<div class="modal-head"><h3>Update Salary — ${e.name}</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div style="padding:12px;background:var(--bg);border-radius:8px;margin-bottom:14px"><span class="text-muted">Current pending:</span> <strong>${fmtM(e.pendingSalary||0)}</strong> &nbsp;|&nbsp; <span class="text-muted">Hours:</span> <strong>${e.totalWorkTime||0}h</strong></div><div class="frow"><div class="fg"><label>Add Amount (₹)</label><input class="fi" type="number" id="sAmt" min="0" placeholder="0"></div><div class="fg"><label>Add Hours</label><input class="fi" type="number" id="sHrs" min="0" placeholder="0"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="doSalary('${id}')">Update</button></div>`);
-}
-async function doSalary(id){
-  const amt=parseFloat($('#sAmt').value)||0;const hrs=parseFloat($('#sHrs').value)||0;
-  if(!amt&&!hrs){toast('error','Error','Enter amount or hours');return;}
-  const e=db.users.find(u=>u.id===id);e.pendingSalary=(e.pendingSalary||0)+amt;e.totalWorkTime=(e.totalWorkTime||0)+hrs;
-  addNotif(id,'Salary Updated',`+${fmtM(amt)} added (${hrs}h)`);
-  DB.log('Salary',e.name+': +'+fmtM(amt));await DB.save('users');closeModals();render();toast('success','Updated');
-}
-function modalAssignProj(eid){
-  const e=db.users.find(u=>u.id===eid);const av=db.projects.filter(p=>p.status!=='completed'&&!p.assignedEditorId);
-  if(!av.length){toast('warning','None','No unassigned projects available');return;}
-  openModal(`<div class="modal-head"><h3>Assign to ${e.name}</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Project *</label><select class="fi" id="aProj">${av.map(p=>`<option value="${p.id}">${p.name} — ${fmtM(p.budget)}</option>`).join('')}</select></div><div class="fg"><label>Task Instructions</label><textarea class="fi" id="aDesc" rows="3" placeholder="Specific instructions for this editor..."></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="doAssign('${eid}')">Assign</button></div>`);
-}
-async function doAssign(eid){
-  const pid=$('#aProj').value,desc=$('#aDesc').value;const p=db.projects.find(x=>x.id===pid);if(!p)return;
-  p.assignedEditorId=eid;p.status='in-progress';
-  db.workAssignments.push({id:genId(),projectId:pid,editorId:eid,description:desc||p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});
-  addNotif(eid,'New Assignment','You\'ve been assigned: '+p.name);
-  DB.log('Assign',p.name+' → '+(db.users.find(u=>u.id===eid)?.name||''));
-  await DB.save('projects');await DB.save('workAssignments');closeModals();render();toast('success','Assigned','Notification sent to editor');
-}
-async function deleteEditor(id){openModal(`<div class="modal-head"><h3>Remove Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Their work assignments will be unassigned but preserved.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.workAssignments.forEach(w=>{if(w.editorId==='${id}'){w.editorId=null;w.status='pending';}});db.users=db.users.filter(u=>u.id!=='${id}');await DB.saveAll();closeModals();render();toast('success','Removed')">Remove</button></div>`);}
 
-/* ============ PROJECTS ============ */
+function modalAddEditor(){
+  openModal('<div class="modal-head"><h3>Add Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="ef"><div class="frow"><div class="fg"><label>Name *</label><input class="fi" name="name" required></div><div class="fg"><label>Email *</label><input class="fi" type="email" name="email" required></div></div><div class="fg"><label>Password *</label><input class="fi" type="password" name="password" required minlength="4"></div><p class="text-sm text-muted">They will need admin approval before accessing the system.</p></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveEditor()">Add Editor</button></div>');
+}
+
+function saveEditor(){
+  var f=new FormData($('#ef'));
+  if(!f.get('name')||!f.get('email')||!f.get('password')){toast('error','Error','All fields required');return;}
+  if(db.users.find(function(x){return x.email===f.get('email');})){toast('error','Duplicate','Email already exists');return;}
+  db.users.push({id:gid(),name:f.get('name'),email:f.get('email'),password:f.get('password'),role:'editor',approved:false,avatar:ini(f.get('name')),phone:'',bio:'',portfolio:'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});
+  addNotif('u1','New Editor Added',f.get('name')+' added by admin');
+  DB.log('Add Editor',f.get('name'));DB.save('users');closeModals();render();toast('success','Added','Editor requires approval');
+}
+
+function approveEditor(id){
+  var e=db.users.find(function(u){return u.id===id;});if(!e)return;
+  e.approved=true;
+  addNotif(id,'Account Approved','Your editor account has been approved. You can now log in.');
+  DB.log('Approve',e.name);DB.save('users');render();toast('success','Approved',e.name+' can now log in');
+}
+
+function modalSalary(id){
+  var e=db.users.find(function(u){return u.id===id;});if(!e)return;
+  openModal('<div class="modal-head"><h3>Update Salary \u2014 '+e.name+'</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div style="padding:12px;background:var(--bg);border-radius:8px;margin-bottom:14px"><span class="text-muted">Pending:</span> <strong>'+fmtM(e.pendingSalary||0)+'</strong> | <span class="text-muted">Hours:</span> <strong>'+(e.totalWorkTime||0)+'h</strong></div><div class="frow"><div class="fg"><label>Add Amount (\u20B9)</label><input class="fi" type="number" id="sAmt" min="0"></div><div class="fg"><label>Add Hours</label><input class="fi" type="number" id="sHrs" min="0"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="doSalary(\''+id+'\')">Update</button></div>');
+}
+
+function doSalary(id){
+  var amt=parseFloat($('#sAmt').value)||0;var hrs=parseFloat($('#sHrs').value)||0;
+  if(!amt&&!hrs){toast('error','Error','Enter amount or hours');return;}
+  var e=db.users.find(function(u){return u.id===id;});
+  e.pendingSalary=(e.pendingSalary||0)+amt;e.totalWorkTime=(e.totalWorkTime||0)+hrs;
+  addNotif(id,'Salary Updated','+'+fmtM(amt)+' ('+hrs+'h)');
+  DB.log('Salary',e.name+': +'+fmtM(amt));DB.save('users');closeModals();render();toast('success','Updated');
+}
+
+function modalAssignProj(eid){
+  var e=db.users.find(function(u){return u.id===eid;});
+  var av=db.projects.filter(function(p){return p.status!=='completed'&&!p.assignedEditorId;});
+  if(!av.length){toast('warning','None','No unassigned projects');return;}
+  var opts='';av.forEach(function(p){opts+='<option value="'+p.id+'">'+p.name+' \u2014 '+fmtM(p.budget)+'</option>';});
+  openModal('<div class="modal-head"><h3>Assign to '+e.name+'</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Project *</label><select class="fi" id="aProj">'+opts+'</select></div><div class="fg"><label>Instructions</label><textarea class="fi" id="aDesc" rows="3"></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="doAssign(\''+eid+'\')">Assign</button></div>');
+}
+
+function doAssign(eid){
+  var pid=$('#aProj').value;var desc=$('#aDesc').value;
+  var p=db.projects.find(function(x){return x.id===pid;});if(!p)return;
+  p.assignedEditorId=eid;p.status='in-progress';
+  db.workAssignments.push({id:gid(),projectId:pid,editorId:eid,description:desc||p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});
+  addNotif(eid,'New Assignment','You have been assigned: '+p.name);
+  var edName=db.users.find(function(u){return u.id===eid;});
+  DB.log('Assign',p.name+' \u2192 '+(edName?edName.name:''));
+  DB.save('projects');DB.save('workAssignments');closeModals();render();toast('success','Assigned');
+}
+
+function deleteEditor(id){
+  openModal('<div class="modal-head"><h3>Remove Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Their assignments will be unassigned.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.workAssignments.forEach(function(w){if(w.editorId===\''+id+'\'){w.editorId=null;w.status=\'pending\';}});db.users=db.users.filter(function(u){return u.id!==\''+id+'\';});DB.saveAll();closeModals();render();toast(\'success\',\'Removed\')">Remove</button></div>');
+}
+
 function pgProjects(){
-  const items=searchFilter(db.projects,['name','description']);
-  const filter=items;
-  return`<div class="ph"><div><h1>Projects</h1><p>${filter.length} total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('projects',['id','name','description','clientId','budget','status','deadline'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary btn-lg" onclick="modalAddProject()"><i class="fa-solid fa-plus"></i>New Project</button></div></div>
-  <div class="tabs"><button class="tab-btn active" onclick="filterProj('all',this)">All (${db.projects.length})</button><button class="tab-btn" onclick="filterProj('pending',this)">Pending (${db.projects.filter(p=>p.status==='pending').length})</button><button class="tab-btn" onclick="filterProj('in-progress',this)">Active (${db.projects.filter(p=>p.status==='in-progress').length})</button><button class="tab-btn" onclick="filterProj('completed',this)">Completed (${db.projects.filter(p=>p.status==='completed').length})</button><button class="tab-btn" onclick="filterProj('overdue',this)" style="color:var(--danger)">Overdue (${db.projects.filter(p=>dlLeft(p.deadline)<=0&&p.status!=='completed').length})</button></div>
-  <div id="projList">${rProjRows(filter)}</div>`;
+  var items=searchFilter(db.projects,['name','description']);
+  return '<div class="ph"><div><h1>Projects</h1><p>'+db.projects.length+' total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV(\'projects\',[\'id\',\'name\',\'clientId\',\'budget\',\'status\',\'deadline\'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary btn-lg" onclick="modalAddProject()"><i class="fa-solid fa-plus"></i>New Project</button></div></div><div class="tabs"><button class="tab-btn active" onclick="filterProj(\'all\',this)">All ('+db.projects.length+')</button><button class="tab-btn" onclick="filterProj(\'pending\',this)">Pending</button><button class="tab-btn" onclick="filterProj(\'in-progress\',this)">Active</button><button class="tab-btn" onclick="filterProj(\'completed\',this)">Completed</button><button class="tab-btn" onclick="filterProj(\'overdue\',this)" style="color:var(--danger)">Overdue</button></div><div id="projList">'+rProjRows(items)+'</div>';
 }
-function filterProj(s,btn){$$('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');let f;if(s==='overdue')f=db.projects.filter(p=>dlLeft(p.deadline)<=0&&p.status!=='completed');else if(s==='all')f=db.projects;else f=db.projects.filter(p=>p.status===s);$('#projList').innerHTML=rProjRows(searchFilter(f,['name','description']));}
+
+function filterProj(s,btn){
+  $$('.tab-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');
+  var f;if(s==='overdue')f=db.projects.filter(function(p){return dlLeft(p.deadline)<=0&&p.status!=='completed';});else if(s==='all')f=db.projects;else f=db.projects.filter(function(p){return p.status===s;});
+  $('#projList').innerHTML=rProjRows(searchFilter(f,['name','description']));
+}
+
 function rProjRows(items){
-  if(!items.length)return'<div class="card"><div class="card-body" style="text-align:center;padding:36px;color:var(--fg3)">No projects match your filter</div></div>';
-  return`<div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Project</th><th>Client</th><th>Editor</th><th>Budget</th><th>Status</th><th>Deadline</th><th>Actions</th></tr></thead><tbody>${items.map(p=>{const cl=db.clients.find(c=>c.id===p.clientId);const ed=p.assignedEditorId?db.users.find(u=>u.id===p.assignedEditorId):null;const dl=dlLeft(p.deadline);const isOverdue=dl!==null&&dl<=0&&p.status!=='completed';return`<tr ${isOverdue?'style="background:rgba(248,81,73,.03)"':''}><td><div class="cn">${p.name}</div><div class="cs">${(p.description||'').slice(0,50)}</div></td><td>${cl?.name||'—'}</td><td>${ed?`<span style="color:var(--accent)">${ed.name}</span>`:'<span class="text-muted">Unassigned</span>'}</td><td style="font-weight:600">${fmtM(p.budget)}</td><td><span class="badge bg-${p.status==='completed'?'green':p.status==='in-progress'?'blue':'yellow'}">${p.status}</span></td><td>${isOverdue?'<span class="overdue-badge"><i class="fa-solid fa-triangle-exclamation"></i>Overdue</span>':`<span class="text-muted text-sm">${dl!==null?dl+'d left':fmtD(p.deadline)}</span>`}</td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu"><button class="dd-item" onclick="modalEditProject('${p.id}')"><i class="fa-solid fa-pen"></i>Edit</button>${p.status!=='completed'?`<button class="dd-item" onclick="completeProj('${p.id}')"><i class="fa-solid fa-check"></i>Mark Complete</button>`:''}<button class="dd-item danger" onclick="deleteProj('${p.id}')"><i class="fa-solid fa-trash"></i>Delete</button></div></div></td></tr>`;}).join('')}</tbody></table></div></div>`;
+  if(!items.length)return '<div class="card"><div class="card-body" style="text-align:center;padding:36px;color:var(--fg3)">No projects match</div></div>';
+  var rows='';
+  items.forEach(function(p){
+    var cl=db.clients.find(function(c){return c.id===p.clientId;});
+    var ed=p.assignedEditorId?db.users.find(function(u){return u.id===p.assignedEditorId;}):null;
+    var dl=dlLeft(p.deadline);var isOver=dl!==null&&dl<=0&&p.status!=='completed';
+    rows+='<tr'+(isOver?' style="background:rgba(248,81,73,.03)"':'')+'><td><div class="cn">'+p.name+'</div><div class="cs">'+((p.description||'').slice(0,50))+'</div></td><td>'+(cl?cl.name:'\u2014')+'</td><td>'+(ed?'<span style="color:var(--accent)">'+ed.name+'</span>':'<span class="text-muted">Unassigned</span>')+'</td><td style="font-weight:600">'+fmtM(p.budget)+'</td><td><span class="badge bg-'+(p.status==='completed'?'green':p.status==='in-progress'?'blue':'yellow')+'">'+p.status+'</span></td><td>'+(isOver?'<span class="overdue-badge"><i class="fa-solid fa-triangle-exclamation"></i>Overdue</span>':'<span class="text-muted text-sm">'+(dl!==null?dl+'d':fmtD(p.deadline))+'</span>')+'</td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle(\'open\')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu"><button class="dd-item" onclick="modalEditProject(\''+p.id+'\')"><i class="fa-solid fa-pen"></i>Edit</button>'+(p.status!=='completed'?'<button class="dd-item" onclick="completeProj(\''+p.id+'\')"><i class="fa-solid fa-check"></i>Complete</button>':'')+'<button class="dd-item danger" onclick="deleteProj(\''+p.id+'\')"><i class="fa-solid fa-trash"></i>Delete</button></div></div></td></tr>';
+  });
+  return '<div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Project</th><th>Client</th><th>Editor</th><th>Budget</th><th>Status</th><th>Deadline</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
-function modalAddProject(edit=null){
-  const p=edit?db.projects.find(x=>x.id===edit):null;
-  openModal(`<div class="modal-head"><h3>${p?'Edit':'New'} Project</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="pf2"><div class="fg"><label>Project Name *</label><input class="fi" name="name" value="${p?.name||''}" required></div><div class="fg"><label>Description</label><textarea class="fi" name="desc" rows="2">${p?.description||''}</textarea></div><div class="frow"><div class="fg"><label>Client *</label><select class="fi" name="clientId" required><option value="">Select client</option>${db.clients.map(c=>`<option value="${c.id}" ${p?.clientId===c.id?'selected':''}>${c.name} — ${c.company||''}</option>`).join('')}</select></div><div class="fg"><label>Budget (₹) *</label><input class="fi" type="number" name="budget" value="${p?.budget||''}" required min="0"></div></div><div class="frow"><div class="fg"><label>Assign Editor</label><select class="fi" name="editorId"><option value="">Leave unassigned</option>${db.users.filter(u=>u.role==='editor'&&u.approved).map(e=>`<option value="${e.id}" ${p?.assignedEditorId===e.id?'selected':''}>${e.name}</option>`).join('')}</select></div><div class="fg"><label>Deadline</label><input class="fi" type="date" name="deadline" value="${p?.deadline||''}"></div></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveProj('${edit||''}')">${p?'Save Changes':'Create Project'}</button></div>`);
+
+function modalAddProject(editId){
+  var p=editId?db.projects.find(function(x){return x.id===editId;}):null;
+  var clOpts='';db.clients.forEach(function(c){clOpts+='<option value="'+c.id+'"'+(p&&p.clientId===c.id?' selected':'')+'>'+c.name+'</option>';});
+  var edOpts='<option value="">Leave unassigned</option>';db.users.filter(function(u){return u.role==='editor'&&u.approved;}).forEach(function(e){edOpts+='<option value="'+e.id+'"'+(p&&p.assignedEditorId===e.id?' selected':'')+'>'+e.name+'</option>';});
+  openModal('<div class="modal-head"><h3>'+(p?'Edit':'New')+' Project</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="pf2"><div class="fg"><label>Name *</label><input class="fi" name="name" value="'+(p?p.name:'')+'" required></div><div class="fg"><label>Description</label><textarea class="fi" name="desc" rows="2">'+(p?p.description:'')+'</textarea></div><div class="frow"><div class="fg"><label>Client *</label><select class="fi" name="clientId" required><option value="">Select</option>'+clOpts+'</select></div><div class="fg"><label>Budget (\u20B9) *</label><input class="fi" type="number" name="budget" value="'+(p?p.budget:'')+'" required min="0"></div></div><div class="frow"><div class="fg"><label>Editor</label><select class="fi" name="editorId">'+edOpts+'</select></div><div class="fg"><label>Deadline</label><input class="fi" type="date" name="deadline" value="'+(p?p.deadline:'')+'"></div></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveProj(\''+(editId||'')+'\')">'+(p?'Save':'Create')+'</button></div>');
 }
 function modalEditProject(id){modalAddProject(id);}
-async function saveProj(eid){
-  const f=new FormData($('#pf2'));
+
+function saveProj(eid){
+  var f=new FormData($('#pf2'));
   if(!f.get('name')||!f.get('clientId')||!f.get('budget')){toast('error','Error','Name, client, and budget required');return;}
   if(eid){
-    const p=db.projects.find(x=>x.id===eid);const oldEd=p.assignedEditorId;
-    Object.assign(p,{name:f.get('name'),description:f.get('desc'),clientId:f.get('clientId'),budget:+f.get('budget'),assignedEditorId:f.get('editorId')||null,deadline:f.get('deadline')});
-    if(f.get('editorId')&&f.get('editorId')!==oldEd){
-      db.workAssignments.push({id:genId(),projectId:p.id,editorId:f.get('editorId'),description:p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});
-      addNotif(f.get('editorId'),'Assigned',p.name);
-    }
+    var p=db.projects.find(function(x){return x.id===eid;});var oldEd=p.assignedEditorId;
+    p.name=f.get('name');p.description=f.get('desc');p.clientId=f.get('clientId');p.budget=+f.get('budget');p.assignedEditorId=f.get('editorId')||null;p.deadline=f.get('deadline');
+    if(f.get('editorId')&&f.get('editorId')!==oldEd){db.workAssignments.push({id:gid(),projectId:p.id,editorId:f.get('editorId'),description:p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});addNotif(f.get('editorId'),'Assigned',p.name);}
     DB.log('Edit Project',p.name);
   }else{
-    const id=genId();db.projects.push({id,name:f.get('name'),description:f.get('desc'),clientId:f.get('clientId'),budget:+f.get('budget'),assignedEditorId:f.get('editorId')||null,status:'pending',deadline:f.get('deadline'),createdAt:new Date().toISOString()});
-    if(f.get('editorId')){db.workAssignments.push({id:genId(),projectId:id,editorId:f.get('editorId'),description:f.get('desc'),deadline:f.get('deadline'),status:'pending',createdAt:new Date().toISOString()});addNotif(f.get('editorId'),'Assigned',f.get('name'));}
+    var id=gid();db.projects.push({id:id,name:f.get('name'),description:f.get('desc'),clientId:f.get('clientId'),budget:+f.get('budget'),assignedEditorId:f.get('editorId')||null,status:'pending',deadline:f.get('deadline'),createdAt:new Date().toISOString()});
+    if(f.get('editorId')){db.workAssignments.push({id:gid(),projectId:id,editorId:f.get('editorId'),description:f.get('desc'),deadline:f.get('deadline'),status:'pending',createdAt:new Date().toISOString()});addNotif(f.get('editorId'),'Assigned',f.get('name'));}
     DB.log('Add Project',f.get('name'));
   }
-  await DB.save('projects');await DB.save('workAssignments');closeModals();render();toast('success','Done');
+  DB.save('projects');DB.save('workAssignments');closeModals();render();toast('success','Done');
 }
-async function completeProj(id){
-  const p=db.projects.find(x=>x.id===id);if(!p)return;p.status='completed';
-  db.workAssignments.filter(w=>w.projectId===id).forEach(w=>w.status='completed');
-  db.invoices.push({id:genId(),clientId:p.clientId,projectId:p.id,editorId:p.assignedEditorId,amount:p.budget,status:'unpaid',date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});
-  if(p.assignedEditorId)addNotif(p.assignedEditorId,'Project Completed',p.name+' is marked as done');
-  DB.log('Complete',p.name+' → Invoice auto-created');await DB.saveAll();render();toast('success','Completed','Invoice of '+fmtM(p.budget)+' created');
-}
-async function deleteProj(id){openModal(`<div class="modal-head"><h3>Delete Project</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">This will remove the project and all associated assignments and files.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(x=>x.id!=='${id}');db.workAssignments=db.workAssignments.filter(w=>w.projectId!=='${id}');db.files=(db.files||[]).filter(f=>f.projectId!=='${id}');await DB.saveAll();closeModals();render();toast('success','Deleted')">Delete</button></div>`);}
 
-/* ============ ASSIGNMENTS ============ */
+function completeProj(id){
+  var p=db.projects.find(function(x){return x.id===id;});if(!p)return;
+  p.status='completed';
+  db.workAssignments.filter(function(w){return w.projectId===id;}).forEach(function(w){w.status='completed';});
+  db.invoices.push({id:gid(),clientId:p.clientId,projectId:p.id,editorId:p.assignedEditorId,amount:p.budget,status:'unpaid',date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});
+  if(p.assignedEditorId)addNotif(p.assignedEditorId,'Completed',p.name+' is done');
+  DB.log('Complete',p.name);DB.saveAll();render();toast('success','Completed','Invoice created for '+fmtM(p.budget));
+}
+
+function deleteProj(id){
+  openModal('<div class="modal-head"><h3>Delete Project</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Removes project and related data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(function(x){return x.id!==\''+id+'\';});db.workAssignments=db.workAssignments.filter(function(w){return w.projectId!==\''+id+'\';});db.files=(db.files||[]).filter(function(f){return f.projectId!==\''+id+'\';});DB.saveAll();closeModals();render();toast(\'success\',\'Deleted\')">Delete</button></div>');
+}
+
 function pgAssign(){
-  return`<div class="ph"><div><h1>Assignments</h1><p>${db.workAssignments.length} total</p></div></div>
-  <div class="tabs"><button class="tab-btn active" onclick="filterWA('all',this)">All</button><button class="tab-btn" onclick="filterWA('pending',this)">Pending</button><button class="tab-btn" onclick="filterWA('in-progress',this)">In Progress</button><button class="tab-btn" onclick="filterWA('completed',this)">Completed</button></div>
-  <div id="waList">${rWACards(db.workAssignments)}</div>`;
+  return '<div class="ph"><div><h1>Assignments</h1><p>'+db.workAssignments.length+' total</p></div></div><div class="tabs"><button class="tab-btn active" onclick="filterWA(\'all\',this)">All</button><button class="tab-btn" onclick="filterWA(\'pending\',this)">Pending</button><button class="tab-btn" onclick="filterWA(\'in-progress\',this)">In Progress</button><button class="tab-btn" onclick="filterWA(\'completed\',this)">Completed</button></div><div id="waList">'+rWACards(db.workAssignments)+'</div>';
 }
-function filterWA(s,btn){$$('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');$('#waList').innerHTML=rWACards(s==='all'?db.workAssignments:db.workAssignments.filter(w=>w.status===s));}
+function filterWA(s,btn){$$('.tab-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');var f=s==='all'?db.workAssignments:db.workAssignments.filter(function(w){return w.status===s;});$('#waList').innerHTML=rWACards(f);}
+
 function rWACards(items){
-  if(!items.length)return'<div style="text-align:center;padding:48px;color:var(--fg3)">No assignments found</div>';
-  return items.slice().reverse().map(w=>{const p=db.projects.find(x=>x.id===w.projectId);const e=db.users.find(x=>x.id===w.editorId);const dl=dlLeft(w.deadline);const fl=(db.files||[]).filter(f=>f.assignmentId===w.id);const isOverdue=dl!==null&&dl<=0&&w.status!=='completed';return`<div class="wk" ${isOverdue?'style="border-left:3px solid var(--danger)"':''}><div class="wk-head"><div class="wk-title">${p?.name||'Unknown'}</div><div style="display:flex;gap:6px;align-items:center"><span class="badge bg-${w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow'}">${w.status}</span>${isOverdue?'<span class="overdue-badge"><i class="fa-solid fa-triangle-exclamation"></i>Overdue</span>':''}</div></div><div class="wk-desc">${w.description||'No description'}</div><div class="wk-meta"><span><i class="fa-solid fa-user"></i>${e?.name||'Unassigned'}</span><span><i class="fa-solid fa-calendar"></i>${isOverdue?'<span style="color:var(--danger)">Overdue</span>':dl!==null?dl+'d left':fmtD(w.deadline)}</span><span><i class="fa-solid fa-paperclip"></i>${fl.length} file${fl.length!==1?'s':''}</span></div>${w.status!=='completed'?`<div class="wk-actions"><button class="btn btn-sm btn-ghost" onclick="modalCreateInv('${w.projectId}')"><i class="fa-solid fa-file-invoice-dollar"></i>Create Invoice</button></div>`:''}</div>`;}).join('');
+  if(!items.length)return '<div style="text-align:center;padding:48px;color:var(--fg3)">No assignments</div>';
+  var html='';items.slice().reverse().forEach(function(w){
+    var p=db.projects.find(function(x){return x.id===w.projectId;});
+    var e=db.users.find(function(x){return x.id===w.editorId;});
+    var dl=dlLeft(w.deadline);var isOver=dl!==null&&dl<=0&&w.status!=='completed';
+    var fl=(db.files||[]).filter(function(f){return f.assignmentId===w.id;});
+    html+='<div class="wk"'+(isOver?' style="border-left:3px solid var(--danger)"':'')+'><div class="wk-head"><div class="wk-title">'+(p?p.name:'Unknown')+'</div><div style="display:flex;gap:6px"><span class="badge bg-'+(w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow')+'">'+w.status+'</span>'+(isOver?'<span class="overdue-badge"><i class="fa-solid fa-triangle-exclamation"></i>Overdue</span>':'')+'</div></div><div class="wk-desc">'+(w.description||'No description')+'</div><div class="wk-meta"><span><i class="fa-solid fa-user"></i>'+(e?e.name:'Unassigned')+'</span><span><i class="fa-solid fa-calendar"></i>'+(isOver?'<span style="color:var(--danger)">Overdue</span>':dl!==null?dl+'d left':fmtD(w.deadline))+'</span><span><i class="fa-solid fa-paperclip"></i>'+fl.length+' file'+(fl.length!==1?'s':'')+'</span></div>'+(w.status!=='completed'?'<div class="wk-actions"><button class="btn btn-sm btn-ghost" onclick="modalCreateInv(\''+w.projectId+'\')"><i class="fa-solid fa-file-invoice-dollar"></i>Invoice</button></div>':'')+'</div>';
+  });
+  return html;
 }
+
 function modalCreateInv(pid){
-  const p=db.projects.find(x=>x.id===pid);if(!p)return;const cl=db.clients.find(c=>c.id===p.clientId);
-  openModal(`<div class="modal-head"><h3>Create Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div style="padding:10px 14px;background:var(--bg);border-radius:8px;margin-bottom:14px"><strong>${p.name}</strong><br><span class="text-sm text-muted">Client: ${cl?.name||''}</span></div><div class="frow"><div class="fg"><label>Amount (₹) *</label><input class="fi" type="number" id="iAmt" value="${p.budget}" min="0"></div><div class="fg"><label>Due Date</label><input class="fi" type="date" id="iDate" value="${futureD(7)}"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const amt=parseFloat($('#iAmt').value);if(!amt){toast('error','Error','Amount required');return;}db.invoices.push({id:genId(),clientId:'${p.clientId}',projectId:'${pid}',editorId:p.assignedEditorId,amount:amt,status:'unpaid',date:$('#iDate').value||new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Invoice','Created for '+p.name+': '+fmtM(amt));DB.save('invoices');closeModals();render();toast('success','Created','Invoice for '+fmtM(amt))">Create Invoice</button></div>`;
+  var p=db.projects.find(function(x){return x.id===pid;});if(!p)return;
+  var cl=db.clients.find(function(c){return c.id===p.clientId;});
+  openModal('<div class="modal-head"><h3>Create Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div style="padding:10px 14px;background:var(--bg);border-radius:8px;margin-bottom:14px"><strong>'+p.name+'</strong><br><span class="text-sm text-muted">'+(cl?cl.name:'')+'</span></div><div class="frow"><div class="fg"><label>Amount (\u20B9) *</label><input class="fi" type="number" id="iAmt" value="'+p.budget+'" min="0"></div><div class="fg"><label>Due Date</label><input class="fi" type="date" id="iDate" value="'+futureD(7)+'"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="var amt=parseFloat($(\'#iAmt\').value);if(!amt){toast(\'error\',\'Error\',\'Amount required\');return;}db.invoices.push({id:gid(),clientId:\''+p.clientId+'\',projectId:\''+pid+'\',editorId:p.assignedEditorId,amount:amt,status:\'unpaid\',date:$(\'#iDate\').value||new Date().toISOString().split(\'T\')[0],createdAt:new Date().toISOString()});DB.log(\'Invoice\',\''+p.name+': \'+fmtM(amt));DB.save(\'invoices\');closeModals();render();toast(\'success\',\'Created\')">Create</button></div>');
 }
 
-/* ============ INVOICES ============ */
 function pgInv(){
-  const paid=db.invoices.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
-  const unp=db.invoices.filter(i=>i.status==='unpaid').reduce((s,i)=>s+i.amount,0);
-  const unpCount=db.invoices.filter(i=>i.status==='unpaid').length;
-  const items=searchFilter(db.invoices,['id']);
-  return`<div class="ph"><div><h1>Invoices</h1><p>Payment tracking</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('invoices',['id','clientId','projectId','amount','status','date'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalManualInv()"><i class="fa-solid fa-plus"></i>New Invoice</button></div></div>
-  <div class="stats" style="grid-template-columns:1fr 1fr;margin-bottom:18px"><div class="stat"><div class="stat-top"><span class="stat-label">Collected</span><div class="stat-icon si-2"><i class="fa-solid fa-check-circle"></i></div></div><div class="stat-val" style="color:var(--accent2)">${fmtM(paid)}</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Pending</span><div class="stat-icon si-3"><i class="fa-solid fa-clock"></i></div></div><div class="stat-val" style="color:var(--warning)">${fmtM(unp)}</div><div class="stat-sub">${unpCount} unpaid invoice${unpCount!==1?'s':''}</div></div></div>
-  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Invoice</th><th>Client</th><th>Project</th><th>Amount</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(inv=>{const cl=db.clients.find(c=>c.id===inv.clientId);const pr=db.projects.find(p=>p.id===inv.projectId);return`<tr><td style="font-family:'Space Grotesk';font-weight:600">#${inv.id.slice(-5).toUpperCase()}</td><td>${cl?.name||'—'}</td><td class="text-muted">${pr?.name||'—'}</td><td style="font-weight:600">${fmtM(inv.amount)}</td><td class="text-muted">${fmtD(inv.date)}</td><td><span class="badge bg-${inv.status==='paid'?'green':'yellow'}">${inv.status}</span></td><td style="display:flex;gap:4px">${inv.status==='unpaid'?`<button class="btn btn-sm btn-success" onclick="markPaid('${inv.id}')" title="Mark as paid"><i class="fa-solid fa-check"></i> Paid</button>`:''}<button class="btn-icon" onclick="printInvoice('${inv.id}')" title="Print"><i class="fa-solid fa-print"></i></button></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="7">No invoices yet</td></tr>'}</tbody></table></div></div>`;
+  var paid=db.invoices.filter(function(i){return i.status==='paid';}).reduce(function(s,i){return s+i.amount;},0);
+  var unp=db.invoices.filter(function(i){return i.status==='unpaid';}).reduce(function(s,i){return s+i.amount;},0);
+  var unpC=db.invoices.filter(function(i){return i.status==='unpaid';}).length;
+  var items=searchFilter(db.invoices,['id']);
+  var rows='';
+  items.forEach(function(inv){
+    var cl=db.clients.find(function(c){return c.id===inv.clientId;});
+    var pr=db.projects.find(function(p){return p.id===inv.projectId;});
+    var paidBtn=inv.status==='unpaid'?'<button class="btn btn-sm btn-success" onclick="markPaid(\''+inv.id+'\')"><i class="fa-solid fa-check"></i> Paid</button>':'';
+    rows+='<tr><td style="font-family:\'Space Grotesk\';font-weight:600">#'+inv.id.slice(-5).toUpperCase()+'</td><td>'+(cl?cl.name:'\u2014')+'</td><td class="text-muted">'+(pr?pr.name:'\u2014')+'</td><td style="font-weight:600">'+fmtM(inv.amount)+'</td><td class="text-muted">'+fmtD(inv.date)+'</td><td><span class="badge bg-'+(inv.status==='paid'?'green':'yellow')+'">'+inv.status+'</span></td><td style="display:flex;gap:4px">'+paidBtn+'<button class="btn-icon" onclick="printInvoice(\''+inv.id+'\')"><i class="fa-solid fa-print"></i></button></td></tr>';
+  });
+  if(!items.length)rows='<tr class="empty-row"><td colspan="7">No invoices</td></tr>';
+  return '<div class="ph"><div><h1>Invoices</h1><p>Payment tracking</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV(\'invoices\',[\'id\',\'clientId\',\'amount\',\'status\',\'date\'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalManualInv()"><i class="fa-solid fa-plus"></i>New Invoice</button></div></div><div class="stats" style="grid-template-columns:1fr 1fr;margin-bottom:18px"><div class="stat"><div class="stat-top"><span class="stat-label">Collected</span><div class="stat-icon si-2"><i class="fa-solid fa-check-circle"></i></div></div><div class="stat-val" style="color:var(--accent2)">'+fmtM(paid)+'</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Pending</span><div class="stat-icon si-3"><i class="fa-solid fa-clock"></i></div></div><div class="stat-val" style="color:var(--warning)">'+fmtM(unp)+'</div><div class="stat-sub">'+unpC+' unpaid</div></div></div><div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Invoice</th><th>Client</th><th>Project</th><th>Amount</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
+
 function modalManualInv(){
-  openModal(`<div class="modal-head"><h3>New Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Client *</label><select class="fi" id="miCl"><option value="">Select client</option>${db.clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select></div><div class="fg"><label>Project (optional)</label><select class="fi" id="miPr"><option value="">None</option>${db.projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div><div class="frow"><div class="fg"><label>Amount (₹) *</label><input class="fi" type="number" id="miAmt" min="0"></div><div class="fg"><label>Due Date</label><input class="fi" type="date" id="miDate" value="${futureD(7)}"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const cl=$('#miCl').value,amt=parseFloat($('#miAmt').value);if(!cl||!amt){toast('error','Error','Client and amount required');return;}db.invoices.push({id:genId(),clientId:cl,projectId:$('#miPr').value,editorId:null,amount:amt,status:'unpaid',date:$('#miDate').value||new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Invoice','Manual: '+fmtM(amt));DB.save('invoices');closeModals();render();toast('success','Created')">Create</button></div>`);
+  var clOpts='';db.clients.forEach(function(c){clOpts+='<option value="'+c.id+'">'+c.name+'</option>';});
+  var prOpts='<option value="">None</option>';db.projects.forEach(function(p){prOpts+='<option value="'+p.id+'">'+p.name+'</option>';});
+  openModal('<div class="modal-head"><h3>New Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Client *</label><select class="fi" id="miCl"><option value="">Select</option>'+clOpts+'</select></div><div class="fg"><label>Project</label><select class="fi" id="miPr">'+prOpts+'</select></div><div class="frow"><div class="fg"><label>Amount (\u20B9) *</label><input class="fi" type="number" id="miAmt" min="0"></div><div class="fg"><label>Due Date</label><input class="fi" type="date" id="miDate" value="'+futureD(7)+'"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="var cl=$(\'#miCl\').value,amt=parseFloat($(\'#miAmt\').value);if(!cl||!amt){toast(\'error\',\'Error\',\'Client and amount required\');return;}db.invoices.push({id:gid(),clientId:cl,projectId:$(\'#miPr\').value,editorId:null,amount:amt,status:\'unpaid\',date:$(\'#miDate\').value||new Date().toISOString().split(\'T\')[0],createdAt:new Date().toISOString()});DB.log(\'Invoice\',\'Manual: \'+fmtM(amt));DB.save(\'invoices\');closeModals();render();toast(\'success\',\'Created\')">Create</button></div>');
 }
-async function markPaid(id){const inv=db.invoices.find(i=>i.id===id);if(!inv)return;inv.status='paid';DB.log('Payment Received','#'+inv.id.slice(-5).toUpperCase()+' — '+fmtM(inv.amount));await DB.save('invoices');render();toast('success','Payment Recorded',fmtM(inv.amount)+' marked as paid');}
 
-/* ============ ACTIVITY LOG ============ */
+function markPaid(id){
+  var inv=db.invoices.find(function(i){return i.id===id;});if(!inv)return;
+  inv.status='paid';DB.log('Paid','#'+inv.id.slice(-5).toUpperCase()+' \u2014 '+fmtM(inv.amount));DB.save('invoices');render();toast('success','Paid',fmtM(inv.amount)+' recorded');
+}
+
 function pgAct(){
-  const logs=(db.activityLog||[]).slice(0,80);
-  return`<div class="ph"><div><h1>Activity Log</h1><p>${logs.length} entries</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="if(confirm('Clear all activity?')){db.activityLog=[];DB.save('activityLog');render();toast('success','Cleared');}"><i class="fa-solid fa-trash"></i>Clear All</button></div></div>
-  <div class="card"><div class="card-body">${logs.length?logs.map(l=>{const u=db.users.find(x=>x.id===l.userId);return`<div class="log-item"><div class="log-dot"></div><div class="log-text"><strong>${u?.name||'System'}</strong> ${l.details||l.action}</div><div class="log-time">${fmtT(l.createdAt)}</div></div>`;}).join(''):'<div style="text-align:center;padding:36px;color:var(--fg3)">No activity recorded</div>'}</div></div>`;
+  var logs=(db.activityLog||[]).slice(0,80);var html='';
+  logs.forEach(function(l){var u=db.users.find(function(x){return x.id===l.userId;});html+='<div class="log-item"><div class="log-dot"></div><div class="log-text"><strong>'+(u?u.name:'System')+'</strong> '+(l.details||l.action)+'</div><div class="log-time">'+fmtT(l.createdAt)+'</div></div>';});
+  if(!logs.length)html='<div style="text-align:center;padding:36px;color:var(--fg3)">No activity</div>';
+  return '<div class="ph"><div><h1>Activity Log</h1><p>'+logs.length+' entries</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="db.activityLog=[];DB.save(\'activityLog\');render();toast(\'success\',\'Cleared\')"><i class="fa-solid fa-trash"></i>Clear</button></div></div><div class="card"><div class="card-body">'+html+'</div></div>';
 }
 
-/* ============ NOTES ============ */
 function pgNotes(){
-  const my=(db.notes||[]).filter(n=>n.userId===user.id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  return`<div class="ph"><div><h1>Quick Notes</h1><p>${my.length} notes</p></div><div class="ph-actions"><button class="btn btn-primary" onclick="modalAddNote()"><i class="fa-solid fa-plus"></i>New Note</button></div></div>
-  ${my.length?my.map(n=>`<div class="note"><div class="note-head"><div class="note-title">${n.title}</div><button class="btn-icon" onclick="db.notes=db.notes.filter(x=>x.id!=='${n.id}');DB.save('notes');render();toast('success','Deleted')"><i class="fa-solid fa-trash" style="font-size:.75rem"></i></button></div><div class="note-body">${n.content}</div><div class="note-time">${fmtT(n.createdAt)}</div></div>`).join(''):'<div class="card"><div class="card-body" style="text-align:center;padding:48px;color:var(--fg3)"><i class="fa-solid fa-note-sticky" style="font-size:2rem;opacity:.2;display:block;margin-bottom:12px"></i>No notes yet — jot down quick thoughts</div></div>'}`;
+  var my=(db.notes||[]).filter(function(n){return n.userId===user.id;}).sort(function(a,b){return new Date(b.createdAt)-new Date(a.createdAt);});
+  var html='';my.forEach(function(n){html+='<div class="note"><div class="note-head"><div class="note-title">'+n.title+'</div><button class="btn-icon" onclick="db.notes=db.notes.filter(function(x){return x.id!==\''+n.id+'\';});DB.save(\'notes\');render();toast(\'success\',\'Deleted\')"><i class="fa-solid fa-trash" style="font-size:.75rem"></i></button></div><div class="note-body">'+n.content+'</div><div class="note-time">'+fmtT(n.createdAt)+'</div></div>';});
+  if(!my.length)html='<div class="card"><div class="card-body" style="text-align:center;padding:48px;color:var(--fg3)"><i class="fa-solid fa-note-sticky" style="font-size:2rem;opacity:.2;display:block;margin-bottom:12px"></i>No notes yet</div></div>';
+  return '<div class="ph"><div><h1>Quick Notes</h1><p>'+my.length+' notes</p></div><div class="ph-actions"><button class="btn btn-primary" onclick="modalAddNote()"><i class="fa-solid fa-plus"></i>New Note</button></div></div>'+html;
 }
-function modalAddNote(){openModal(`<div class="modal-head"><h3>New Note</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Title</label><input class="fi" id="nTitle" placeholder="Note title"></div><div class="fg"><label>Content</label><textarea class="fi" id="nContent" rows="4" placeholder="Write your note..."></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="if(!db.notes)db.notes=[];const t=$('#nTitle').value.trim()||'Untitled';db.notes.push({id:genId(),userId:user.id,title:t,content:$('#nContent').value||'',createdAt:new Date().toISOString()});DB.save('notes');closeModals();render();toast('success','Saved')">Save Note</button></div>`);}
 
-/* ============ TICKETS (Admin) ============ */
+function modalAddNote(){
+  openModal('<div class="modal-head"><h3>New Note</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Title</label><input class="fi" id="nTitle" placeholder="Note title"></div><div class="fg"><label>Content</label><textarea class="fi" id="nContent" rows="4" placeholder="Write..."></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="if(!db.notes)db.notes=[];db.notes.push({id:gid(),userId:user.id,title:$(\'#nTitle\').value.trim()||\'Untitled\',content:$(\'#nContent\').value||\'\',createdAt:new Date().toISOString()});DB.save(\'notes\');closeModals();render();toast(\'success\',\'Saved\')">Save</button></div>');
+}
+
 function pgTix(){
-  return`<div class="ph"><div><h1>Support Tickets</h1><p>${db.tickets.filter(t=>!t.resolved).length} open</p></div></div>
-  ${db.tickets.length?db.tickets.slice().reverse().map(t=>{const ed=db.users.find(u=>u.id===t.userId);return`<div class="wk" style="border-left:3px solid ${t.priority==='high'?'var(--danger)':t.priority==='medium'?'var(--warning)':'var(--success)'}"><div class="wk-head"><div><div class="wk-title">${t.subject}</div><div class="text-sm text-muted mt-2">From: <strong>${ed?.name||'Unknown'}</strong> — ${fmtT(t.createdAt)}</div></div><div style="display:flex;gap:6px;align-items:center"><span class="badge bg-${t.priority==='high'?'red':t.priority==='medium'?'yellow':'green'}">${t.priority}</span>${t.resolved?'<span class="badge bg-green">Resolved</span>':`<button class="btn btn-sm btn-success" onclick="resolveTix('${t.id}')"><i class="fa-solid fa-check"></i>Resolve</button>`}</div></div><div class="wk-desc">${t.description}</div></div>`;}).join(''):'<div class="card"><div class="card-body" style="text-align:center;padding:48px;color:var(--fg3)"><i class="fa-solid fa-life-ring" style="font-size:2rem;opacity:.2;display:block;margin-bottom:12px"></i>No tickets</div></div>'}`;
+  var html='';db.tickets.slice().reverse().forEach(function(t){
+    var ed=db.users.find(function(u){return u.id===t.userId;});
+    var resolveBtn=t.resolved?'':'<button class="btn btn-sm btn-success" onclick="resolveTix(\''+t.id+'\')"><i class="fa-solid fa-check"></i>Resolve</button>';
+    html+='<div class="wk" style="border-left:3px solid '+(t.priority==='high'?'var(--danger)':t.priority==='medium'?'var(--warning)':'var(--success)')+'"><div class="wk-head"><div><div class="wk-title">'+t.subject+'</div><div class="text-sm text-muted mt-2">From: <strong>'+(ed?ed.name:'Unknown')+'</strong> \u2014 '+fmtT(t.createdAt)+'</div></div><div style="display:flex;gap:6px"><span class="badge bg-'+(t.priority==='high'?'red':t.priority==='medium'?'yellow':'green')+'">'+t.priority+'</span>'+(t.resolved?'<span class="badge bg-green">Resolved</span>':resolveBtn)+'</div></div><div class="wk-desc">'+t.description+'</div></div>';
+  });
+  if(!db.tickets.length)html='<div class="card"><div class="card-body" style="text-align:center;padding:48px;color:var(--fg3)">No tickets</div></div>';
+  return '<div class="ph"><div><h1>Support Tickets</h1><p>'+(db.tickets.filter(function(t){return !t.resolved;}).length)+' open</p></div></div>'+html;
 }
-async function resolveTix(id){const t=db.tickets.find(x=>x.id===id);if(!t)return;t.resolved=true;addNotif(t.userId,'Ticket Resolved','Your ticket "'+t.subject+'" has been resolved');DB.log('Resolve Ticket',t.subject);await DB.save('tickets');render();toast('success','Resolved');}
 
-/* ============ CHAT — FIXED ============ */
+function resolveTix(id){
+  var t=db.tickets.find(function(x){return x.id===id;});if(!t)return;
+  t.resolved=true;addNotif(t.userId,'Resolved',t.subject);DB.log('Resolve',t.subject);DB.save('tickets');render();toast('success','Resolved');
+}
+
 function pgChat(){
-  const ct=db.users.filter(u=>u.id!==user.id);
-  if(!ct.length){
-    return`<div class="ph"><div><h1>Messages</h1></div></div>
-    <div class="card"><div class="card-body" style="text-align:center;padding:60px;color:var(--fg3)">
-      <i class="fa-solid fa-comments" style="font-size:2.5rem;opacity:.15;display:block;margin-bottom:16px"></i>
-      <p style="font-size:1rem;margin-bottom:6px;color:var(--fg2)">No team members to message</p>
-      <p class="text-sm">Add editors to start chatting with your team</p>
-    </div></div>`;
-  }
-  return`<div class="chat-wrap"><div class="chat-list"><div class="chat-list-head"><h3>Messages</h3></div><div class="chat-contacts">${ct.map(c=>{const l=getLM(user.id,c.id);return`<div class="chat-c ${chatWith===c.id?'active':''}" onclick="openChat('${c.id}',this)"><div class="sb-avatar" style="width:34px;height:34px;font-size:.7rem;flex-shrink:0">${c.avatar}</div><div class="chat-c-info"><div class="chat-c-name">${c.name}</div><div class="chat-c-prev">${l?l.text:'No messages yet'}</div></div><div class="chat-c-time">${l?fmtT(l.timestamp):''}</div></div>`;}).join('')}</div></div><div class="chat-main" id="chatMain"><div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--fg3);gap:8px"><i class="fa-solid fa-comments" style="font-size:2.5rem;opacity:.15"></i><p>Select a conversation to start messaging</p></div></div></div>`;
+  var ct=db.users.filter(function(u){return u.id!==user.id;});
+  if(!ct.length)return '<div class="ph"><div><h1>Messages</h1></div></div><div class="card"><div class="card-body" style="text-align:center;padding:60px;color:var(--fg3)"><i class="fa-solid fa-comments" style="font-size:2.5rem;opacity:.15;display:block;margin-bottom:16px"></i><p style="font-size:1rem;margin-bottom:6px;color:var(--fg2)">No team members to message</p><p class="text-sm">Add editors to start chatting</p></div></div>';
+  var contacts='';ct.forEach(function(c){var l=getLM(user.id,c.id);contacts+='<div class="chat-c '+(chatWith===c.id?'active':'')+'" onclick="openChat(\''+c.id+'\',this)"><div class="sb-avatar" style="width:34px;height:34px;font-size:.7rem;flex-shrink:0">'+c.avatar+'</div><div class="chat-c-info"><div class="chat-c-name">'+c.name+'</div><div class="chat-c-prev">'+(l?l.text:'No messages yet')+'</div></div><div class="chat-c-time">'+(l?fmtT(l.timestamp):'')+'</div></div>';});
+  return '<div class="chat-wrap"><div class="chat-list"><div class="chat-list-head"><h3>Messages</h3></div><div class="chat-contacts">'+contacts+'</div></div><div class="chat-main" id="chatMain"><div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--fg3);gap:8px"><i class="fa-solid fa-comments" style="font-size:2.5rem;opacity:.15"></i><p>Select a conversation</p></div></div></div>';
 }
-function getLM(u1,u2){const m=db.messages.filter(x=>(x.senderId===u1&&x.receiverId===u2)||(x.senderId===u2&&x.receiverId===u1)).sort((a,b)=>new Date(b.timestamp)-new Date(a.timestamp));return m[0];}
+
+function getLM(u1,u2){var m=db.messages.filter(function(x){return(x.senderId===u1&&x.receiverId===u2)||(x.senderId===u2&&x.receiverId===u1);}).sort(function(a,b){return new Date(b.timestamp)-new Date(a.timestamp);});return m[0];}
+
 function openChat(cid,el){
-  chatWith=cid;$$('.chat-c').forEach(e=>e.classList.remove('active'));if(el)el.classList.add('active');
-  const other=db.users.find(u=>u.id===cid);if(!other)return;
-  const msgs=db.messages.filter(m=>(m.senderId===user.id&&m.receiverId===cid)||(m.senderId===cid&&m.receiverId===user.id)).sort((a,b)=>new Date(a.timestamp)-new Date(b.timestamp));
-  $('#chatMain').innerHTML=`<div class="chat-top"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${other.avatar}</div><div><div style="font-weight:500;font-size:.88rem">${other.name}</div><div class="text-sm text-muted">${other.role==='admin'?'Admin':'Editor'}</div></div></div><div class="chat-msgs" id="chatMsgs">${msgs.length?msgs.map(m=>`<div class="msg ${m.senderId===user.id?'mine':''}"><div><div class="msg-b">${m.text}</div><div class="msg-t">${fmtT(m.timestamp)}</div></div></div>`).join(''):'<div style="text-align:center;color:var(--fg3);padding:36px"><p>No messages yet</p><p class="text-sm">Say hello to ${other.name}</p></div>'}</div><div class="chat-iw"><input class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMsg('${cid}')"><button class="chat-send" onclick="sendMsg('${cid}')"><i class="fa-solid fa-paper-plane"></i></button></div>`;
-  const el2=$('#chatMsgs');if(el2)el2.scrollTop=el2.scrollHeight;
+  chatWith=cid;$$('.chat-c').forEach(function(e){e.classList.remove('active');});if(el)el.classList.add('active');
+  var other=db.users.find(function(u){return u.id===cid;});if(!other)return;
+  var msgs=db.messages.filter(function(m){return(m.senderId===user.id&&m.receiverId===cid)||(m.senderId===cid&&m.receiverId===user.id);}).sort(function(a,b){return new Date(a.timestamp)-new Date(b.timestamp);});
+  var msgsHtml='';if(msgs.length){msgs.forEach(function(m){msgsHtml+='<div class="msg '+(m.senderId===user.id?'mine':'')+'"><div><div class="msg-b">'+m.text+'</div><div class="msg-t">'+fmtT(m.timestamp)+'</div></div></div>';});}else{msgsHtml='<div style="text-align:center;color:var(--fg3);padding:36px"><p>No messages yet</p><p class="text-sm">Say hello to '+other.name+'</p></div>';}
+  $('#chatMain').innerHTML='<div class="chat-top"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">'+other.avatar+'</div><div><div style="font-weight:500;font-size:.88rem">'+other.name+'</div><div class="text-sm text-muted">'+(other.role==='admin'?'Admin':'Editor')+'</div></div></div><div class="chat-msgs" id="chatMsgs">'+msgsHtml+'</div><div class="chat-iw"><input class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key===\'Enter\')sendMsg(\''+cid+'\')"><button class="chat-send" onclick="sendMsg(\''+cid+'\')"><i class="fa-solid fa-paper-plane"></i></button></div>';
+  var el2=$('#chatMsgs');if(el2)el2.scrollTop=el2.scrollHeight;
 }
-async function sendMsg(rid){const inp=$('#chatInput');if(!inp)return;const txt=inp.value.trim();if(!txt)return;db.messages.push({id:genId(),senderId:user.id,receiverId:rid,text:txt,timestamp:new Date().toISOString()});await DB.save('messages');inp.value='';openChat(rid);}
 
-/* ============ EDITOR DASHBOARD ============ */
+function sendMsg(rid){
+  var inp=$('#chatInput');if(!inp)return;var txt=inp.value.trim();if(!txt)return;
+  db.messages.push({id:gid(),senderId:user.id,receiverId:rid,text:txt,timestamp:new Date().toISOString()});
+  DB.save('messages');inp.value='';openChat(rid);
+}
+
 function pgED(){
-  const my=db.workAssignments.filter(w=>w.editorId===user.id);
-  const pending=my.filter(w=>w.status==='pending').length;
-  const inp=my.filter(w=>w.status==='in-progress').length;
-  const done=my.filter(w=>w.status==='completed').length;
-  const overdue=my.filter(w=>dlLeft(w.deadline)<=0&&w.status!=='completed').length;
-  const recent=my.slice(-3).reverse();
-  let alerts='';
-  if(overdue)alerts+=`<div class="alert-bar alert-danger"><i class="fa-solid fa-triangle-exclamation"></i><span><strong>${overdue} overdue assignment${overdue>1?'s':''}</strong> — needs immediate attention</span></div>`;
-  if(pending)alerts+=`<div class="alert-bar alert-warning"><i class="fa-solid fa-clock"></i><span><strong>${pending} new assignment${pending>1?'s':''}</strong> — accept or reject to proceed</span></div>`;
-
-  return`<div class="ph"><div><h1>Dashboard</h1><p>Welcome back, ${user.name}</p></div></div>
-  ${alerts}
-  <div class="stats stats-primary">
-    <div class="stat"><div class="stat-top"><span class="stat-label">Pending Salary</span><div class="stat-icon si-1"><i class="fa-solid fa-indian-rupee-sign"></i></div></div><div class="stat-val" style="color:var(--accent)">${fmtM(user.pendingSalary||0)}</div><div class="stat-sub">${user.totalWorkTime||0} hours logged</div></div>
-    <div class="stat"><div class="stat-top"><span class="stat-label">Work Summary</span><div class="stat-icon si-4"><i class="fa-solid fa-list-check"></i></div></div><div class="stat-val">${done}<span style="font-size:1rem;color:var(--fg3)"> / ${my.length}</span></div><div class="stat-sub">${pending} pending, ${inp} in progress</div></div>
-  </div>
-  ${recent.length?`<div class="card"><div class="card-head"><h3>Recent Work</h3><button class="btn btn-sm btn-ghost" onclick="navigate('my-work')">View All</button></div><div class="card-body">${recent.map(rEWK).join('')}</div></div>`:''}`;
+  var my=db.workAssignments.filter(function(w){return w.editorId===user.id;});
+  var pending=my.filter(function(w){return w.status==='pending';}).length;
+  var inp2=my.filter(function(w){return w.status==='in-progress';}).length;
+  var done=my.filter(function(w){return w.status==='completed';}).length;
+  var overdue=my.filter(function(w){return dlLeft(w.deadline)<=0&&w.status!=='completed';}).length;
+  var alerts='';
+  if(overdue)alerts+='<div class="alert-bar alert-danger"><i class="fa-solid fa-triangle-exclamation"></i><span><strong>'+overdue+' overdue</strong></span></div>';
+  if(pending)alerts+='<div class="alert-bar alert-warning"><i class="fa-solid fa-clock"></i><span><strong>'+pending+' new assignment'+(pending>1?'s':'')+'</strong> \u2014 accept to proceed</span></div>';
+  var recentHtml='';my.slice(-3).reverse().forEach(function(w){recentHtml+=rEWK(w);});
+  return '<div class="ph"><div><h1>Dashboard</h1><p>Welcome back, '+user.name+'</p></div></div>'+alerts+'<div class="stats stats-p"><div class="stat"><div class="stat-top"><span class="stat-label">Pending Salary</span><div class="stat-icon si-1"><i class="fa-solid fa-indian-rupee-sign"></i></div></div><div class="stat-val" style="color:var(--accent)">'+fmtM(user.pendingSalary||0)+'</div><div class="stat-sub">'+(user.totalWorkTime||0)+' hours logged</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Work Done</span><div class="stat-icon si-4"><i class="fa-solid fa-list-check"></i></div></div><div class="stat-val">'+done+'<span style="font-size:1rem;color:var(--fg3)"> / '+my.length+'</span></div><div class="stat-sub">'+pending+' pending, '+inp2+' active</div></div></div>'+(recentHtml?'<div class="card"><div class="card-head"><h3>Recent Work</h3><button class="btn btn-sm btn-ghost" onclick="navigate(\'my-work\')">View All</button></div><div class="card-body">'+recentHtml+'</div></div>':'');
 }
+
 function rEWK(w){
-  const p=db.projects.find(x=>x.id===w.projectId);const dl=dlLeft(w.deadline);const isOverdue=dl!==null&&dl<=0&&w.status!=='completed';
-  return`<div class="wk" ${isOverdue?'style="border-left:3px solid var(--danger)"':''}><div class="wk-head"><div class="wk-title">${p?.name||'Unknown'}</div><div style="display:flex;gap:6px;align-items:center"><span class="badge bg-${w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow'}">${w.status}</span>${isOverdue?'<span class="overdue-badge"><i class="fa-solid fa-triangle-exclamation"></i>Overdue</span>':''}</div></div><div class="wk-desc">${w.description||'No description'}</div><div class="wk-meta"><span><i class="fa-solid fa-calendar"></i>${isOverdue?'<span style="color:var(--danger)">Overdue</span>':dl!==null?dl+'d left':fmtD(w.deadline)}</span></div>${w.status==='pending'?`<div class="wk-actions"><button class="btn btn-sm btn-primary" onclick="acceptW('${w.id}')"><i class="fa-solid fa-check"></i>Accept</button><button class="btn btn-sm btn-ghost" style="color:var(--danger);border-color:rgba(248,81,73,.2)" onclick="rejectW('${w.id}')"><i class="fa-solid fa-times"></i>Reject</button></div>`:w.status==='in-progress'?`<div class="wk-actions"><button class="btn btn-sm btn-primary" onclick="navigate('submit-work')"><i class="fa-solid fa-cloud-arrow-up"></i>Submit Work</button></div>`:''}</div>`;
+  var p=db.projects.find(function(x){return x.id===w.projectId;});var dl=dlLeft(w.deadline);var isOver=dl!==null&&dl<=0&&w.status!=='completed';
+  var actions='';
+  if(w.status==='pending')actions='<div class="wk-actions"><button class="btn btn-sm btn-primary" onclick="acceptW(\''+w.id+'\')"><i class="fa-solid fa-check"></i>Accept</button><button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="rejectW(\''+w.id+'\')"><i class="fa-solid fa-times"></i>Reject</button></div>';
+  else if(w.status==='in-progress')actions='<div class="wk-actions"><button class="btn btn-sm btn-primary" onclick="navigate(\'submit-work\')"><i class="fa-solid fa-cloud-arrow-up"></i>Submit Work</button></div>';
+  return '<div class="wk"'+(isOver?' style="border-left:3px solid var(--danger)"':'')+'><div class="wk-head"><div class="wk-title">'+(p?p.name:'Unknown')+'</div><div style="display:flex;gap:6px"><span class="badge bg-'+(w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow')+'">'+w.status+'</span>'+(isOver?'<span class="overdue-badge"><i class="fa-solid fa-triangle-exclamation"></i>Overdue</span>':'')+'</div></div><div class="wk-desc">'+(w.description||'')+'</div><div class="wk-meta"><span><i class="fa-solid fa-calendar"></i>'+(isOver?'<span style="color:var(--danger)">Overdue</span>':dl!==null?dl+'d left':fmtD(w.deadline))+'</span></div>'+actions+'</div>';
 }
 
-/* ============ MY WORK ============ */
 function pgMW(){
-  const my=db.workAssignments.filter(w=>w.editorId===user.id);
-  return`<div class="ph"><div><h1>My Work</h1><p>${my.length} assignment${my.length!==1?'s':''}</p></div></div>
-  <div class="tabs"><button class="tab-btn active" onclick="filterMW('all',this)">All</button><button class="tab-btn" onclick="filterMW('pending',this)">Pending</button><button class="tab-btn" onclick="filterMW('in-progress',this)">In Progress</button><button class="tab-btn" onclick="filterMW('completed',this)">Completed</button></div>
-  <div id="mwList">${my.length?my.slice().reverse().map(rEWK).join(''):'<div style="text-align:center;padding:60px;color:var(--fg3)"><i class="fa-solid fa-briefcase" style="font-size:2.5rem;opacity:.15;display:block;margin-bottom:16px"></i><p>No work assigned yet</p><p class="text-sm">The admin will assign projects to you</p></div>'}</div>`;
+  var my=db.workAssignments.filter(function(w){return w.editorId===user.id;});
+  var html='';my.slice().reverse().forEach(function(w){html+=rEWK(w);});
+  if(!my.length)html='<div style="text-align:center;padding:60px;color:var(--fg3)"><i class="fa-solid fa-briefcase" style="font-size:2.5rem;opacity:.15;display:block;margin-bottom:16px"></i><p>No work assigned yet</p></div>';
+  return '<div class="ph"><div><h1>My Work</h1><p>'+my.length+' assignment'+(my.length!==1?'s':'')+'</p></div></div><div class="tabs"><button class="tab-btn active" onclick="filterMW(\'all\',this)">All</button><button class="tab-btn" onclick="filterMW(\'pending\',this)">Pending</button><button class="tab-btn" onclick="filterMW(\'in-progress\',this)">Active</button><button class="tab-btn" onclick="filterMW(\'completed\',this)">Done</button></div><div id="mwList">'+html+'</div>';
 }
-function filterMW(s,btn){$$('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const my=db.workAssignments.filter(w=>w.editorId===user.id);const f=s==='all'?my:my.filter(w=>w.status===s);$('#mwList').innerHTML=f.length?f.slice().reverse().map(rEWK).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">No assignments in this category</div>';}
-async function acceptW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='in-progress';const pn=db.projects.find(p=>p.id===w.projectId)?.name||'';addNotif('u1','Work Accepted',user.name+' started: '+pn);DB.log('Accept',pn);await DB.save('workAssignments');render();toast('success','Accepted','Marked as in-progress');}
-async function rejectW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='rejected';const pn=db.projects.find(p=>p.id===w.projectId)?.name||'';addNotif('u1','Work Rejected',user.name+' rejected: '+pn);DB.log('Reject',pn);await DB.save('workAssignments');render();toast('info','Rejected','Admin has been notified');}
+function filterMW(s,btn){$$('.tab-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');var my=db.workAssignments.filter(function(w){return w.editorId===user.id;});var f=s==='all'?my:my.filter(function(w){return w.status===s;});var html='';f.slice().reverse().forEach(function(w){html+=rEWK(w);});if(!f.length)html='<div style="text-align:center;padding:48px;color:var(--fg3)">None</div>';$('#mwList').innerHTML=html;}
 
-/* ============ SUBMIT WORK ============ */
+function acceptW(id){var w=db.workAssignments.find(function(x){return x.id===id;});if(!w)return;w.status='in-progress';var pn=db.projects.find(function(p){return p.id===w.projectId;});addNotif('u1','Accepted',user.name+' started: '+(pn?pn.name:''));DB.log('Accept',(pn?pn.name:''));DB.save('workAssignments');render();toast('success','Accepted');}
+function rejectW(id){var w=db.workAssignments.find(function(x){return x.id===id;});if(!w)return;w.status='rejected';var pn=db.projects.find(function(p){return p.id===w.projectId;});addNotif('u1','Rejected',user.name+' rejected: '+(pn?pn.name:''));DB.log('Reject',(pn?pn.name:''));DB.save('workAssignments');render();toast('info','Rejected');}
+
 function pgSW(){
-  const inp=db.workAssignments.filter(w=>w.editorId===user.id&&w.status==='in-progress');uploadedFiles=[];
-  return`<div class="ph"><div><h1>Submit Work</h1><p>Upload completed deliverables</p></div></div>
-  ${inp.length?`<div class="card"><div class="card-head"><h3>Select Assignment</h3></div><div class="card-body"><div class="fg"><select class="fi" id="swId">${inp.map(w=>{const p=db.projects.find(x=>x.id===w.projectId);return`<option value="${w.id}">${p?.name||'Unknown'}</option>`;}).join('')}</select></div></div></div>`:'<div class="card"><div class="card-body" style="text-align:center;padding:36px;color:var(--fg3)">No in-progress work to submit</div></div>'}
-  <div class="card mt-4"><div class="card-head"><h3>Upload Files</h3></div><div class="card-body"><div class="upload-zone" onclick="$('#fInput').click()"><i class="fa-solid fa-cloud-arrow-up"></i><p>Click to upload or drag files here</p><span>PNG, JPG, PDF, PSD, AI — Max 50MB per file</span></div><input type="file" id="fInput" multiple accept=".png,.jpg,.jpeg,.pdf,.psd,.ai" style="display:none" onchange="handleFiles(this.files)"><div class="file-list" id="fList"></div></div></div>
-  <div class="card mt-4"><div class="card-head"><h3>Submission Notes</h3></div><div class="card-body"><textarea class="fi" id="swNotes" rows="3" placeholder="Add any notes about the delivered work..."></textarea></div></div>
-  <div class="mt-4"><button class="btn btn-primary btn-lg" onclick="submitWork()"><i class="fa-solid fa-paper-plane"></i>Submit Deliverables</button></div>`;
+  var inp2=db.workAssignments.filter(function(w){return w.editorId===user.id&&w.status==='in-progress';});uploadedFiles=[];
+  var projSel='';inp2.forEach(function(w){var p=db.projects.find(function(x){return x.id===w.projectId;});projSel+='<option value="'+w.id+'">'+(p?p.name:'Unknown')+'</option>';});
+  var projHtml=inp2.length?'<div class="card"><div class="card-head"><h3>Select Assignment</h3></div><div class="card-body"><div class="fg"><select class="fi" id="swId">'+projSel+'</select></div></div></div>':'<div class="card"><div class="card-body" style="text-align:center;padding:36px;color:var(--fg3)">No in-progress work</div></div>';
+  return '<div class="ph"><div><h1>Submit Work</h1></div></div>'+projHtml+'<div class="card mt-4"><div class="card-head"><h3>Upload Files</h3></div><div class="card-body"><div class="upload-zone" onclick="$(\'#fInput\').click()"><i class="fa-solid fa-cloud-arrow-up"></i><p>Click or drag files here</p><span>PNG, JPG, PDF, PSD, AI</span></div><input type="file" id="fInput" multiple accept=".png,.jpg,.jpeg,.pdf,.psd,.ai" style="display:none" onchange="handleFiles(this.files)"><div class="file-list" id="fList"></div></div></div><div class="card mt-4"><div class="card-head"><h3>Notes</h3></div><div class="card-body"><textarea class="fi" id="swNotes" rows="3" placeholder="Notes for admin..."></textarea></div></div><div class="mt-4"><button class="btn btn-primary btn-lg" onclick="submitWork()"><i class="fa-solid fa-paper-plane"></i>Submit</button></div>';
 }
-function handleFiles(files){Array.from(files).forEach(f=>{if(f.size>52428800){toast('error','Too Large',f.name+' exceeds 50MB');return;}uploadedFiles.push({name:f.name,size:f.size,type:f.type});});renderFL();}
-function renderFL(){$('#fList').innerHTML=uploadedFiles.map((f,i)=>`<div class="file-item"><i class="fa-solid fa-file"></i><span class="fn">${f.name}</span><span class="text-muted text-sm">${(f.size/1024).toFixed(0)}KB</span><button class="fr" onclick="uploadedFiles.splice(${i},1);renderFL()"><i class="fa-solid fa-times"></i></button></div>`).join('');}
-async function submitWork(){
-  const wid=$('#swId')?.value;if(!wid){toast('error','Error','Select an assignment');return;}
-  if(!uploadedFiles.length){toast('error','Error','Upload at least one file');return;}
-  const w=db.workAssignments.find(x=>x.id===wid);if(!w)return;
+
+function handleFiles(files){Array.from(files).forEach(function(f){if(f.size>52428800){toast('error','Too Large',f.name);return;}uploadedFiles.push({name:f.name,size:f.size,type:f.type});});renderFL();}
+function renderFL(){var html='';uploadedFiles.forEach(function(f,i){html+='<div class="file-item"><i class="fa-solid fa-file"></i><span class="fn">'+f.name+'</span><span class="text-muted text-sm">'+(f.size/1024).toFixed(0)+'KB</span><button class="fr" onclick="uploadedFiles.splice('+i+',1);renderFL()"><i class="fa-solid fa-times"></i></button></div>';});$('#fList').innerHTML=html;}
+
+function submitWork(){
+  var wid=$('#swId')?$('#swId').value:null;if(!wid){toast('error','Error','Select assignment');return;}
+  if(!uploadedFiles.length){toast('error','Error','Upload files');return;}
+  var w=db.workAssignments.find(function(x){return x.id===wid;});if(!w)return;
   if(!db.files)db.files=[];
-  uploadedFiles.forEach(f=>{db.files.push({id:genId(),assignmentId:wid,projectId:w.projectId,editorId:user.id,name:f.name,size:f.size,type:f.type,uploadedAt:new Date().toISOString()});});
-  w.status='completed';
-  const p=db.projects.find(x=>x.id===w.projectId);
-  if(p)p.status='completed';
-  db.invoices.push({id:genId(),clientId:p?.clientId,projectId:p?.id,editorId:user.id,amount:p?.budget||0,status:'unpaid',date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});
-  addNotif('u1','Work Submitted',user.name+' completed: '+(p?.name||'')+' ('+uploadedFiles.length+' files)');
-  DB.log('Submit',p?.name||'');await DB.saveAll();render();toast('success','Submitted','Admin has been notified');
+  uploadedFiles.forEach(function(f){db.files.push({id:gid(),assignmentId:wid,projectId:w.projectId,editorId:user.id,name:f.name,size:f.size,type:f.type,uploadedAt:new Date().toISOString()});});
+  w.status='completed';var p=db.projects.find(function(x){return x.id===w.projectId;});if(p)p.status='completed';
+  db.invoices.push({id:gid(),clientId:p?p.clientId:'',projectId:p?p.id:'',editorId:user.id,amount:p?p.budget:0,status:'unpaid',date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});
+  addNotif('u1','Work Submitted',user.name+' completed: '+(p?p.name:''));
+  DB.log('Submit',(p?p.name:''));DB.saveAll();render();toast('success','Submitted');
 }
 
-/* ============ MY INVOICES ============ */
 function pgMI(){
-  const my=db.invoices.filter(i=>i.editorId===user.id);
-  const total=my.reduce((s,i)=>s+i.amount,0);
-  const paid=my.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
-  return`<div class="ph"><div><h1>My Invoices</h1><p>${my.length} total — ${fmtM(paid)} collected</p></div></div>
-  <div class="stats" style="grid-template-columns:1fr 1fr;margin-bottom:18px"><div class="stat"><div class="stat-top"><span class="stat-label">Total Value</span><div class="stat-icon si-1"><i class="fa-solid fa-indian-rupee-sign"></i></div></div><div class="stat-val">${fmtM(total)}</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Collected</span><div class="stat-icon si-2"><i class="fa-solid fa-check-circle"></i></div></div><div class="stat-val" style="color:var(--accent2)">${fmtM(paid)}</div><div class="stat-sub">${fmtM(total-paid)} pending</div></div></div>
-  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Invoice</th><th>Project</th><th>Amount</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>${my.length?my.map(inv=>{const pr=db.projects.find(p=>p.id===inv.projectId);return`<tr><td style="font-family:'Space Grotesk';font-weight:600">#${inv.id.slice(-5).toUpperCase()}</td><td>${pr?.name||'—'}</td><td style="font-weight:600">${fmtM(inv.amount)}</td><td class="text-muted">${fmtD(inv.date)}</td><td><span class="badge bg-${inv.status==='paid'?'green':'yellow'}">${inv.status}</span></td><td><button class="btn-icon" onclick="printInvoice('${inv.id}')" title="Print"><i class="fa-solid fa-print"></i></button></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="6">No invoices yet</td></tr>'}</tbody></table></div></div>`;
+  var my=db.invoices.filter(function(i){return i.editorId===user.id;});
+  var total=my.reduce(function(s,i){return s+i.amount;},0);var paid=my.filter(function(i){return i.status==='paid';}).reduce(function(s,i){return s+i.amount;},0);
+  var rows='';my.forEach(function(inv){var pr=db.projects.find(function(p){return p.id===inv.projectId;});rows+='<tr><td style="font-family:\'Space Grotesk\';font-weight:600">#'+inv.id.slice(-5).toUpperCase()+'</td><td>'+(pr?pr.name:'\u2014')+'</td><td style="font-weight:600">'+fmtM(inv.amount)+'</td><td class="text-muted">'+fmtD(inv.date)+'</td><td><span class="badge bg-'+(inv.status==='paid'?'green':'yellow')+'">'+inv.status+'</span></td><td><button class="btn-icon" onclick="printInvoice(\''+inv.id+'\')"><i class="fa-solid fa-print"></i></button></td></tr>';});
+  if(!my.length)rows='<tr class="empty-row"><td colspan="6">No invoices</td></tr>';
+  return '<div class="ph"><div><h1>My Invoices</h1><p>'+my.length+' total \u2014 '+fmtM(paid)+' collected</p></div></div><div class="stats" style="grid-template-columns:1fr 1fr;margin-bottom:18px"><div class="stat"><div class="stat-top"><span class="stat-label">Total</span><div class="stat-icon si-1"><i class="fa-solid fa-indian-rupee-sign"></i></div></div><div class="stat-val">'+fmtM(total)+'</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Collected</span><div class="stat-icon si-2"><i class="fa-solid fa-check-circle"></i></div></div><div class="stat-val" style="color:var(--accent2)">'+fmtM(paid)+'</div><div class="stat-sub">'+fmtM(total-paid)+' pending</div></div></div><div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Invoice</th><th>Project</th><th>Amount</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
 
-/* ============ SUPPORT ============ */
 function pgSup(){
-  const my=db.tickets.filter(t=>t.userId===user.id);
-  return`<div class="ph"><div><h1>Get Help</h1><p>Submit a support ticket</p></div></div>
-  <div class="card"><div class="card-head"><h3>New Ticket</h3></div><div class="card-body"><div class="fg"><label>Subject *</label><input class="fi" id="tSubj" placeholder="Brief description of your issue"></div><div class="frow"><div class="fg"><label>Priority</label><select class="fi" id="tPri"><option value="low">Low — General question</option><option value="medium" selected>Medium — Need help soon</option><option value="high">High — Blocking my work</option></select></div><div class="fg"></div></div><div class="fg"><label>Description *</label><textarea class="fi" id="tDesc" rows="4" placeholder="Describe your issue in detail..."></textarea></div><button class="btn btn-primary" onclick="submitTicket()"><i class="fa-solid fa-paper-plane"></i>Submit Ticket</button></div></div>
-  ${my.length?`<div class="card mt-4"><div class="card-head"><h3>My Tickets (${my.length})</h3></div><div class="card-body">${my.slice().reverse().map(t=>`<div class="wk" style="border-left:3px solid ${t.priority==='high'?'var(--danger)':t.priority==='medium'?'var(--warning)':'var(--success)'}"><div class="wk-head"><div class="wk-title">${t.subject}</div><div style="display:flex;gap:6px"><span class="badge bg-${t.priority==='high'?'red':t.priority==='medium'?'yellow':'green'}">${t.priority}</span>${t.resolved?'<span class="badge bg-green">Resolved</span>':'<span class="badge bg-yellow">Open</span>'}</div></div><div class="wk-desc">${t.description}</div><div class="text-sm text-muted">${fmtT(t.createdAt)}</div></div>`).join('')}</div></div>`:''}`;
-}
-function submitTicket(){
-  const s=$('#tSubj').value.trim(),p=$('#tPri').value,d=$('#tDesc').value.trim();
-  if(!s||!d){toast('error','Error','Subject and description are required');return;}
-  db.tickets.push({id:genId(),userId:user.id,subject:s,priority:p,description:d,resolved:false,createdAt:new Date().toISOString()});
-  addNotif('u1','New Ticket',s+' ('+p+' priority)');
-  DB.log('Ticket',s);DB.save('tickets');render();toast('success','Sent','Admin will respond shortly');
+  var my=db.tickets.filter(function(t){return t.userId===user.id;});
+  var tixHtml='';my.slice().reverse().forEach(function(t){tixHtml+='<div class="wk" style="border-left:3px solid '+(t.priority==='high'?'var(--danger)':t.priority==='medium'?'var(--warning)':'var(--success')+'')+'"><div class="wk-head"><div class="wk-title">'+t.subject+'</div><div style="display:flex;gap:6px"><span class="badge bg-'+(t.priority==='high'?'red':t.priority==='medium'?'yellow':'green')+'">'+t.priority+'</span>'+(t.resolved?'<span class="badge bg-green">Resolved</span>':'<span class="badge bg-yellow">Open</span>')+'</div></div><div class="wk-desc">'+t.description+'</div><div class="text-sm text-muted">'+fmtT(t.createdAt)+'</div></div>';});
+  return '<div class="ph"><div><h1>Get Help</h1></div></div><div class="card"><div class="card-head"><h3>New Ticket</h3></div><div class="card-body"><div class="fg"><label>Subject *</label><input class="fi" id="tSubj"></div><div class="fg"><label>Priority</label><select class="fi" id="tPri"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div><div class="fg"><label>Description *</label><textarea class="fi" id="tDesc" rows="4"></textarea></div><button class="btn btn-primary" onclick="var s=$(\'#tSubj\').value.trim(),d=$(\'#tDesc\').value.trim();if(!s||!d){toast(\'error\',\'Error\',\'Fill all fields\');return;}db.tickets.push({id:gid(),userId:user.id,subject:s,priority:$(\'#tPri\').value,description:d,resolved:false,createdAt:new Date().toISOString()});addNotif(\'u1\',\'Ticket\',s);DB.log(\'Ticket\',s);DB.save(\'tickets\');render();toast(\'success\',\'Sent\')"><i class="fa-solid fa-paper-plane"></i>Submit</button></div></div>'+(my.length?'<div class="card mt-4"><div class="card-head"><h3>My Tickets</h3></div><div class="card-body">'+tixHtml+'</div></div>':'');
 }
 
-/* ============ PROFILE ============ */
 function pgProf(){
-  return`<div class="ph"><div><h1>Settings</h1><p>Manage your account</p></div></div>
-  <div class="card"><div class="card-head"><h3>Profile Information</h3></div><div class="card-body"><form id="profileForm"><div class="frow"><div class="fg"><label>Name</label><input class="fi" value="${user.name}" ${user.role==='admin'?'readonly':''} id="pName"></div><div class="fg"><label>Email</label><input class="fi" value="${user.email}" readonly style="opacity:.6"><p class="text-sm text-muted mt-2">Email cannot be changed</p></div></div><div class="fg"><label>Phone</label><input class="fi" value="${user.phone||''}" id="pPhone" placeholder="Your phone number"></div>${user.role==='editor'?`<div class="fg"><label>Portfolio URL</label><input class="fi" value="${user.portfolio||''}" id="pPort" placeholder="https://..."></div><div class="fg"><label>Bio</label><textarea class="fi" id="pBio" rows="3" placeholder="Tell us about yourself...">${user.bio||''}</textarea></div>`:''}<button type="submit" class="btn btn-primary mt-4"><i class="fa-solid fa-save"></i>Save Changes</button></form></div></div>
-  <div class="card mt-4"><div class="card-head"><h3>Change Password</h3></div><div class="card-body"><form id="pwForm"><div class="fg"><label>Current Password *</label><input class="fi" type="password" id="pwC" required></div><div class="frow"><div class="fg"><label>New Password *</label><input class="fi" type="password" id="pwN" required minlength="4"></div><div class="fg"><label>Confirm New *</label><input class="fi" type="password" id="pwF" required></div></div><button type="submit" class="btn btn-primary mt-4"><i class="fa-solid fa-key"></i>Update Password</button></form></div></div>
-  <div class="card mt-4"><div class="card-head"><h3>Appearance</h3></div><div class="card-body"><div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-weight:500">Theme</div><div class="text-sm text-muted">Switch between dark and light mode</div></div><button class="btn btn-ghost" onclick="toggleTheme();render()"><i class="fa-solid ${document.documentElement.getAttribute('data-theme')==='dark'?'fa-sun':'fa-moon'}"></i>${document.documentElement.getAttribute('data-theme')==='dark'?'Light Mode':'Dark Mode'}</button></div></div></div>
-  ${user.role==='admin'?`<div class="card mt-4" style="border-color:rgba(248,81,73,.2)"><div class="card-head"><h3 style="color:var(--danger)">Danger Zone</h3></div><div class="card-body"><p class="text-muted mb-4">Permanently reset all data. This cannot be undone.</p><button class="btn btn-danger" onclick="openModal('<div class=\\'modal-head\\'><h3 style=\\'color:var(--danger)\\'>Reset All Data</h3><button class=\\'modal-close\\' onclick=\\'closeModals()\\'>&times;</button></div><div class=\\'modal-body\\'><p class=\\'text-muted\\'>This will delete all clients, projects, invoices, editors, and settings.</p><p style=\\'color:var(--danger);margin-top:12px;font-weight:600\\'>Type RESET to confirm.</p><input class=\\'fi mt-4\\' id=\\'resetC\\' placeholder=\\'RESET\\'></div><div class=\\'modal-foot\\'><button class=\\'btn btn-ghost\\' onclick=\\'closeModals()\\'>Cancel</button><button class=\\'btn btn-danger\\' onclick=\\'if($(\\\"#resetC\\\").value===\"RESET\"){localStorage.removeItem(CACHE_KEY);db=null;init();closeModals();toast(\"success\",\"Reset\",\"All data cleared\")}else{toast(\"error\",\"Error\",\"Type RESET to confirm\")}\\'>Reset Everything</button></div>')"><i class="fa-solid fa-trash"></i>Reset All Data</button></div></div>`:''}`;
+  var themeIcon=document.documentElement.getAttribute('data-theme')==='dark'?'fa-sun':'fa-moon';
+  var themeLabel=document.documentElement.getAttribute('data-theme')==='dark'?'Light Mode':'Dark Mode';
+  var editorFields=user.role==='editor'?'<div class="fg"><label>Portfolio URL</label><input class="fi" value="'+(user.portfolio||'')+'" id="pPort"></div><div class="fg"><label>Bio</label><textarea class="fi" id="pBio" rows="3">'+(user.bio||'')+'</textarea></div>':'';
+  var dangerZone=user.role==='admin'?'<div class="card mt-4" style="border-color:rgba(248,81,73,.2)"><div class="card-head"><h3 style="color:var(--danger)">Danger Zone</h3></div><div class="card-body"><p class="text-muted mb-4">Permanently reset all data.</p><button class="btn btn-danger" onclick="openModal(\'<div class=\\\\\'modal-head\\\\\'><h3 style=\\\\\'color:var(--danger)\\\\\'>Reset All</h3><button class=\\\\\'modal-close\\\\\' onclick=\\\\\'closeModals()\\\\\'>\\&times;</button></div><div class=\\\\\'modal-body\\\\\'><p class=\\\\\'text-muted\\\\\'>Type RESET to confirm.</p><input class=\\\\\'fi mt-4\\\\\' id=\\\\\'resetC\\\\\'></div><div class=\\\\\'modal-foot\\\\\'><button class=\\\\\'btn btn-ghost\\\\\' onclick=\\\\\'closeModals()\\\\\'>Cancel</button><button class=\\\\\'btn btn-danger\\\\\' onclick=\\\\\'if($(\\\\\"#resetC\\\\\").value===\\\"RESET\\\"){localStorage.removeItem(CACHE_KEY);db=null;init();closeModals();toast(\\\"success\\\",\\\"Reset\\\")}else{toast(\\\"error\\\",\\\"Type RESET\\\")}\\\\\'>Reset</button></div>\')"><i class="fa-solid fa-trash"></i>Reset All Data</button></div></div>':'';
+  return '<div class="ph"><div><h1>Settings</h1></div></div><div class="card"><div class="card-head"><h3>Profile</h3></div><div class="card-body"><form id="profileForm"><div class="frow"><div class="fg"><label>Name</label><input class="fi" value="'+user.name+'" '+(user.role==='admin'?'readonly':'')+' id="pName"></div><div class="fg"><label>Email</label><input class="fi" value="'+user.email+'" readonly style="opacity:.6"></div></div><div class="fg"><label>Phone</label><input class="fi" value="'+(user.phone||'')+'" id="pPhone"></div>'+editorFields+'<button type="submit" class="btn btn-primary mt-4"><i class="fa-solid fa-save"></i>Save</button></form></div></div><div class="card mt-4"><div class="card-head"><h3>Change Password</h3></div><div class="card-body"><form id="pwForm"><div class="fg"><label>Current *</label><input class="fi" type="password" id="pwC" required></div><div class="frow"><div class="fg"><label>New *</label><input class="fi" type="password" id="pwN" required minlength="4"></div><div class="fg"><label>Confirm *</label><input class="fi" type="password" id="pwF" required></div></div><button type="submit" class="btn btn-primary mt-4"><i class="fa-solid fa-key"></i>Update</button></form></div></div><div class="card mt-4"><div class="card-head"><h3>Appearance</h3></div><div class="card-body"><div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-weight:500">Theme</div><div class="text-sm text-muted">Switch dark/light mode</div></div><button class="btn btn-ghost" onclick="toggleTheme();render()"><i class="fa-solid '+themeIcon+'"></i>'+themeLabel+'</button></div></div></div>'+dangerZone;
 }
-async function saveProfile(){const u=db.users.find(x=>x.id===user.id);if(!u)return;u.phone=$('#pPhone')?.value||'';if($('#pPort'))u.portfolio=$('#pPort').value;if($('#pBio'))u.bio=$('#pBio').value;u.avatar=ini(u.name);user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));DB.log('Profile','Updated profile');await DB.save('users');render();toast('success','Saved','Profile updated');}
-async function changePw(){const c=$('#pwC').value,n=$('#pwN').value,f=$('#pwF').value;if(c!==user.password){toast('error','Wrong Password','Current password is incorrect');return;}if(n!==f){toast('error','Mismatch','New passwords don\'t match');return;}if(n.length<4){toast('error','Too Short','Use at least 4 characters');return;}const u=db.users.find(x=>x.id===user.id);u.password=n;user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));await DB.save('users');$('#pwForm').reset();toast('success','Updated','Password changed successfully');}
 
-/* ============ LOGIN PAGE — REDESIGNED ============ */
+function saveProfile(){var u=db.users.find(function(x){return x.id===user.id;});if(!u)return;u.phone=$('#pPhone')?$('#pPhone').value:'';if($('#pPort'))u.portfolio=$('#pPort').value;if($('#pBio'))u.bio=$('#pBio').value;u.avatar=ini(u.name);user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));DB.log('Profile','Updated');DB.save('users');render();toast('success','Saved');}
+
+function changePw(){var c=$('#pwC').value,n=$('#pwN').value,f=$('#pwF').value;if(c!==user.password){toast('error','Wrong','Current password incorrect');return;}if(n!==f){toast('error','Mismatch','Passwords don\'t match');return;}if(n.length<4){toast('error','Short','Min 4 characters');return;}var u=db.users.find(function(x){return x.id===user.id;});u.password=n;user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));DB.save('users');$('#pwForm').reset();toast('success','Updated');}
+
 function renderLogin(){
-  $('#app').innerHTML=`<div class="login"><div class="login-left"><div class="login-box"><div class="login-logo"><div class="sb-logo-icon">T</div><span>Typixel</span></div><p class="tagline">Built for Designers Who Handle Multiple Clients</p><h2>Sign in to your studio</h2><p class="sub">Manage clients, projects, and payments in one place</p><form onsubmit="event.preventDefault();login($('#lE').value,$('#lP').value)"><div class="fg"><label>Email</label><input class="fi" type="email" id="lE" placeholder="you@example.com" required></div><div class="fg"><label>Password</label><input class="fi" type="password" id="lP" placeholder="Enter your password" required></div><button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center"><i class="fa-solid fa-right-to-bracket"></i>Sign In</button></form><div class="login-divider">or</div><button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="modalJoin()"><i class="fa-solid fa-user-plus"></i>Join as an Editor</button></div></div><div class="login-right"><div class="login-right-content"><div class="hero-badge"><i class="fa-solid fa-bolt"></i>Freelance Design Studio OS</div><h1>Stop juggling spreadsheets.<br>Start <em>delivering.</em></h1><p class="hero-desc">Typixel replaces your scattered Google Sheets, WhatsApp chats, and sticky notes with one organized workspace built specifically for freelance designers.</p><div class="trust-row"><div class="trust-num"><div class="val">${(db?.projects?.length||4)+126}</div><div class="lbl">Projects Managed</div></div><div class="trust-sep"></div><div class="trust-num"><div class="val">${(db?.clients?.length||3)+47}</div><div class="lbl">Active Clients</div></div><div class="trust-sep"></div><div class="trust-num"><div class="val">${fmtM((db?.invoices?.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0)||80000)+2400000).replace('₹','')}</div><div class="lbl">Revenue Tracked</div></div></div><div class="login-features"><div class="login-feat"><i class="fa-solid fa-users"></i><span>Client & project management</span></div><div class="login-feat"><i class="fa-solid fa-file-invoice-dollar"></i><span>Invoice creation & tracking</span></div><div class="login-feat"><i class="fa-solid fa-clipboard-list"></i><span>Work assignment & deadlines</span></div><div class="login-feat"><i class="fa-solid fa-comments"></i><span>Team chat & notifications</span></div></div></div></div></div>`;
-}
-function modalJoin(){
-  openModal(`<div class="modal-head"><h3>Join as an Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted mb-4">Apply to join the design team. Your account will need admin approval before you can access projects.</p><form id="jf"><div class="frow"><div class="fg"><label>Full Name *</label><input class="fi" name="name" required placeholder="Your name"></div><div class="fg"><label>Email *</label><input class="fi" type="email" name="email" required placeholder="you@example.com"></div></div><div class="fg"><label>Password *</label><input class="fi" type="password" name="password" required minlength="4" placeholder="Min 4 characters"></div><div class="fg"><label>Portfolio URL</label><input class="fi" name="portfolio" placeholder="https://dribbble.com/..."></div><div class="fg"><label>About You</label><textarea class="fi" name="bio" rows="3" placeholder="Your skills, experience, tools..."></textarea></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const f=new FormData($('#jf'));register(f.get('name'),f.get('email'),f.get('password'),f.get('portfolio'),f.get('bio'))">Submit Application</button></div>`);
+  var projCount=(db?db.projects.length:0)+126;var clientCount=(db?db.clients.length:0)+47;var revVal=(db?db.invoices.filter(function(i){return i.status==='paid';}).reduce(function(s,i){return s+i.amount;},0):80000)+2400000;
+  return '<div class="login"><div class="login-left"><div class="login-box"><div class="login-logo"><div class="sb-logo-icon">T</div><span>Typixel</span></div><p class="tagline">Built for Designers Who Handle Multiple Clients</p><h2>Sign in to your studio</h2><p class="sub">Manage clients, projects, and payments in one place</p><form onsubmit="event.preventDefault();login($(\'#lE\').value,$(\'#lP\').value)"><div class="fg"><label>Email</label><input class="fi" type="email" id="lE" placeholder="you@example.com" required></div><div class="fg"><label>Password</label><input class="fi" type="password" id="lP" placeholder="Enter password" required></div><button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center"><i class="fa-solid fa-right-to-bracket"></i>Sign In</button></form><div class="login-divider">or</div><button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="modalJoin()"><i class="fa-solid fa-user-plus"></i>Join as an Editor</button></div></div><div class="login-right"><div class="login-right-content"><div class="hero-badge"><i class="fa-solid fa-bolt"></i>Freelance Design Studio OS</div><h1>Stop juggling spreadsheets.<br>Start <em>delivering.</em></h1><p class="hero-desc">Typixel replaces your scattered Google Sheets, WhatsApp chats, and sticky notes with one organized workspace built for freelance designers.</p><div class="trust-row"><div class="trust-num"><div class="val">'+projCount+'</div><div class="lbl">Projects Managed</div></div><div class="trust-sep"></div><div class="trust-num"><div class="val">'+clientCount+'</div><div class="lbl">Active Clients</div></div><div class="trust-sep"></div><div class="trust-num"><div class="val">'+fmtM(revVal).replace('\u20B9','')+'</div><div class="lbl">Revenue Tracked</div></div></div><div class="login-features"><div class="login-feat"><i class="fa-solid fa-users"></i><span>Client management</span></div><div class="login-feat"><i class="fa-solid fa-file-invoice-dollar"></i><span>Invoice tracking</span></div><div class="login-feat"><i class="fa-solid fa-clipboard-list"></i><span>Work assignments</span></div><div class="login-feat"><i class="fa-solid fa-comments"></i><span>Team chat</span></div></div></div></div></div>';
 }
 
-/* ============ GLOBAL EVENTS ============ */
-document.addEventListener('dragover',e=>e.preventDefault());
-document.addEventListener('drop',e=>{e.preventDefault();if(e.target.closest('.upload-zone'))handleFiles(e.dataTransfer.files);});
-document.addEventListener('click',e=>{
-  if(!e.target.closest('.dropdown'))$$('.dd-menu.open').forEach(m=>m.classList.remove('open'));
-  if(!e.target.closest('.notif-panel')&&!e.target.closest('[onclick*="toggleNotif"]')){const p=$('#notifPanel');if(p)p.classList.remove('open');}
+function modalJoin(){
+  openModal('<div class="modal-head"><h3>Join as an Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted mb-4">Your account will need admin approval before you can access projects.</p><form id="jf"><div class="frow"><div class="fg"><label>Full Name *</label><input class="fi" name="name" required></div><div class="fg"><label>Email *</label><input class="fi" type="email" name="email" required></div></div><div class="fg"><label>Password *</label><input class="fi" type="password" name="password" required minlength="4"></div><div class="fg"><label>Portfolio URL</label><input class="fi" name="portfolio" placeholder="https://..."></div><div class="fg"><label>About You</label><textarea class="fi" name="bio" rows="3"></textarea></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="var f=new FormData($(\'#jf\'));register(f.get(\'name\'),f.get(\'email\'),f.get(\'password\'),f.get(\'portfolio\'),f.get(\'bio\'))">Submit Application</button></div>');
+}
+
+document.addEventListener('dragover',function(e){e.preventDefault();});
+document.addEventListener('drop',function(e){e.preventDefault();if(e.target.closest('.upload-zone'))handleFiles(e.dataTransfer.files);});
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.dropdown'))$$('.dd-menu.open').forEach(function(m){m.classList.remove('open');});
+  if(!e.target.closest('.notif-panel')&&!e.target.closest('[onclick*="toggleNotif"]')){var p=$('#notifPanel');if(p)p.classList.remove('open');}
 });
 
-/* ============ INIT ============ */
-async function init(){
-  db=await DB.load();
-  if(user){const f=db.users.find(u=>u.id===user.id);if(f){user=f;sessionStorage.setItem(AUTH_KEY,JSON.stringify(f));}else{user=null;sessionStorage.removeItem(AUTH_KEY);}}
-  render();
+function init(){
+  DB.load().then(function(data){
+    db=data;
+    if(user){var f=db.users.find(function(u){return u.id===user.id;});if(f){user=f;sessionStorage.setItem(AUTH_KEY,JSON.stringify(f));}else{user=null;sessionStorage.removeItem(AUTH_KEY);}}
+    render();
+  });
 }
 init();
 </script>
