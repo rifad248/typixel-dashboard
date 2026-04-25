@@ -7,34 +7,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-/* ── Theme Variables ── */
 :root{
   --bg:#0d1117;--bg2:#161b22;--bg3:#1c2333;--sidebar:#010409;
   --accent:#FF6B35;--accent2:#00C9A7;--accent-glow:rgba(255,107,53,.12);
   --success:#2EA043;--warning:#D29922;--danger:#F85149;--info:#58A6FF;
   --fg:#E6EDF3;--fg2:#8B949E;--fg3:#484F58;
   --border:#30363D;--border2:#21262D;
-  --shadow:0 2px 8px rgba(0,0,0,.4);
-  --radius:10px;
+  --shadow:0 2px 8px rgba(0,0,0,.4);--radius:10px;
 }
 [data-theme="light"]{
   --bg:#f0f2f5;--bg2:#ffffff;--bg3:#e8eaed;--sidebar:#1a1d23;
   --accent:#E05520;--accent2:#009E82;--accent-glow:rgba(224,85,32,.08);
   --fg:#1f2937;--fg2:#6b7280;--fg3:#9ca3af;
-  --border:#d1d5db;--border2:#e5e7eb;
-  --shadow:0 2px 8px rgba(0,0,0,.08);
+  --border:#d1d5db;--border2:#e5e7eb;--shadow:0 2px 8px rgba(0,0,0,.08);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);overflow:hidden;height:100vh;transition:background .3s,color .3s}
 h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--fg3);border-radius:3px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--fg3);border-radius:3px}
 .app{display:flex;height:100vh}
 .sidebar{width:248px;background:var(--sidebar);border-right:1px solid var(--border2);display:flex;flex-direction:column;flex-shrink:0;z-index:50;transition:transform .3s}
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .topbar{height:54px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;transition:background .3s}
 .page{flex:1;overflow-y:auto;padding:24px;transition:background .3s}
-/* Sidebar */
 .sb-logo{padding:18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border2)}
 .sb-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),#ff9a5c);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;font-size:1rem;color:#fff}
 .sb-logo span{font-family:'Space Grotesk';font-weight:700;font-size:1.15rem;color:var(--fg)}
@@ -50,7 +45,6 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
 .sb-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.68rem;color:#fff;flex-shrink:0}
 .sb-user-name{font-weight:600;font-size:.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sb-user-role{font-size:.68rem;color:var(--fg2)}
-/* Topbar */
 .topbar-left{display:flex;align-items:center;gap:14px}
 .topbar-title{font-family:'Space Grotesk';font-weight:600;font-size:1rem}
 .topbar-search{display:flex;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:6px 10px;width:240px;transition:border-color .2s}
@@ -61,32 +55,26 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
 .tb-btn{width:34px;height:34px;border-radius:7px;border:1px solid var(--border);background:var(--bg);color:var(--fg2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;font-size:.85rem;position:relative}
 .tb-btn:hover{background:var(--bg3);color:var(--fg);border-color:var(--fg3)}
 .tb-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--danger);border-radius:50%;border:2px solid var(--bg2)}
-.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--success);margin-right:6px;flex-shrink:0}
-.sync-dot.off{background:var(--danger)}
-.sync-dot.syncing{background:var(--warning);animation:pulse 1s infinite}
+.sync-dot{width:6px;height:6px;border-radius:50%;margin-right:6px;flex-shrink:0}
+.sync-dot.on{background:var(--success)}.sync-dot.off{background:var(--danger)}.sync-dot.ing{background:var(--warning);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-/* Page Header */
 .ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;gap:12px;flex-wrap:wrap}
 .ph h1{font-size:1.5rem;font-weight:700}
 .ph p{color:var(--fg2);font-size:.88rem;margin-top:3px}
 .ph-actions{display:flex;gap:7px;flex-wrap:wrap}
-/* Buttons */
 .btn{padding:7px 16px;border-radius:7px;font-weight:500;font-size:.83rem;border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .12s;font-family:inherit;white-space:nowrap}
 .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 .btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn-ghost{background:transparent;color:var(--fg2);border-color:var(--border)}
 .btn-ghost:hover{background:var(--bg3);color:var(--fg)}
-.btn-success{background:var(--success);color:#fff}
-.btn-danger{background:var(--danger);color:#fff}
+.btn-success{background:var(--success);color:#fff}.btn-danger{background:var(--danger);color:#fff}
 .btn-sm{padding:4px 10px;font-size:.76rem}
 .btn-icon{width:30px;height:30px;padding:0;justify-content:center;border-radius:6px;background:transparent;color:var(--fg2);border:1px solid transparent}
 .btn-icon:hover{background:var(--bg3);color:var(--fg)}
-/* Cards */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:background .3s,border-color .3s}
 .card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
 .card-head h3{font-size:.95rem;font-weight:600}
 .card-body{padding:18px}
-/* Stats */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
 .stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:all .2s;position:relative;overflow:hidden}
 .stat::after{content:'';position:absolute;top:0;right:0;width:70px;height:70px;border-radius:50%;filter:blur(35px);opacity:.1;pointer-events:none}
@@ -101,7 +89,6 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
 .stat-val{font-family:'Space Grotesk';font-size:1.6rem;font-weight:700;line-height:1}
 .stat-chg{font-size:.75rem;margin-top:5px;display:flex;align-items:center;gap:3px}
 .stat-chg.up{color:var(--success)}.stat-chg.dn{color:var(--danger)}
-/* Tables */
 .tbl{width:100%;border-collapse:collapse}
 .tbl th{text-align:left;padding:9px 14px;font-size:.72rem;font-weight:600;color:var(--fg2);text-transform:uppercase;letter-spacing:.04em;background:var(--bg3);border-bottom:1px solid var(--border)}
 .tbl td{padding:10px 14px;border-bottom:1px solid var(--border2);font-size:.85rem;vertical-align:middle}
@@ -109,19 +96,16 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
 .tbl .cu{display:flex;align-items:center;gap:9px}
 .tbl .cn{font-weight:500}.tbl .cs{font-size:.72rem;color:var(--fg2)}
 .empty-row td{text-align:center;color:var(--fg3);padding:36px 14px!important}
-/* Badges */
 .badge{display:inline-flex;padding:2px 9px;border-radius:20px;font-size:.7rem;font-weight:600;letter-spacing:.01em}
 .bg-green{background:rgba(46,160,67,.12);color:var(--success)}.bg-yellow{background:rgba(210,153,34,.12);color:var(--warning)}
 .bg-red{background:rgba(248,81,73,.12);color:var(--danger)}.bg-blue{background:rgba(88,166,255,.12);color:var(--info)}
 .bg-orange{background:rgba(255,107,53,.12);color:var(--accent)}
-/* Forms */
 .fg{margin-bottom:14px}
 .fg label{display:block;font-size:.78rem;font-weight:500;margin-bottom:5px;color:var(--fg2)}
 .fi{width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--fg);font-size:.85rem;font-family:inherit;transition:border-color .2s}
 .fi:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,.08)}
 select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-/* Modal */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
 .modal-bg.open{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:13px;width:92%;max-width:540px;max-height:85vh;overflow-y:auto;animation:mIn .22s ease}
@@ -132,7 +116,6 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .modal-close:hover{color:var(--fg)}
 .modal-body{padding:22px}
 .modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:7px}
-/* Toast */
 .toast-wrap{position:fixed;top:16px;right:16px;z-index:300;display:flex;flex-direction:column;gap:7px;pointer-events:none}
 .toast{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:12px 16px;display:flex;align-items:flex-start;gap:9px;min-width:280px;max-width:400px;box-shadow:0 8px 20px rgba(0,0,0,.35);animation:tIn .25s ease;pointer-events:auto}
 @keyframes tIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
@@ -142,21 +125,17 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .toast-body{flex:1;min-width:0}.toast-title{font-weight:600;font-size:.82rem;margin-bottom:1px}
 .toast-msg{font-size:.78rem;color:var(--fg2);line-height:1.35}
 .toast-x{background:none;border:none;color:var(--fg3);cursor:pointer;font-size:.85rem;padding:2px;flex-shrink:0}
-/* Work Cards */
 .wk{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:10px;transition:all .15s}
 .wk:hover{border-color:var(--fg3)}
 .wk-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;gap:10px}
 .wk-title{font-weight:600;font-size:.95rem}
 .wk-desc{color:var(--fg2);font-size:.83rem;line-height:1.45;margin-bottom:10px}
 .wk-meta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:.8rem;color:var(--fg2)}
-.wk-meta span{display:flex;align-items:center;gap:4px}
-.wk-meta i{font-size:.75rem}
+.wk-meta span{display:flex;align-items:center;gap:4px}.wk-meta i{font-size:.75rem}
 .wk-actions{display:flex;gap:7px;flex-wrap:wrap}
 .dl-soon{color:var(--danger)!important;font-weight:600}.dl-ok{color:var(--success)!important}
-/* Progress */
 .progress{height:5px;background:var(--bg);border-radius:3px;overflow:hidden;margin-top:6px}
 .progress-fill{height:100%;border-radius:3px;transition:width .4s}
-/* Chat */
 .chat-wrap{display:flex;height:100%}
 .chat-list{width:260px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
 .chat-list-head{padding:14px;border-bottom:1px solid var(--border)}
@@ -181,7 +160,6 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .chat-input:focus{border-color:var(--accent)}
 .chat-send{width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;font-size:.85rem}
 .chat-send:hover{filter:brightness(1.1)}
-/* File Upload */
 .upload-zone{border:2px dashed var(--border);border-radius:9px;padding:28px;text-align:center;cursor:pointer;transition:all .15s}
 .upload-zone:hover{border-color:var(--accent);background:var(--accent-glow)}
 .upload-zone i{font-size:1.8rem;color:var(--fg3);margin-bottom:8px}
@@ -189,15 +167,11 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .upload-zone span{font-size:.75rem;color:var(--fg3)}
 .file-list{margin-top:10px;display:flex;flex-direction:column;gap:5px}
 .file-item{display:flex;align-items:center;gap:9px;padding:7px 10px;background:var(--bg);border-radius:7px;font-size:.8rem}
-.file-item i{color:var(--accent)}
-.file-item .fn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.file-item .fr{background:none;border:none;color:var(--fg3);cursor:pointer;font-size:.78rem}
-.file-item .fr:hover{color:var(--danger)}
-/* Tabs */
+.file-item i{color:var(--accent)}.file-item .fn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-item .fr{background:none;border:none;color:var(--fg3);cursor:pointer;font-size:.78rem}.file-item .fr:hover{color:var(--danger)}
 .tabs{display:flex;gap:3px;margin-bottom:18px;border-bottom:1px solid var(--border);padding-bottom:0}
 .tab-btn{padding:9px 16px;font-size:.83rem;font-weight:500;color:var(--fg2);cursor:pointer;border:none;background:none;font-family:inherit;border-bottom:2px solid transparent;transition:all .12s;margin-bottom:-1px}
 .tab-btn:hover{color:var(--fg)}.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
-/* Notif Panel */
 .notif-panel{position:fixed;top:54px;right:20px;width:360px;background:var(--bg2);border:1px solid var(--border);border-radius:11px;box-shadow:0 10px 28px rgba(0,0,0,.45);z-index:150;display:none;animation:mIn .18s ease}
 .notif-panel.open{display:block}
 .notif-ph{padding:14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
@@ -209,7 +183,6 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .notif-item-msg{font-size:.75rem;color:var(--fg2);line-height:1.35}
 .notif-item-time{font-size:.67rem;color:var(--fg3);margin-top:5px}
 .notif-empty{padding:28px;text-align:center;color:var(--fg3);font-size:.85rem}
-/* Dropdown */
 .dropdown{position:relative;display:inline-block}
 .dd-menu{position:absolute;top:100%;right:0;background:var(--bg2);border:1px solid var(--border);border-radius:7px;min-width:170px;box-shadow:0 8px 20px rgba(0,0,0,.35);z-index:100;display:none;padding:3px}
 .dd-menu.open{display:block}
@@ -217,7 +190,6 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .dd-item:hover{background:var(--bg3);color:var(--fg)}
 .dd-item.danger{color:var(--danger)}.dd-item.danger:hover{background:rgba(248,81,73,.08)}
 .dd-sep{height:1px;background:var(--border);margin:3px 0}
-/* Login */
 .login{display:flex;height:100vh;background:var(--bg)}
 .login-left{flex:1;display:flex;align-items:center;justify-content:center;padding:28px}
 .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:32px;width:100%;max-width:400px}
@@ -236,34 +208,28 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 .login-right .features{display:flex;flex-direction:column;gap:12px;margin-top:28px;text-align:left}
 .login-right .feat{display:flex;align-items:center;gap:10px;color:var(--fg2);font-size:.9rem}
 .login-right .feat i{color:var(--accent);width:18px;text-align:center}
-/* Notes */
 .note{padding:12px;border-radius:8px;border-left:3px solid var(--accent);background:var(--bg3);margin-bottom:8px;transition:all .15s}
 .note:hover{border-left-color:var(--accent2)}
 .note-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .note-title{font-weight:600;font-size:.85rem}
 .note-body{font-size:.8rem;color:var(--fg2);line-height:1.4;white-space:pre-wrap}
 .note-time{font-size:.67rem;color:var(--fg3);margin-top:6px}
-/* Activity Log */
 .log-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border2);font-size:.83rem}
 .log-item:last-child{border-bottom:none}
 .log-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0}
 .log-text{flex:1;color:var(--fg2)}.log-text strong{color:var(--fg);font-weight:500}
 .log-time{font-size:.72rem;color:var(--fg3);flex-shrink:0;white-space:nowrap}
-/* Loading */
 .loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* Print */
 .print-invoice{background:#fff;color:#111;padding:40px;max-width:700px;margin:0 auto;font-family:'DM Sans',sans-serif}
 .print-invoice h1{color:#111}.print-invoice table{width:100%;border-collapse:collapse;margin:20px 0}
 .print-invoice th,.print-invoice td{padding:10px 14px;border:1px solid #ddd;text-align:left;font-size:.9rem}
 .print-invoice th{background:#f5f5f5}
-/* Misc */
 .fade-in{animation:fadeIn .25s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .text-muted{color:var(--fg2)}.text-sm{font-size:.8rem}.mt-2{margin-top:6px}.mt-4{margin-top:14px}.mb-4{margin-bottom:14px}
 .flex{display:flex}.items-center{align-items:center}.gap-2{gap:7px}.gap-3{gap:10px}
-.flex-1{flex:1}.justify-between{justify-content:space-between}
-.hidden{display:none!important}
+.flex-1{flex:1}.justify-between{justify-content:space-between}.hidden{display:none!important}
 @media(max-width:768px){.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:60}.sidebar.open{transform:none}.stats{grid-template-columns:1fr 1fr}.frow{grid-template-columns:1fr}.chat-list{width:200px}.login{flex-direction:column}.login-right{display:none}.topbar-search{width:140px}.ph{flex-direction:column}}
 @media(max-width:480px){.stats{grid-template-columns:1fr}.page{padding:14px}}
 @media print{.sidebar,.topbar,.toast-wrap,.notif-panel{display:none!important}.main{margin:0}.page{padding:0;overflow:visible}}
@@ -276,16 +242,16 @@ select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:70px}
 <div class="loading-overlay hidden" id="loader"><div class="spinner"></div><div style="color:var(--fg2);font-size:.9rem">Syncing with Google Sheets...</div></div>
 
 <script>
-/* ═══════════════════════════════════════════════════
-   Typixel — Google Sheets + LocalStorage Hybrid DB
-   ═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   Typixel — Google Sheets Connected
+   URL pre-configured to your deployment
+   ═══════════════════════════════════════════════════════════ */
 
-const API_KEY = 'typixel_api_url';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyZoXDY7E0-Y4-FAXtBd92oReBsdD_Qeyo0I51xZgPfUQQwVnN6eDV6T56VeGVXHJ1W1w/exec';
 const CACHE_KEY = 'typixel_cache';
 const AUTH_KEY = 'typixel_auth';
 const THEME_KEY = 'typixel_theme';
 
-// ── Helpers ──
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
@@ -297,17 +263,13 @@ const dlLeft=d=>{if(!d)return null;return Math.ceil((new Date(d)-new Date())/864
 const futureD=n=>new Date(Date.now()+n*864e5).toISOString().split('T')[0];
 const pastD=n=>new Date(Date.now()-n*864e5).toISOString().split('T')[0];
 
-// ── Database Layer ──
-const DB = {
-  _data: null,
-  _url: localStorage.getItem(API_KEY)||'',
-  _syncing: false,
-
-  get url(){ return this._url; },
-  set url(v){ this._url=v; localStorage.setItem(API_KEY,v); },
+/* ── Database: Google Sheets + localStorage cache ── */
+const DB={
+  _data:null,_syncing:false,
+  get url(){return SHEET_URL;},
 
   defaults(){
-    return {
+    return{
       users:[{id:'u1',name:'Admin',email:'rifadwork@gmail.com',password:'123',role:'admin',approved:true,avatar:'AD',phone:'',bio:'',portfolio:'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()}],
       clients:[
         {id:'c1',name:'Priya Sharma',company:'Sharma Enterprises',email:'priya@example.com',phone:'9876543210',address:'Mumbai',avatar:'PS'},
@@ -320,231 +282,138 @@ const DB = {
         {id:'p3',name:'Product Packaging',description:'Packaging design for organic food products',clientId:'c3',budget:60000,assignedEditorId:null,status:'in-progress',deadline:futureD(21),createdAt:pastD(5)},
         {id:'p4',name:'Website Redesign',description:'Full website UI/UX redesign',clientId:'c1',budget:80000,assignedEditorId:null,status:'completed',deadline:pastD(2),createdAt:pastD(30)}
       ],
-      workAssignments:[],
-      messages:[],
-      notifications:[],
-      tickets:[],
+      workAssignments:[],messages:[],notifications:[],tickets:[],
       invoices:[
         {id:'inv1',clientId:'c1',projectId:'p4',editorId:null,amount:80000,status:'paid',date:pastD(2),createdAt:pastD(30)},
         {id:'inv2',clientId:'c2',projectId:'p2',editorId:null,amount:25000,status:'unpaid',date:futureD(7),createdAt:pastD(10)},
         {id:'inv3',clientId:'c3',projectId:'p3',editorId:null,amount:60000,status:'unpaid',date:futureD(21),createdAt:pastD(5)}
       ],
-      files:[],
-      activityLog:[],
-      notes:[]
+      files:[],activityLog:[],notes:[]
     };
   },
 
-  get tableNames(){ return ['users','clients','projects','workAssignments','messages','notifications','tickets','invoices','files','activityLog','notes']; },
+  get tables(){return['users','clients','projects','workAssignments','messages','notifications','tickets','invoices','files','activityLog','notes'];},
 
   async load(){
-    // Try Google Sheets first
-    if(this._url){
-      try{
-        $('#loader').classList.remove('hidden');
-        this._syncing=true; updateSyncDot();
-        const res=await fetch(this._url+'?t='+Date.now());
-        const json=await res.json();
-        if(json.ok && json.data){
-          this._data={};
-          this.tableNames.forEach(t=>{this._data[t]=json.data[t]||[];});
-          localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
-          this._syncing=false; updateSyncDot();
-          $('#loader').classList.add('hidden');
-          return this._data;
-        }
-      }catch(e){ console.log('Sheet fetch failed, using cache'); }
-      this._syncing=false; updateSyncDot();
-      $('#loader').classList.add('hidden');
-    }
-    // Fallback: localStorage cache
-    try{ this._data=JSON.parse(localStorage.getItem(CACHE_KEY)); }catch(e){}
-    if(!this._data||!this._data.users){
-      this._data=this.defaults();
-      this._saveCache();
-    }
+    // Try Google Sheets
+    try{
+      $('#loader').classList.remove('hidden');
+      this._syncing=true;syncDot();
+      const res=await fetch(SHEET_URL+'?t='+Date.now());
+      const json=await res.json();
+      if(json.ok&&json.data){
+        this._data={};
+        this.tables.forEach(t=>{this._data[t]=json.data[t]||[];});
+        localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
+        this._syncing=false;syncDot();
+        $('#loader').classList.add('hidden');
+        return this._data;
+      }
+    }catch(e){console.log('Sheet fetch failed, using cache:',e.message);}
+    this._syncing=false;syncDot();
+    $('#loader').classList.add('hidden');
+    // Fallback cache
+    try{this._data=JSON.parse(localStorage.getItem(CACHE_KEY));}catch(e){}
+    if(!this._data||!this._data.users){this._data=this.defaults();this._cache();}
     return this._data;
   },
 
   async save(table){
     if(!this._data)return;
     localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
-    if(this._url){
+    if(true){
       try{
-        this._syncing=true; updateSyncDot();
-        await fetch(this._url,{
-          method:'POST',
-          headers:{'Content-Type':'text/plain'},
-          body:JSON.stringify({key:table,data:this._data[table]||[]})
-        });
-        this._syncing=false; updateSyncDot();
-      }catch(e){
-        this._syncing=false; updateSyncDot();
-        console.log('Sheet save failed, cached locally');
-      }
+        this._syncing=true;syncDot();
+        await fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:table,data:this._data[table]||[]})});
+        this._syncing=false;syncDot();
+      }catch(e){this._syncing=false;syncDot();console.log('Save failed, cached locally');}
     }
   },
 
   async saveAll(){
     if(!this._data)return;
     localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));
-    if(this._url){
-      try{
-        this._syncing=true; updateSyncDot();
-        for(const t of this.tableNames){
-          await fetch(this._url,{
-            method:'POST',headers:{'Content-Type':'text/plain'},
-            body:JSON.stringify({key:t,data:this._data[t]||[]})
-          });
-        }
-        this._syncing=false; updateSyncDot();
-      }catch(e){this._syncing=false;updateSyncDot();}
-    }
+    try{
+      this._syncing=true;syncDot();
+      for(const t of this.tables){await fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({key:t,data:this._data[t]||[]})});}
+      this._syncing=false;syncDot();
+    }catch(e){this._syncing=false;syncDot();}
   },
 
-  _saveCache(){ localStorage.setItem(CACHE_KEY,JSON.stringify(this._data)); },
-
-  log(action,details){
-    if(!this._data)return;
-    this._data.activityLog.unshift({id:uid(),userId:user?.id||'system',action,details,createdAt:new Date().toISOString()});
-    if(this._data.activityLog.length>200) this._data.activityLog.length=200;
-    this.save('activityLog');
-  }
+  _cache(){localStorage.setItem(CACHE_KEY,JSON.stringify(this._data));},
+  log(action,details){if(!this._data)return;this._data.activityLog.unshift({id:uid(),userId:user?.id||'system',action,details,createdAt:new Date().toISOString()});if(this._data.activityLog.length>200)this._data.activityLog.length=200;this.save('activityLog');}
 };
 
-function updateSyncDot(){
-  const d=$('.sync-dot');
-  if(!d)return;
-  d.className='sync-dot'+(DB._syncing?' syncing':DB._url?'':' off');
-}
+function syncDot(){const d=$('.sync-dot');if(!d)return;d.className='sync-dot'+(DB._syncing?' ing':' on');}
 
-// ── State ──
-let db=null, user=JSON.parse(sessionStorage.getItem(AUTH_KEY)||'null');
+/* ── State ── */
+let db=null,user=JSON.parse(sessionStorage.getItem(AUTH_KEY)||'null');
 let page=user?(user.role==='admin'?'dashboard':'editor-dashboard'):'login';
-let chatWith=null, uploadedFiles=[], searchQuery='';
+let chatWith=null,uploadedFiles=[],searchQuery='';
 
-// ── Theme ──
-function applyTheme(){
-  const t=localStorage.getItem(THEME_KEY)||'dark';
-  document.documentElement.setAttribute('data-theme',t);
-}
+/* ── Theme ── */
+function applyTheme(){document.documentElement.setAttribute('data-theme',localStorage.getItem(THEME_KEY)||'dark');}
 applyTheme();
-function toggleTheme(){
-  const cur=document.documentElement.getAttribute('data-theme');
-  const next=cur==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme',next);
-  localStorage.setItem(THEME_KEY,next);
-}
+function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem(THEME_KEY,n);}
 
-// ── Toast ──
+/* ── Toast ── */
 function toast(type,title,msg){
-  const icons={success:'fa-check-circle',error:'fa-times-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle'};
-  const cls={success:'ts',error:'te',warning:'tw',info:'ti'};
-  const el=document.createElement('div');
-  el.className=`toast ${cls[type]}`;
-  el.innerHTML=`<i class="fa-solid ${icons[type]} toast-icon"></i><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div><button class="toast-x" onclick="this.parentElement.remove()"><i class="fa-solid fa-times"></i></button>`;
-  $('#toasts').appendChild(el);
-  setTimeout(()=>{if(el.parentElement)el.remove();},4000);
+  const ic={success:'fa-check-circle',error:'fa-times-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle'};
+  const cl={success:'ts',error:'te',warning:'tw',info:'ti'};
+  const el=document.createElement('div');el.className=`toast ${cl[type]}`;
+  el.innerHTML=`<i class="fa-solid ${ic[type]} toast-icon"></i><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div><button class="toast-x" onclick="this.parentElement.remove()"><i class="fa-solid fa-times"></i></button>`;
+  $('#toasts').appendChild(el);setTimeout(()=>{if(el.parentElement)el.remove();},4000);
 }
 
-// ── Notifications ──
-function addNotif(userId,title,msg){
-  if(!db)return;
-  db.notifications.unshift({id:uid(),userId,title,msg,read:false,createdAt:new Date().toISOString()});
-  DB.save('notifications');
-}
+/* ── Notifications ── */
+function addNotif(uid,title,msg){if(!db)return;db.notifications.unshift({id:uid(),userId:uid,title,msg,read:false,createdAt:new Date().toISOString()});DB.save('notifications');}
 function unreadCount(){return db?db.notifications.filter(n=>n.userId===user?.id&&!n.read).length:0;}
 function toggleNotifPanel(){
   const p=$('#notifPanel');
-  if(p.classList.contains('open')){
-    p.classList.remove('open');
-    db.notifications.filter(n=>n.userId===user?.id&&!n.read).forEach(n=>n.read=true);
-    DB.save('notifications'); render();
-  }else{
-    const notifs=db.notifications.filter(n=>n.userId===user?.id).slice(0,15);
-    p.innerHTML=`<div class="notif-ph"><h3>Notifications</h3><span class="text-sm text-muted">${notifs.length}</span></div><div class="notif-list">${notifs.length?notifs.map(n=>`<div class="notif-item ${n.read?'':'unread'}"><div class="notif-item-title">${n.title}</div><div class="notif-item-msg">${n.msg}</div><div class="notif-item-time">${fmtT(n.createdAt)}</div></div>`).join(''):'<div class="notif-empty">No notifications</div>'}</div>`;
-    p.classList.add('open');
-  }
+  if(p.classList.contains('open')){p.classList.remove('open');db.notifications.filter(n=>n.userId===user?.id&&!n.read).forEach(n=>n.read=true);DB.save('notifications');render();}
+  else{const ns=db.notifications.filter(n=>n.userId===user?.id).slice(0,15);p.innerHTML=`<div class="notif-ph"><h3>Notifications</h3><span class="text-sm text-muted">${ns.length}</span></div><div class="notif-list">${ns.length?ns.map(n=>`<div class="notif-item ${n.read?'':'unread'}"><div class="notif-item-title">${n.title}</div><div class="notif-item-msg">${n.msg}</div><div class="notif-item-time">${fmtT(n.createdAt)}</div></div>`).join(''):'<div class="notif-empty">No notifications</div>'}</div>`;p.classList.add('open');}
 }
 
-// ── Modal ──
-function openModal(html){
-  closeModals();
-  const bg=document.createElement('div');bg.className='modal-bg open';bg.id='modalBg';
-  bg.innerHTML=`<div class="modal">${html}</div>`;
-  bg.addEventListener('click',e=>{if(e.target===bg)closeModals();});
-  document.body.appendChild(bg);
-}
+/* ── Modal ── */
+function openModal(html){closeModals();const bg=document.createElement('div');bg.className='modal-bg open';bg.id='modalBg';bg.innerHTML=`<div class="modal">${html}</div>`;bg.addEventListener('click',e=>{if(e.target===bg)closeModals();});document.body.appendChild(bg);}
 function closeModals(){const m=$('#modalBg');if(m)m.remove();}
 
-// ── CSV Export ──
-function exportCSV(table,key,headers){
-  const rows=db[table]||[];
-  if(!rows.length){toast('warning','Empty','No data to export');return;}
-  let csv=headers.join(',')+'\n';
-  rows.forEach(r=>{csv+=headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(',')+'\n';});
-  const blob=new Blob([csv],{type:'text/csv'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=table+'.csv';a.click();
-  toast('success','Exported',`${table}.csv downloaded`);
+/* ── CSV Export ── */
+function exportCSV(table,headers){
+  const rows=db[table]||[];if(!rows.length){toast('warning','Empty','No data');return;}
+  let csv=headers.join(',')+'\n';rows.forEach(r=>{csv+=headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(',')+'\n';});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=table+'.csv';a.click();toast('success','Exported');
 }
 
-// ── Print Invoice ──
-function printInvoice(invId){
-  const inv=db.invoices.find(i=>i.id===invId);if(!inv)return;
-  const cl=db.clients.find(c=>c.id===inv.clientId);
-  const pr=db.projects.find(p=>p.id===inv.projectId);
+/* ── Print Invoice ── */
+function printInvoice(id){
+  const inv=db.invoices.find(i=>i.id===id);if(!inv)return;
+  const cl=db.clients.find(c=>c.id===inv.clientId);const pr=db.projects.find(p=>p.id===inv.projectId);
   const w=document.createElement('div');
-  w.innerHTML=`<div class="print-invoice"><div style="display:flex;justify-content:space-between;margin-bottom:30px"><div><h1 style="font-size:1.8rem;margin-bottom:4px">Typixel</h1><p style="color:#666">Graphic Design Studio</p></div><div style="text-align:right"><h2 style="font-size:1.4rem;margin-bottom:4px">INVOICE</h2><p style="color:#666">#${inv.id.slice(-5).toUpperCase()}</p></div></div><div style="display:flex;justify-content:space-between;margin-bottom:30px"><div><strong>Bill To:</strong><br>${cl?.name||'—'}<br>${cl?.company||''}<br>${cl?.email||''}</div><div style="text-align:right"><strong>Date:</strong> ${fmtD(inv.date)}<br><strong>Status:</strong> ${inv.status.toUpperCase()}<br><strong>Due:</strong> ${fmtD(inv.date)}</div></div><table><thead><tr><th>Description</th><th style="text-align:right">Amount</th></tr></thead><tbody><tr><td>${pr?.name||'Project'} — ${pr?.description?.slice(0,80)||''}</td><td style="text-align:right;font-weight:600">${fmtM(inv.amount)}</td></tr></tbody><tfoot><tr><td style="text-align:right;font-weight:700;border-top:2px solid #111;padding-top:10px">Total</td><td style="text-align:right;font-weight:700;font-size:1.1rem;border-top:2px solid #111;padding-top:10px">${fmtM(inv.amount)}</td></tr></tfoot></table><div style="margin-top:40px;text-align:center;color:#999;font-size:.85rem">Thank you for your business — Typixel</div></div>`;
-  document.body.appendChild(w);
-  window.print();
-  w.remove();
+  w.innerHTML=`<div class="print-invoice"><div style="display:flex;justify-content:space-between;margin-bottom:30px"><div><h1 style="font-size:1.8rem;margin-bottom:4px">Typixel</h1><p style="color:#666">Graphic Design Studio</p></div><div style="text-align:right"><h2 style="font-size:1.4rem;margin-bottom:4px">INVOICE</h2><p style="color:#666">#${inv.id.slice(-5).toUpperCase()}</p></div></div><div style="display:flex;justify-content:space-between;margin-bottom:30px"><div><strong>Bill To:</strong><br>${cl?.name||'—'}<br>${cl?.company||''}<br>${cl?.email||''}</div><div style="text-align:right"><strong>Date:</strong> ${fmtD(inv.date)}<br><strong>Status:</strong> ${inv.status.toUpperCase()}</div></div><table><thead><tr><th>Description</th><th style="text-align:right">Amount</th></tr></thead><tbody><tr><td>${pr?.name||'Project'}</td><td style="text-align:right;font-weight:600">${fmtM(inv.amount)}</td></tr></tbody><tfoot><tr><td style="text-align:right;font-weight:700;border-top:2px solid #111;padding-top:10px">Total</td><td style="text-align:right;font-weight:700;font-size:1.1rem;border-top:2px solid #111;padding-top:10px">${fmtM(inv.amount)}</td></tr></tfoot></table><div style="margin-top:40px;text-align:center;color:#999;font-size:.85rem">Thank you — Typixel</div></div>`;
+  document.body.appendChild(w);window.print();w.remove();
 }
 
-// ── Auth ──
-function login(email,pw){
-  const u=db.users.find(x=>x.email===email&&x.password===pw);
-  if(!u){toast('error','Login Failed','Invalid credentials');return;}
-  if(u.role==='editor'&&!u.approved){toast('warning','Pending','Your account awaits approval');return;}
-  user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));
-  page=u.role==='admin'?'dashboard':'editor-dashboard';
-  DB.log('Login',`${u.name} logged in`);
-  render();toast('success','Welcome',`Hi ${u.name}!`);
-}
-function logout(){user=null;sessionStorage.removeItem(AUTH_KEY);page='login';chatWith=null;render();toast('info','Logged out','See you soon');}
-function register(name,email,pw,portfolio,bio){
-  if(db.users.find(x=>x.email===email)){toast('error','Taken','Email already registered');return;}
-  db.users.push({id:uid(),name,email,password:pw,role:'editor',approved:false,avatar:ini(name),phone:'',bio:bio||'',portfolio:portfolio||'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});
-  addNotif('u1','New Editor Applied',`${name} applied to join`);
-  DB.log('Register',`New editor: ${name}`);
-  DB.save('users');toast('success','Sent','Application submitted');
-}
+/* ── Auth ── */
+function login(email,pw){const u=db.users.find(x=>x.email===email&&x.password===pw);if(!u){toast('error','Login Failed','Invalid credentials');return;}if(u.role==='editor'&&!u.approved){toast('warning','Pending','Awaiting admin approval');return;}user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));page=u.role==='admin'?'dashboard':'editor-dashboard';DB.log('Login',u.name+' logged in');render();toast('success','Welcome','Hi '+u.name+'!');}
+function logout(){user=null;sessionStorage.removeItem(AUTH_KEY);page='login';chatWith=null;render();toast('info','Logged out');}
+function register(name,email,pw,portfolio,bio){if(db.users.find(x=>x.email===email)){toast('error','Taken','Email exists');return;}db.users.push({id:uid(),name,email,password:pw,role:'editor',approved:false,avatar:ini(name),phone:'',bio:bio||'',portfolio:portfolio||'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});addNotif('u1','New Editor Applied',name);DB.log('Register',name);DB.save('users');toast('success','Sent','Application submitted');}
 
-// ── Navigation ──
+/* ── Nav ── */
 function navigate(p){page=p;chatWith=null;searchQuery='';render();}
+function searchFilter(arr,fields){if(!searchQuery)return arr;const q=searchQuery.toLowerCase();return arr.filter(i=>fields.some(f=>(i[f]||'').toString().toLowerCase().includes(q)));}
 
-// ── Search filter for arrays ──
-function searchFilter(arr,fields){
-  if(!searchQuery)return arr;
-  const q=searchQuery.toLowerCase();
-  return arr.filter(item=>fields.some(f=>(item[f]||'').toString().toLowerCase().includes(q)));
-}
-
-// ── Main Render ──
+/* ── Render ── */
 async function render(){
   if(!user){renderLogin();return;}
   $('#app').innerHTML=`<div class="app">${rSidebar()}<div class="main">${rTopbar()}<div class="page fade-in" id="pc">${rPage()}</div></div></div>`;
-  // Bind search
-  const si=$('.topbar-search input');
-  if(si)si.oninput=e=>{searchQuery=e.target.value;const pc=$('#pc');if(pc)pc.innerHTML=rPage();};
-  // Profile form
-  const pf=$('#profileForm');
-  if(pf)pf.onsubmit=e=>{e.preventDefault();saveProfile();};
-  const pwf=$('#pwForm');
-  if(pwf)pwf.onsubmit=e=>{e.preventDefault();changePw();};
-  updateSyncDot();
+  const si=$('.topbar-search input');if(si)si.oninput=e=>{searchQuery=e.target.value;const pc=$('#pc');if(pc)pc.innerHTML=rPage();};
+  const pf=$('#profileForm');if(pf)pf.onsubmit=e=>{e.preventDefault();saveProfile();};
+  const pwf=$('#pwForm');if(pwf)pwf.onsubmit=e=>{e.preventDefault();changePw();};
+  syncDot();
 }
 
-// ── Sidebar ──
+/* ── Sidebar ── */
 function rSidebar(){
   const items=user.role==='admin'?[
     {s:'MAIN'},{id:'dashboard',i:'fa-gauge-high',l:'Dashboard'},
@@ -558,79 +427,60 @@ function rSidebar(){
   ];
   items.push({s:''},{id:'profile',i:'fa-gear',l:'Settings'});
   let h=`<div class="sb-logo"><div class="sb-logo-icon">T</div><span>Typixel</span></div><nav class="sb-nav">`;
-  items.forEach(it=>{
-    if(it.s)h+=`<div class="sb-sec">${it.s}</div>`;
-    else h+=`<button class="sb-item ${page===it.id?'active':''}" onclick="navigate('${it.id}')"><i class="fa-solid ${it.i}"></i>${it.l}${it.id==='tickets'?`<span class="sb-badge">${db.tickets.filter(t=>!t.resolved).length||''}</span>`:''}</button>`;
-  });
+  items.forEach(it=>{if(it.s)h+=`<div class="sb-sec">${it.s}</div>`;else h+=`<button class="sb-item ${page===it.id?'active':''}" onclick="navigate('${it.id}')"><i class="fa-solid ${it.i}"></i>${it.l}${it.id==='tickets'?`<span class="sb-badge">${db.tickets.filter(t=>!t.resolved).length||''}</span>`:''}</button>`;});
   h+=`</nav><div class="sb-footer"><div class="sb-user"><div class="sb-avatar">${user.avatar}</div><div><div class="sb-user-name">${user.name}</div><div class="sb-user-role">${user.role==='admin'?'Admin':'Editor'}</div></div></div></div>`;
-  return `<aside class="sidebar" id="sidebar">${h}</aside>`;
+  return`<aside class="sidebar" id="sidebar">${h}</aside>`;
 }
 
-// ── Topbar ──
+/* ── Topbar ── */
 function rTopbar(){
-  const titles={dashboard:'Dashboard',clients:'Clients',editors:'Editors',projects:'Projects',assignments:'Assignments',invoices:'Invoices',activity:'Activity Log',notes:'Quick Notes',tickets:'Tickets',chat:'Chat','editor-dashboard':'Dashboard','my-work':'My Work','submit-work':'Submit Work','my-invoices':'My Invoices',support:'Get Help',profile:'Settings'};
+  const t={dashboard:'Dashboard',clients:'Clients',editors:'Editors',projects:'Projects',assignments:'Assignments',invoices:'Invoices',activity:'Activity Log',notes:'Quick Notes',tickets:'Tickets',chat:'Chat','editor-dashboard':'Dashboard','my-work':'My Work','submit-work':'Submit Work','my-invoices':'My Invoices',support:'Get Help',profile:'Settings'};
   const uc=unreadCount();
-  return `<header class="topbar"><div class="topbar-left"><span class="sync-dot${DB.url?'':' off'}"></span><span class="topbar-title">${titles[page]||'Typixel'}</span></div><div class="topbar-right"><div class="topbar-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search..." value="${searchQuery}"></div><button class="tb-btn" onclick="toggleTheme()" title="Toggle theme"><i class="fa-solid ${document.documentElement.getAttribute('data-theme')==='dark'?'fa-sun':'fa-moon'}"></i></button><button class="tb-btn" onclick="toggleNotifPanel()"><i class="fa-solid fa-bell"></i>${uc?'<span class="tb-dot"></span>':''}</button><div class="dropdown"><button class="tb-btn" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis-vertical"></i></button><div class="dd-menu"><button class="dd-item" onclick="navigate('profile');this.closest('.dd-menu').classList.remove('open')"><i class="fa-solid fa-gear"></i>Settings</button><div class="dd-sep"></div><button class="dd-item danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i>Logout</button></div></div></div></header>`;
+  return`<header class="topbar"><div class="topbar-left"><span class="sync-dot on"></span><span class="topbar-title">${t[page]||'Typixel'}</span></div><div class="topbar-right"><div class="topbar-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search..." value="${searchQuery}"></div><button class="tb-btn" onclick="toggleTheme()" title="Theme"><i class="fa-solid ${document.documentElement.getAttribute('data-theme')==='dark'?'fa-sun':'fa-moon'}"></i></button><button class="tb-btn" onclick="toggleNotifPanel()"><i class="fa-solid fa-bell"></i>${uc?'<span class="tb-dot"></span>':''}</button><div class="dropdown"><button class="tb-btn" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis-vertical"></i></button><div class="dd-menu"><button class="dd-item" onclick="navigate('profile');this.closest('.dd-menu').classList.remove('open')"><i class="fa-solid fa-gear"></i>Settings</button><div class="dd-sep"></div><button class="dd-item danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i>Logout</button></div></div></div></header>`;
 }
 
-// ── Page Router ──
+/* ── Page Router ── */
 function rPage(){
   switch(page){
-    case 'dashboard':return pgDashboard();
-    case 'clients':return pgClients();
-    case 'editors':return pgEditors();
-    case 'projects':return pgProjects();
-    case 'assignments':return pgAssignments();
-    case 'invoices':return pgInvoices();
-    case 'activity':return pgActivity();
-    case 'notes':return pgNotes();
-    case 'tickets':return pgTickets();
-    case 'chat':return pgChat();
-    case 'editor-dashboard':return pgEDash();
-    case 'my-work':return pgMyWork();
-    case 'submit-work':return pgSubmitWork();
-    case 'my-invoices':return pgMyInv();
-    case 'support':return pgSupport();
-    case 'profile':return pgProfile();
-    default:return pgDashboard();
+    case'dashboard':return pgDash();case'clients':return pgClients();case'editors':return pgEditors();
+    case'projects':return pgProjects();case'assignments':return pgAssign();case'invoices':return pgInv();
+    case'activity':return pgAct();case'notes':return pgNotes();case'tickets':return pgTix();case'chat':return pgChat();
+    case'editor-dashboard':return pgED();case'my-work':return pgMW();case'submit-work':return pgSW();
+    case'my-invoices':return pgMI();case'support':return pgSup();case'profile':return pgProf();
+    default:return pgDash();
   }
 }
 
-// ═════════════ ADMIN PAGES ═══════════
-
-function pgDashboard(){
+/* ═══════════ ADMIN ═══════════ */
+function pgDash(){
   const rev=db.invoices.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
   const unp=db.invoices.filter(i=>i.status==='unpaid').reduce((s,i)=>s+i.amount,0);
   const act=db.projects.filter(p=>p.status==='in-progress').length;
   const eds=db.users.filter(u=>u.role==='editor'&&u.approved).length;
-  const pendApp=db.users.filter(u=>u.role==='editor'&&!u.approved).length;
-  // Project progress
-  const totalP=db.projects.length;
-  const doneP=db.projects.filter(p=>p.status==='completed').length;
-  const prog=Math.round(totalP?(doneP/totalP)*100:0);
-  const upcoming=db.projects.filter(p=>p.deadline&&p.status!=='completed').sort((a,b)=>new Date(a.deadline)-new Date(b.deadline)).slice(0,5);
-  const recentWA=db.workAssignments.slice(-5).reverse();
-
-  return `<div class="ph"><div><h1>Dashboard</h1><p>Your studio at a glance</p></div><div class="ph-actions"><button class="btn btn-primary" onclick="modalAddProject()"><i class="fa-solid fa-plus"></i>New Project</button></div></div>
+  const pa=db.users.filter(u=>u.role==='editor'&&!u.approved).length;
+  const tp=db.projects.length,dp=db.projects.filter(p=>p.status==='completed').length;
+  const prog=Math.round(tp?(dp/tp)*100:0);
+  const up=db.projects.filter(p=>p.deadline&&p.status!=='completed').sort((a,b)=>new Date(a.deadline)-new Date(b.deadline)).slice(0,5);
+  const rw=db.workAssignments.slice(-5).reverse();
+  return`<div class="ph"><div><h1>Dashboard</h1><p>Your studio at a glance</p></div><div class="ph-actions"><button class="btn btn-primary" onclick="modalAddProject()"><i class="fa-solid fa-plus"></i>New Project</button></div></div>
   <div class="stats">
     <div class="stat"><div class="stat-top"><span class="stat-label">Revenue</span><div class="stat-icon si-1"><i class="fa-solid fa-indian-rupee-sign"></i></div></div><div class="stat-val">${fmtM(rev)}</div><div class="stat-chg up"><i class="fa-solid fa-arrow-up"></i>Collected</div></div>
     <div class="stat"><div class="stat-top"><span class="stat-label">Pending</span><div class="stat-icon si-2"><i class="fa-solid fa-clock"></i></div></div><div class="stat-val">${fmtM(unp)}</div><div class="stat-chg dn"><i class="fa-solid fa-circle-exclamation"></i>${db.invoices.filter(i=>i.status==='unpaid').length} invoices</div></div>
-    <div class="stat"><div class="stat-top"><span class="stat-label">Active Projects</span><div class="stat-icon si-3"><i class="fa-solid fa-briefcase"></i></div></div><div class="stat-val">${act}</div><div class="stat-chg text-muted"><i class="fa-solid fa-hourglass-half"></i>${db.projects.filter(p=>p.status==='pending').length} pending</div></div>
-    <div class="stat"><div class="stat-top"><span class="stat-label">Editors</span><div class="stat-icon si-4"><i class="fa-solid fa-users"></i></div></div><div class="stat-val">${eds}</div><div class="stat-chg ${pendApp?'dn':'up'}">${pendApp?`<i class="fa-solid fa-user-clock"></i>${pendApp} pending`:'<i class="fa-solid fa-check"></i>All active'}</div></div>
+    <div class="stat"><div class="stat-top"><span class="stat-label">Active</span><div class="stat-icon si-3"><i class="fa-solid fa-briefcase"></i></div></div><div class="stat-val">${act}</div><div class="stat-chg text-muted"><i class="fa-solid fa-hourglass-half"></i>${db.projects.filter(p=>p.status==='pending').length} pending</div></div>
+    <div class="stat"><div class="stat-top"><span class="stat-label">Editors</span><div class="stat-icon si-4"><i class="fa-solid fa-users"></i></div></div><div class="stat-val">${eds}</div><div class="stat-chg ${pa?'dn':'up'}">${pa?`<i class="fa-solid fa-user-clock"></i>${pa} pending`:'<i class="fa-solid fa-check"></i>All active'}</div></div>
   </div>
-  <!-- Project Progress -->
-  <div class="card mb-4"><div class="card-head"><h3>Overall Project Progress</h3><span class="text-sm text-muted">${doneP}/${totalP} completed</span></div><div class="card-body"><div class="progress" style="height:8px;border-radius:4px"><div class="progress-fill" style="width:${prog}%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px"></div></div><div class="text-sm text-muted mt-2">${prog}% completion rate</div></div></div>
+  <div class="card mb-4"><div class="card-head"><h3>Overall Progress</h3><span class="text-sm text-muted">${dp}/${tp} completed</span></div><div class="card-body"><div class="progress" style="height:8px;border-radius:4px"><div class="progress-fill" style="width:${prog}%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px"></div></div><div class="text-sm text-muted mt-2">${prog}% completion</div></div></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-    <div class="card"><div class="card-head"><h3>Recent Assignments</h3></div><div class="card-body" style="padding:0">${recentWA.length?recentWA.map(w=>{const p=db.projects.find(x=>x.id===w.projectId);const e=db.users.find(x=>x.id===w.editorId);return `<div style="padding:10px 18px;border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:500;font-size:.85rem">${p?.name||'—'}</div><div class="text-sm text-muted">${e?.name||'Unassigned'}</div></div><span class="badge bg-${w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow'}">${w.status}</span></div>`;}).join(''):'<div style="padding:28px;text-align:center;color:var(--fg3)">No assignments yet</div>'}</div></div>
-    <div class="card"><div class="card-head"><h3>Upcoming Deadlines</h3></div><div class="card-body" style="padding:0">${upcoming.length?upcoming.map(p=>{const dl=dlLeft(p.deadline);const cl=db.clients.find(c=>c.id===p.clientId);return `<div style="padding:10px 18px;border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:500;font-size:.85rem">${p.name}</div><div class="text-sm text-muted">${cl?.name||'—'}</div></div><span class="${dl!==null&&dl<=3?'dl-soon':'dl-ok'} text-sm"><i class="fa-solid fa-calendar-day"></i> ${dl!==null?(dl<=0?'Overdue':dl+'d left'):fmtD(p.deadline)}</span></div>`;}).join(''):'<div style="padding:28px;text-align:center;color:var(--fg3)">No deadlines</div>'}</div></div>
+    <div class="card"><div class="card-head"><h3>Recent Assignments</h3></div><div class="card-body" style="padding:0">${rw.length?rw.map(w=>{const p=db.projects.find(x=>x.id===w.projectId);const e=db.users.find(x=>x.id===w.editorId);return`<div style="padding:10px 18px;border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:500;font-size:.85rem">${p?.name||'—'}</div><div class="text-sm text-muted">${e?.name||'Unassigned'}</div></div><span class="badge bg-${w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow'}">${w.status}</span></div>`;}).join(''):'<div style="padding:28px;text-align:center;color:var(--fg3)">None yet</div>'}</div></div>
+    <div class="card"><div class="card-head"><h3>Upcoming Deadlines</h3></div><div class="card-body" style="padding:0">${up.length?up.map(p=>{const dl=dlLeft(p.deadline);const cl=db.clients.find(c=>c.id===p.clientId);return`<div style="padding:10px 18px;border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:500;font-size:.85rem">${p.name}</div><div class="text-sm text-muted">${cl?.name||'—'}</div></div><span class="${dl!==null&&dl<=3?'dl-soon':'dl-ok'} text-sm"><i class="fa-solid fa-calendar-day"></i> ${dl!==null?(dl<=0?'Overdue':dl+'d'):fmtD(p.deadline)}</span></div>`;}).join(''):'<div style="padding:28px;text-align:center;color:var(--fg3)">No deadlines</div>'}</div></div>
   </div>`;
 }
 
-// ── Clients ──
+/* ── Clients ── */
 function pgClients(){
   const items=searchFilter(db.clients,['name','company','email']);
-  return `<div class="ph"><div><h1>Clients</h1><p>${db.clients.length} total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('clients','clients',['id','name','company','email','phone','address'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddClient()"><i class="fa-solid fa-plus"></i>Add Client</button></div></div>
-  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Client</th><th>Company</th><th>Email</th><th>Phone</th><th>Projects</th><th>Spent</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(c=>{const cp=db.projects.filter(p=>p.clientId===c.id);const sp=cp.reduce((s,p)=>s+(p.budget||0),0);return `<tr><td><div class="cu"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${c.avatar}</div><span class="cn">${c.name}</span></div></td><td>${c.company||'—'}</td><td class="text-muted">${c.email}</td><td class="text-muted">${c.phone||'—'}</td><td>${cp.length}</td><td style="font-weight:600">${fmtM(sp)}</td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu"><button class="dd-item" onclick="modalEditClient('${c.id}')"><i class="fa-solid fa-pen"></i>Edit</button><button class="dd-item danger" onclick="deleteClient('${c.id}')"><i class="fa-solid fa-trash"></i>Delete</button></div></div></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="7">No clients</td></tr>'}</tbody></table></div></div>`;
+  return`<div class="ph"><div><h1>Clients</h1><p>${db.clients.length} total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('clients',['id','name','company','email','phone','address'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddClient()"><i class="fa-solid fa-plus"></i>Add Client</button></div></div>
+  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Client</th><th>Company</th><th>Email</th><th>Phone</th><th>Projects</th><th>Spent</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(c=>{const cp=db.projects.filter(p=>p.clientId===c.id);const sp=cp.reduce((s,p)=>s+(p.budget||0),0);return`<tr><td><div class="cu"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${c.avatar}</div><span class="cn">${c.name}</span></div></td><td>${c.company||'—'}</td><td class="text-muted">${c.email}</td><td class="text-muted">${c.phone||'—'}</td><td>${cp.length}</td><td style="font-weight:600">${fmtM(sp)}</td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu"><button class="dd-item" onclick="modalEditClient('${c.id}')"><i class="fa-solid fa-pen"></i>Edit</button><button class="dd-item danger" onclick="deleteClient('${c.id}')"><i class="fa-solid fa-trash"></i>Delete</button></div></div></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="7">No clients</td></tr>'}</tbody></table></div></div>`;
 }
 function modalAddClient(edit=null){
   const c=edit?db.clients.find(x=>x.id===edit):null;
@@ -639,212 +489,180 @@ function modalAddClient(edit=null){
 function modalEditClient(id){modalAddClient(id);}
 function saveClient(eid){
   const f=new FormData($('#cf'));
-  if(eid){const c=db.clients.find(x=>x.id===eid);Object.assign(c,{name:f.get('name'),company:f.get('company'),email:f.get('email'),phone:f.get('phone'),address:f.get('address'),avatar:ini(f.get('name'))});DB.log('Edit Client',`Edited: ${f.get('name')}`);}
-  else{if(db.clients.find(x=>x.email===f.get('email'))){toast('error','Duplicate','Email exists');return;}db.clients.push({id:uid(),name:f.get('name'),company:f.get('company'),email:f.get('email'),phone:f.get('phone'),address:f.get('address'),avatar:ini(f.get('name'))});DB.log('Add Client',`Added: ${f.get('name')}`);}
-  DB.save('clients');closeModals();render();toast('success','Done',eid?'Client updated':'Client added');
+  if(eid){const c=db.clients.find(x=>x.id===eid);Object.assign(c,{name:f.get('name'),company:f.get('company'),email:f.get('email'),phone:f.get('phone'),address:f.get('address'),avatar:ini(f.get('name'))});DB.log('Edit Client',f.get('name'));}
+  else{if(db.clients.find(x=>x.email===f.get('email'))){toast('error','Duplicate','Email exists');return;}db.clients.push({id:uid(),name:f.get('name'),company:f.get('company'),email:f.get('email'),phone:f.get('phone'),address:f.get('address'),avatar:ini(f.get('name'))});DB.log('Add Client',f.get('name'));}
+  DB.save('clients');closeModals();render();toast('success','Done',eid?'Updated':'Added');
 }
-function deleteClient(id){openModal(`<div class="modal-head"><h3>Delete Client</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">This removes the client and all associated data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(p=>p.clientId!=='${id}');db.invoices=db.invoices.filter(i=>i.clientId!=='${id}');db.clients=db.clients.filter(c=>c.id!=='${id}');DB.saveAll();closeModals();render();toast('success','Deleted','Client removed')">Delete</button></div>`);}
+function deleteClient(id){openModal(`<div class="modal-head"><h3>Delete Client</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Removes client and all associated data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(p=>p.clientId!=='${id}');db.invoices=db.invoices.filter(i=>i.clientId!=='${id}');db.clients=db.clients.filter(c=>c.id!=='${id}');DB.saveAll();closeModals();render();toast('success','Deleted')">Delete</button></div>`);}
 
-// ── Editors ──
+/* ── Editors ── */
 function pgEditors(){
   const items=searchFilter(db.users.filter(u=>u.role==='editor'),['name','email']);
-  return `<div class="ph"><div><h1>Editors</h1><p>${items.length} team members</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('users','editors',['id','name','email','role','totalWorkTime','pendingSalary'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddEditor()"><i class="fa-solid fa-plus"></i>Add Editor</button></div></div>
-  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Editor</th><th>Email</th><th>Hours</th><th>Pending Salary</th><th>Status</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(e=>{return `<tr><td><div class="cu"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${e.avatar}</div><div><div class="cn">${e.name}</div><div class="cs">${db.workAssignments.filter(w=>w.editorId===e.id&&w.status==='completed').length} done</div></div></div></td><td class="text-muted">${e.email}</td><td>${e.totalWorkTime||0}h</td><td style="font-weight:600">${fmtM(e.pendingSalary||0)}</td><td><span class="badge ${e.approved?'bg-green':'bg-yellow'}">${e.approved?'Active':'Pending'}</span></td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu">${!e.approved?`<button class="dd-item" onclick="approveEditor('${e.id}')"><i class="fa-solid fa-check"></i>Approve</button>`:''}<button class="dd-item" onclick="modalSalary('${e.id}')"><i class="fa-solid fa-indian-rupee-sign"></i>Salary</button><button class="dd-item" onclick="modalAssignProj('${e.id}')"><i class="fa-solid fa-briefcase"></i>Assign</button><button class="dd-item danger" onclick="deleteEditor('${e.id}')"><i class="fa-solid fa-trash"></i>Remove</button></div></div></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="6">No editors</td></tr>'}</tbody></table></div></div>`;
+  return`<div class="ph"><div><h1>Editors</h1><p>${items.length} members</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('users',['id','name','email','role','totalWorkTime','pendingSalary'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddEditor()"><i class="fa-solid fa-plus"></i>Add Editor</button></div></div>
+  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Editor</th><th>Email</th><th>Hours</th><th>Salary</th><th>Status</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(e=>`<tr><td><div class="cu"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${e.avatar}</div><div><div class="cn">${e.name}</div><div class="cs">${db.workAssignments.filter(w=>w.editorId===e.id&&w.status==='completed').length} done</div></div></div></td><td class="text-muted">${e.email}</td><td>${e.totalWorkTime||0}h</td><td style="font-weight:600">${fmtM(e.pendingSalary||0)}</td><td><span class="badge ${e.approved?'bg-green':'bg-yellow'}">${e.approved?'Active':'Pending'}</span></td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu">${!e.approved?`<button class="dd-item" onclick="approveEditor('${e.id}')"><i class="fa-solid fa-check"></i>Approve</button>`:''}<button class="dd-item" onclick="modalSalary('${e.id}')"><i class="fa-solid fa-indian-rupee-sign"></i>Salary</button><button class="dd-item" onclick="modalAssignProj('${e.id}')"><i class="fa-solid fa-briefcase"></i>Assign</button><button class="dd-item danger" onclick="deleteEditor('${e.id}')"><i class="fa-solid fa-trash"></i>Remove</button></div></div></td></tr>`).join(''):'<tr class="empty-row"><td colspan="6">No editors</td></tr>'}</tbody></table></div></div>`;
 }
 function modalAddEditor(){openModal(`<div class="modal-head"><h3>Add Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="ef"><div class="frow"><div class="fg"><label>Name</label><input class="fi" name="name" required></div><div class="fg"><label>Email</label><input class="fi" type="email" name="email" required></div></div><div class="fg"><label>Password</label><input class="fi" type="password" name="password" required></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveEditor()">Add</button></div>`);}
-function saveEditor(){const f=new FormData($('#ef'));if(db.users.find(x=>x.email===f.get('email'))){toast('error','Duplicate','Email exists');return;}db.users.push({id:uid(),name:f.get('name'),email:f.get('email'),password:f.get('password'),role:'editor',approved:false,avatar:ini(f.get('name')),phone:'',bio:'',portfolio:'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});addNotif('u1','New Editor',`${f.get('name')} applied`);DB.log('Add Editor',`Added: ${f.get('name')}`);DB.save('users');closeModals();render();toast('success','Added','Editor added — pending approval');}
-function approveEditor(id){const e=db.users.find(u=>u.id===id);if(!e)return;e.approved=true;addNotif(id,'Approved','Your account has been approved');DB.log('Approve Editor',`Approved: ${e.name}`);DB.save('users');render();toast('success','Approved',`${e.name} can now login`);}
-function modalSalary(id){const e=db.users.find(u=>u.id===id);if(!e)return;openModal(`<div class="modal-head"><h3>Update — ${e.name}</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted mb-4">Pending: ${fmtM(e.pendingSalary||0)}</p><div class="frow"><div class="fg"><label>Amount (₹)</label><input class="fi" type="number" id="sAmt" min="0"></div><div class="fg"><label>Hours</label><input class="fi" type="number" id="sHrs" min="0"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const e=db.users.find(u=>u.id==='${id}');e.pendingSalary=(e.pendingSalary||0)+parseFloat($('#sAmt').value||0);e.totalWorkTime=(e.totalWorkTime||0)+parseFloat($('#sHrs').value||0);DB.log('Update Salary','${e.name}: +₹'+$('#sAmt').value);DB.save('users');closeModals();render();toast('success','Updated','Salary updated')">Update</button></div>`);}
-function modalAssignProj(eid){const e=db.users.find(u=>u.id===eid);const avail=db.projects.filter(p=>p.status!=='completed'&&!p.assignedEditorId);if(!avail.length){toast('warning','None','No unassigned projects');return;}openModal(`<div class="modal-head"><h3>Assign to ${e.name}</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Project</label><select class="fi" id="aProj">${avail.map(p=>`<option value="${p.id}">${p.name} (${fmtM(p.budget)})</option>`).join('')}</select></div><div class="fg"><label>Task Description</label><textarea class="fi" id="aDesc" rows="3"></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="doAssign('${eid}')">Assign</button></div>`);}
-function doAssign(eid){const pid=$('#aProj').value,desc=$('#aDesc').value;const p=db.projects.find(x=>x.id===pid);if(!p)return;p.assignedEditorId=eid;p.status='in-progress';db.workAssignments.push({id:uid(),projectId:pid,editorId:eid,description:desc||p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});addNotif(eid,'New Assignment',`Assigned: ${p.name}`);DB.log('Assign Project',`${p.name} → ${db.users.find(u=>u.id===eid)?.name}`);DB.save('projects');DB.save('workAssignments');closeModals();render();toast('success','Assigned','Project assigned');}
-function deleteEditor(id){openModal(`<div class="modal-head"><h3>Remove Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">This unassigns all their work.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.workAssignments.forEach(w=>{if(w.editorId==='${id}')w.editorId=null;});db.users=db.users.filter(u=>u.id!=='${id}');DB.saveAll();closeModals();render();toast('success','Removed','Editor removed')">Remove</button></div>`);}
+function saveEditor(){const f=new FormData($('#ef'));if(db.users.find(x=>x.email===f.get('email'))){toast('error','Duplicate','Email exists');return;}db.users.push({id:uid(),name:f.get('name'),email:f.get('email'),password:f.get('password'),role:'editor',approved:false,avatar:ini(f.get('name')),phone:'',bio:'',portfolio:'',totalWorkTime:0,pendingSalary:0,createdAt:new Date().toISOString()});addNotif('u1','New Editor',f.get('name')+' applied');DB.log('Add Editor',f.get('name'));DB.save('users');closeModals();render();toast('success','Added','Pending approval');}
+function approveEditor(id){const e=db.users.find(u=>u.id===id);if(!e)return;e.approved=true;addNotif(id,'Approved','Your account is approved');DB.log('Approve',e.name);DB.save('users');render();toast('success','Approved',e.name+' can login');}
+function modalSalary(id){const e=db.users.find(u=>u.id===id);if(!e)return;openModal(`<div class="modal-head"><h3>Update — ${e.name}</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted mb-4">Pending: ${fmtM(e.pendingSalary||0)}</p><div class="frow"><div class="fg"><label>Amount (₹)</label><input class="fi" type="number" id="sAmt" min="0"></div><div class="fg"><label>Hours</label><input class="fi" type="number" id="sHrs" min="0"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const e=db.users.find(u=>u.id==='${id}');e.pendingSalary=(e.pendingSalary||0)+parseFloat($('#sAmt').value||0);e.totalWorkTime=(e.totalWorkTime||0)+parseFloat($('#sHrs').value||0);DB.log('Salary',e.name+': +₹'+$('#sAmt').value);DB.save('users');closeModals();render();toast('success','Updated')">Update</button></div>`);}
+function modalAssignProj(eid){const e=db.users.find(u=>u.id===eid);const av=db.projects.filter(p=>p.status!=='completed'&&!p.assignedEditorId);if(!av.length){toast('warning','None','No unassigned projects');return;}openModal(`<div class="modal-head"><h3>Assign to ${e.name}</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Project</label><select class="fi" id="aProj">${av.map(p=>`<option value="${p.id}">${p.name} (${fmtM(p.budget)})</option>`).join('')}</select></div><div class="fg"><label>Task</label><textarea class="fi" id="aDesc" rows="3"></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="doAssign('${eid}')">Assign</button></div>`);}
+function doAssign(eid){const pid=$('#aProj').value,desc=$('#aDesc').value;const p=db.projects.find(x=>x.id===pid);if(!p)return;p.assignedEditorId=eid;p.status='in-progress';db.workAssignments.push({id:uid(),projectId:pid,editorId:eid,description:desc||p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});addNotif(eid,'New Assignment',p.name);DB.log('Assign',p.name);DB.save('projects');DB.save('workAssignments');closeModals();render();toast('success','Assigned');}
+function deleteEditor(id){openModal(`<div class="modal-head"><h3>Remove Editor</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Unassigns all their work.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.workAssignments.forEach(w=>{if(w.editorId==='${id}')w.editorId=null;});db.users=db.users.filter(u=>u.id!=='${id}');DB.saveAll();closeModals();render();toast('success','Removed')">Remove</button></div>`);}
 
-// ── Projects ──
+/* ── Projects ── */
 function pgProjects(){
   const items=searchFilter(db.projects,['name','description']);
-  return `<div class="ph"><div><h1>Projects</h1><p>${db.projects.length} total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('projects','projects',['id','name','description','clientId','budget','status','deadline'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddProject()"><i class="fa-solid fa-plus"></i>New Project</button></div></div>
-  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Project</th><th>Client</th><th>Editor</th><th>Budget</th><th>Status</th><th>Deadline</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(p=>{const cl=db.clients.find(c=>c.id===p.clientId);const ed=p.assignedEditorId?db.users.find(u=>u.id===p.assignedEditorId):null;const dl=dlLeft(p.deadline);return `<tr><td><div class="cn">${p.name}</div><div class="cs">${p.description?.slice(0,45)||''}</div></td><td>${cl?.name||'—'}</td><td>${ed?`<span style="color:var(--accent)">${ed.name}</span>`:'<span class="text-muted">Unassigned</span>'}</td><td style="font-weight:600">${fmtM(p.budget)}</td><td><span class="badge bg-${p.status==='completed'?'green':p.status==='in-progress'?'blue':'yellow'}">${p.status}</span></td><td><span class="${dl!==null&&dl<=3?'dl-soon':'text-muted'} text-sm">${dl!==null?(dl<=0?'<i class="fa-solid fa-triangle-exclamation"></i> Overdue':dl+'d'):fmtD(p.deadline)}</span></td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu"><button class="dd-item" onclick="modalEditProject('${p.id}')"><i class="fa-solid fa-pen"></i>Edit</button>${p.status!=='completed'?`<button class="dd-item" onclick="completeProj('${p.id}')"><i class="fa-solid fa-check"></i>Complete</button>`:''}<button class="dd-item danger" onclick="deleteProj('${p.id}')"><i class="fa-solid fa-trash"></i>Delete</button></div></div></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="7">No projects</td></tr>'}</tbody></table></div></div>`;
+  return`<div class="ph"><div><h1>Projects</h1><p>${db.projects.length} total</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('projects',['id','name','description','clientId','budget','status','deadline'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalAddProject()"><i class="fa-solid fa-plus"></i>New Project</button></div></div>
+  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Project</th><th>Client</th><th>Editor</th><th>Budget</th><th>Status</th><th>Deadline</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(p=>{const cl=db.clients.find(c=>c.id===p.clientId);const ed=p.assignedEditorId?db.users.find(u=>u.id===p.assignedEditorId):null;const dl=dlLeft(p.deadline);return`<tr><td><div class="cn">${p.name}</div><div class="cs">${p.description?.slice(0,45)||''}</div></td><td>${cl?.name||'—'}</td><td>${ed?`<span style="color:var(--accent)">${ed.name}</span>`:'<span class="text-muted">Unassigned</span>'}</td><td style="font-weight:600">${fmtM(p.budget)}</td><td><span class="badge bg-${p.status==='completed'?'green':p.status==='in-progress'?'blue':'yellow'}">${p.status}</span></td><td><span class="${dl!==null&&dl<=3?'dl-soon':'text-muted'} text-sm">${dl!==null?(dl<=0?'<i class="fa-solid fa-triangle-exclamation"></i> Overdue':dl+'d'):fmtD(p.deadline)}</span></td><td><div class="dropdown"><button class="btn-icon" onclick="this.nextElementSibling.classList.toggle('open')"><i class="fa-solid fa-ellipsis"></i></button><div class="dd-menu"><button class="dd-item" onclick="modalEditProject('${p.id}')"><i class="fa-solid fa-pen"></i>Edit</button>${p.status!=='completed'?`<button class="dd-item" onclick="completeProj('${p.id}')"><i class="fa-solid fa-check"></i>Complete</button>`:''}<button class="dd-item danger" onclick="deleteProj('${p.id}')"><i class="fa-solid fa-trash"></i>Delete</button></div></div></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="7">No projects</td></tr>'}</tbody></table></div></div>`;
 }
 function modalAddProject(edit=null){
   const p=edit?db.projects.find(x=>x.id===edit):null;
-  openModal(`<div class="modal-head"><h3>${p?'Edit':'New'} Project</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="pf2"><div class="fg"><label>Name</label><input class="fi" name="name" value="${p?.name||''}" required></div><div class="fg"><label>Description</label><textarea class="fi" name="desc" rows="2">${p?.description||''}</textarea></div><div class="frow"><div class="fg"><label>Client</label><select class="fi" name="clientId" required><option value="">Select</option>${db.clients.map(c=>`<option value="${c.id}" ${p?.clientId===c.id?'selected':''}>${c.name}</option>`).join('')}</select></div><div class="fg"><label>Budget (₹)</label><input class="fi" type="number" name="budget" value="${p?.budget||''}" required></div></div><div class="frow"><div class="fg"><label>Editor</label><select class="fi" name="editorId"><option value="">Unassigned</option>${db.users.filter(u=>u.role==='editor'&&u.approved).map(e=>`<option value="${e.id}" ${p?.assignedEditorId===e.id?'selected':''}>${e.name}</option>`).join('')}</select></div><div class="fg"><label>Deadline</label><input class="fi" type="date" name="deadline" value="${p?.deadline||''}"></div></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveProj('${edit||''}')">${p?'Save':'Create'}</button></div>`);
-}
+  openModal(`<div class="modal-head"><h3>${p?'Edit':'New'} Project</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="pf2"><div class="fg"><label>Name</label><input class="fi" name="name" value="${p?.name||''}" required></div><div class="fg"><label>Description</label><textarea class="fi" name="desc" rows="2">${p?.description||''}</textarea></div><div class="frow"><div class="fg"><label>Client</label><select class="fi" name="clientId" required><option value="">Select</option>${db.clients.map(c=>`<option value="${c.id}" ${p?.clientId===c.id?'selected':''}>${c.name}</option>`).join('')}</select></div><div class="fg"><label>Budget (₹)</label><input class="fi" type="number" name="budget" value="${p?.budget||''}" required></div></div><div class="frow"><div class="fg"><label>Editor</label><select class="fi" name="editorId"><option value="">Unassigned</option>${db.users.filter(u=>u.role==='editor'&&u.approved).map(e=>`<option value="${e.id}" ${p?.assignedEditorId===e.id?'selected':''}>${e.name}</option>`).join('')}</select></div><div class="fg"><label>Deadline</label><input class="fi" type="date" name="deadline" value="${p?.deadline||''}"></div></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="saveProj('${edit||''}')">${p?'Save':'Create'}</button></div>`);}
 function modalEditProject(id){modalAddProject(id);}
 function saveProj(eid){
   const f=new FormData($('#pf2'));
   if(eid){const p=db.projects.find(x=>x.id===eid);const old=p.assignedEditorId;Object.assign(p,{name:f.get('name'),description:f.get('desc'),clientId:f.get('clientId'),budget:+f.get('budget'),assignedEditorId:f.get('editorId')||null,deadline:f.get('deadline')});if(f.get('editorId')&&f.get('editorId')!==old){db.workAssignments.push({id:uid(),projectId:p.id,editorId:f.get('editorId'),description:p.description,deadline:p.deadline,status:'pending',createdAt:new Date().toISOString()});addNotif(f.get('editorId'),'Assigned',p.name);}DB.log('Edit Project',p.name);}
   else{const id=uid();db.projects.push({id,name:f.get('name'),description:f.get('desc'),clientId:f.get('clientId'),budget:+f.get('budget'),assignedEditorId:f.get('editorId')||null,status:'pending',deadline:f.get('deadline'),createdAt:new Date().toISOString()});if(f.get('editorId')){db.workAssignments.push({id:uid(),projectId:id,editorId:f.get('editorId'),description:f.get('desc'),deadline:f.get('deadline'),status:'pending',createdAt:new Date().toISOString()});addNotif(f.get('editorId'),'Assigned',f.get('name'));}DB.log('Add Project',f.get('name'));}
-  DB.save('projects');DB.save('workAssignments');closeModals();render();toast('success','Done',eid?'Updated':'Created');
+  DB.save('projects');DB.save('workAssignments');closeModals();render();toast('success','Done');
 }
-function completeProj(id){const p=db.projects.find(x=>x.id===id);if(!p)return;p.status='completed';db.workAssignments.filter(w=>w.projectId===id).forEach(w=>w.status='completed');db.invoices.push({id:uid(),clientId:p.clientId,projectId:p.id,editorId:p.assignedEditorId,amount:p.budget,status:'unpaid',date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Complete Project',p.name);DB.saveAll();render();toast('success','Completed','Invoice auto-created');}
-function deleteProj(id){openModal(`<div class="modal-head"><h3>Delete Project</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Removes project and all related data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(x=>x.id!=='${id}');db.workAssignments=db.workAssignments.filter(w=>w.projectId!=='${id}');db.files=db.files.filter(f=>f.projectId!=='${id}');DB.saveAll();closeModals();render();toast('success','Deleted','Removed')">Delete</button></div>`);}
+function completeProj(id){const p=db.projects.find(x=>x.id===id);if(!p)return;p.status='completed';db.workAssignments.filter(w=>w.projectId===id).forEach(w=>w.status='completed');db.invoices.push({id:uid(),clientId:p.clientId,projectId:p.id,editorId:p.assignedEditorId,amount:p.budget,status:'unpaid',date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Complete',p.name);DB.saveAll();render();toast('success','Completed','Invoice created');}
+function deleteProj(id){openModal(`<div class="modal-head"><h3>Delete</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted">Removes project and related data.</p></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-danger" onclick="db.projects=db.projects.filter(x=>x.id!=='${id}');db.workAssignments=db.workAssignments.filter(w=>w.projectId!=='${id}');db.files=db.files.filter(f=>f.projectId!=='${id}');DB.saveAll();closeModals();render();toast('success','Deleted')">Delete</button></div>`);}
 
-// ── Assignments ──
-function pgAssignments(){
-  return `<div class="ph"><div><h1>Assignments</h1><p>${db.workAssignments.length} total</p></div></div>
+/* ── Assignments ── */
+function pgAssign(){
+  return`<div class="ph"><div><h1>Assignments</h1><p>${db.workAssignments.length} total</p></div></div>
   <div class="tabs"><button class="tab-btn active" onclick="filterWA('all',this)">All</button><button class="tab-btn" onclick="filterWA('pending',this)">Pending</button><button class="tab-btn" onclick="filterWA('in-progress',this)">In Progress</button><button class="tab-btn" onclick="filterWA('completed',this)">Completed</button></div>
   <div id="waList">${rWACards(db.workAssignments)}</div>`;
 }
 function filterWA(s,btn){$$('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');$('#waList').innerHTML=rWACards(s==='all'?db.workAssignments:db.workAssignments.filter(w=>w.status===s));}
 function rWACards(items){
-  if(!items.length)return '<div style="text-align:center;padding:36px;color:var(--fg3)">None found</div>';
-  return items.slice().reverse().map(w=>{const p=db.projects.find(x=>x.id===w.projectId);const e=db.users.find(x=>x.id===w.editorId);const dl=dlLeft(w.deadline);const files=db.files.filter(f=>f.assignmentId===w.id);return `<div class="wk"><div class="wk-head"><div class="wk-title">${p?.name||'Unknown'}</div><span class="badge bg-${w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow'}">${w.status}</span></div><div class="wk-desc">${w.description||'No description'}</div><div class="wk-meta"><span><i class="fa-solid fa-user"></i>${e?.name||'Unassigned'}</span><span><i class="fa-solid fa-calendar"></i><span class="${dl!==null&&dl<=3?'dl-soon':'dl-ok'}">${dl!==null?(dl<=0?'Overdue':dl+'d'):fmtD(w.deadline)}</span></span><span><i class="fa-solid fa-paperclip"></i>${files.length} files</span></div>${w.status!=='completed'?`<div class="wk-actions"><button class="btn btn-sm btn-ghost" onclick="modalCreateInv('${w.projectId}')"><i class="fa-solid fa-file-invoice-dollar"></i>Invoice</button></div>`:''}</div>`;}).join('');
+  if(!items.length)return'<div style="text-align:center;padding:36px;color:var(--fg3)">None found</div>';
+  return items.slice().reverse().map(w=>{const p=db.projects.find(x=>x.id===w.projectId);const e=db.users.find(x=>x.id===w.editorId);const dl=dlLeft(w.deadline);const fl=db.files.filter(f=>f.assignmentId===w.id);return`<div class="wk"><div class="wk-head"><div class="wk-title">${p?.name||'Unknown'}</div><span class="badge bg-${w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow'}">${w.status}</span></div><div class="wk-desc">${w.description||''}</div><div class="wk-meta"><span><i class="fa-solid fa-user"></i>${e?.name||'Unassigned'}</span><span><i class="fa-solid fa-calendar"></i><span class="${dl!==null&&dl<=3?'dl-soon':'dl-ok'}">${dl!==null?(dl<=0?'Overdue':dl+'d'):fmtD(w.deadline)}</span></span><span><i class="fa-solid fa-paperclip"></i>${fl.length} files</span></div>${w.status!=='completed'?`<div class="wk-actions"><button class="btn btn-sm btn-ghost" onclick="modalCreateInv('${w.projectId}')"><i class="fa-solid fa-file-invoice-dollar"></i>Invoice</button></div>`:''}</div>`;}).join('');
 }
-function modalCreateInv(pid){const p=db.projects.find(x=>x.id===pid);if(!p)return;const cl=db.clients.find(c=>c.id===p.clientId);openModal(`<div class="modal-head"><h3>Create Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted mb-4">${p.name} — ${cl?.name||'—'}</p><div class="frow"><div class="fg"><label>Amount (₹)</label><input class="fi" type="number" id="iAmt" value="${p.budget}"></div><div class="fg"><label>Due Date</label><input class="fi" type="date" id="iDate"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="db.invoices.push({id:uid(),clientId:'${p.clientId}',projectId:'${pid}',editorId:p.assignedEditorId,amount:parseFloat($('#iAmt').value)||${p.budget},status:'unpaid',date:$('#iDate').value||new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Create Invoice','${p.name}');DB.save('invoices');closeModals();render();toast('success','Created','Invoice added')">Create</button></div>`);}
+function modalCreateInv(pid){const p=db.projects.find(x=>x.id===pid);if(!p)return;const cl=db.clients.find(c=>c.id===p.clientId);openModal(`<div class="modal-head"><h3>Create Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><p class="text-muted mb-4">${p.name} — ${cl?.name||''}</p><div class="frow"><div class="fg"><label>Amount (₹)</label><input class="fi" type="number" id="iAmt" value="${p.budget}"></div><div class="fg"><label>Due Date</label><input class="fi" type="date" id="iDate"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="db.invoices.push({id:uid(),clientId:'${p.clientId}',projectId:'${pid}',editorId:p.assignedEditorId,amount:parseFloat($('#iAmt').value)||${p.budget},status:'unpaid',date:$('#iDate').value||new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Invoice',p.name);DB.save('invoices');closeModals();render();toast('success','Created')">Create</button></div>`);}
 
-// ── Invoices ──
-function pgInvoices(){
+/* ── Invoices ── */
+function pgInv(){
   const paid=db.invoices.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
   const unp=db.invoices.filter(i=>i.status==='unpaid').reduce((s,i)=>s+i.amount,0);
   const items=searchFilter(db.invoices,['id']);
-  return `<div class="ph"><div><h1>Invoices</h1><p>Payment tracking</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('invoices','invoices',['id','clientId','projectId','amount','status','date'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalManualInv()"><i class="fa-solid fa-plus"></i>New Invoice</button></div></div>
+  return`<div class="ph"><div><h1>Invoices</h1><p>Payment tracking</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="exportCSV('invoices',['id','clientId','projectId','amount','status','date'])"><i class="fa-solid fa-download"></i>Export</button><button class="btn btn-primary" onclick="modalManualInv()"><i class="fa-solid fa-plus"></i>New Invoice</button></div></div>
   <div class="stats"><div class="stat"><div class="stat-top"><span class="stat-label">Collected</span><div class="stat-icon si-2"><i class="fa-solid fa-check-circle"></i></div></div><div class="stat-val" style="color:var(--accent2)">${fmtM(paid)}</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Pending</span><div class="stat-icon si-3"><i class="fa-solid fa-clock"></i></div></div><div class="stat-val" style="color:var(--warning)">${fmtM(unp)}</div></div></div>
-  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Invoice</th><th>Client</th><th>Project</th><th>Amount</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(inv=>{const cl=db.clients.find(c=>c.id===inv.clientId);const pr=db.projects.find(p=>p.id===inv.projectId);return `<tr><td style="font-family:'Space Grotesk';font-weight:600">#${inv.id.slice(-5).toUpperCase()}</td><td>${cl?.name||'—'}</td><td class="text-muted">${pr?.name||'—'}</td><td style="font-weight:600">${fmtM(inv.amount)}</td><td class="text-muted">${fmtD(inv.date)}</td><td><span class="badge bg-${inv.status==='paid'?'green':'yellow'}">${inv.status}</span></td><td style="display:flex;gap:4px">${inv.status==='unpaid'?`<button class="btn btn-sm btn-success" onclick="markPaid('${inv.id}')"><i class="fa-solid fa-check"></i></button>`:''}<button class="btn-icon" onclick="printInvoice('${inv.id}')" title="Print"><i class="fa-solid fa-print"></i></button></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="7">No invoices</td></tr>'}</tbody></table></div></div>`;
+  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Invoice</th><th>Client</th><th>Project</th><th>Amount</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${items.length?items.map(inv=>{const cl=db.clients.find(c=>c.id===inv.clientId);const pr=db.projects.find(p=>p.id===inv.projectId);return`<tr><td style="font-family:'Space Grotesk';font-weight:600">#${inv.id.slice(-5).toUpperCase()}</td><td>${cl?.name||'—'}</td><td class="text-muted">${pr?.name||'—'}</td><td style="font-weight:600">${fmtM(inv.amount)}</td><td class="text-muted">${fmtD(inv.date)}</td><td><span class="badge bg-${inv.status==='paid'?'green':'yellow'}">${inv.status}</span></td><td style="display:flex;gap:4px">${inv.status==='unpaid'?`<button class="btn btn-sm btn-success" onclick="markPaid('${inv.id}')"><i class="fa-solid fa-check"></i></button>`:''}<button class="btn-icon" onclick="printInvoice('${inv.id}')" title="Print"><i class="fa-solid fa-print"></i></button></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="7">No invoices</td></tr>'}</tbody></table></div></div>`;
 }
-function modalManualInv(){openModal(`<div class="modal-head"><h3>New Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Client</label><select class="fi" id="miCl"><option value="">Select</option>${db.clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select></div><div class="fg"><label>Project</label><select class="fi" id="miPr"><option value="">Select</option>${db.projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div><div class="frow"><div class="fg"><label>Amount (₹)</label><input class="fi" type="number" id="miAmt"></div><div class="fg"><label>Date</label><input class="fi" type="date" id="miDate"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const cl=$('#miCl').value,pr=$('#miPr').value,amt=parseFloat($('#miAmt').value);if(!cl||!amt){toast('error','Error','Client & amount required');return;}db.invoices.push({id:uid(),clientId:cl,projectId:pr,editorId:null,amount:amt,status:'unpaid',date:$('#miDate').value||new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Create Invoice','Manual: '+amt);DB.save('invoices');closeModals();render();toast('success','Created','Invoice added')">Create</button></div>`);}
-function markPaid(id){const inv=db.invoices.find(i=>i.id===id);if(!inv)return;inv.status='paid';DB.log('Mark Paid','#'+inv.id.slice(-5).toUpperCase());DB.save('invoices');render();toast('success','Paid','Invoice marked paid');}
+function modalManualInv(){openModal(`<div class="modal-head"><h3>New Invoice</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Client</label><select class="fi" id="miCl"><option value="">Select</option>${db.clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select></div><div class="fg"><label>Project</label><select class="fi" id="miPr"><option value="">Select</option>${db.projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div><div class="frow"><div class="fg"><label>Amount (₹)</label><input class="fi" type="number" id="miAmt"></div><div class="fg"><label>Date</label><input class="fi" type="date" id="miDate"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const cl=$('#miCl').value,pr=$('#miPr').value,amt=parseFloat($('#miAmt').value);if(!cl||!amt){toast('error','Error','Client & amount required');return;}db.invoices.push({id:uid(),clientId:cl,projectId:pr,editorId:null,amount:amt,status:'unpaid',date:$('#miDate').value||new Date().toISOString().split('T')[0],createdAt:new Date().toISOString()});DB.log('Invoice','Manual: '+amt);DB.save('invoices');closeModals();render();toast('success','Created')">Create</button></div>`);}
+function markPaid(id){const inv=db.invoices.find(i=>i.id===id);if(!inv)return;inv.status='paid';DB.log('Paid','#'+inv.id.slice(-5).toUpperCase());DB.save('invoices');render();toast('success','Paid');}
 
-// ── Activity Log ──
-function pgActivity(){
+/* ── Activity ── */
+function pgAct(){
   const logs=(db.activityLog||[]).slice(0,50);
-  return `<div class="ph"><div><h1>Activity Log</h1><p>Audit trail of all actions</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="if(confirm('Clear all logs?')){db.activityLog=[];DB.save('activityLog');render();}"><i class="fa-solid fa-trash"></i>Clear</button></div></div>
-  <div class="card"><div class="card-body">${logs.length?logs.map(l=>{const u=db.users.find(x=>x.id===l.userId);return `<div class="log-item"><div class="log-dot"></div><div class="log-text"><strong>${u?.name||'System'}</strong> ${l.details||l.action}</div><div class="log-time">${fmtT(l.createdAt)}</div></div>`;}).join(''):'<div style="text-align:center;padding:36px;color:var(--fg3)">No activity yet</div>'}</div></div>`;
+  return`<div class="ph"><div><h1>Activity Log</h1><p>Audit trail</p></div><div class="ph-actions"><button class="btn btn-ghost" onclick="db.activityLog=[];DB.save('activityLog');render();toast('success','Cleared')"><i class="fa-solid fa-trash"></i>Clear</button></div></div>
+  <div class="card"><div class="card-body">${logs.length?logs.map(l=>{const u=db.users.find(x=>x.id===l.userId);return`<div class="log-item"><div class="log-dot"></div><div class="log-text"><strong>${u?.name||'System'}</strong> ${l.details||l.action}</div><div class="log-time">${fmtT(l.createdAt)}</div></div>`;}).join(''):'<div style="text-align:center;padding:36px;color:var(--fg3)">No activity</div>'}</div></div>`;
 }
 
-// ── Quick Notes ──
+/* ── Notes ── */
 function pgNotes(){
-  const myNotes=(db.notes||[]).filter(n=>n.userId===user.id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  return `<div class="ph"><div><h1>Quick Notes</h1><p>${myNotes.length} notes</p></div><div class="ph-actions"><button class="btn btn-primary" onclick="modalAddNote()"><i class="fa-solid fa-plus"></i>New Note</button></div></div>
-  ${myNotes.length?myNotes.map(n=>`<div class="note"><div class="note-head"><div class="note-title">${n.title}</div><button class="btn-icon" onclick="deleteNote('${n.id}')"><i class="fa-solid fa-trash" style="font-size:.75rem"></i></button></div><div class="note-body">${n.content}</div><div class="note-time">${fmtT(n.createdAt)}</div></div>`).join(''):'<div class="card"><div class="card-body" style="text-align:center;padding:36px;color:var(--fg3)">No notes yet</div></div>'}`;
+  const my=(db.notes||[]).filter(n=>n.userId===user.id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  return`<div class="ph"><div><h1>Quick Notes</h1><p>${my.length} notes</p></div><div class="ph-actions"><button class="btn btn-primary" onclick="modalAddNote()"><i class="fa-solid fa-plus"></i>New Note</button></div></div>
+  ${my.length?my.map(n=>`<div class="note"><div class="note-head"><div class="note-title">${n.title}</div><button class="btn-icon" onclick="db.notes=db.notes.filter(x=>x.id!=='${n.id}');DB.save('notes');render();toast('success','Deleted')"><i class="fa-solid fa-trash" style="font-size:.75rem"></i></button></div><div class="note-body">${n.content}</div><div class="note-time">${fmtT(n.createdAt)}</div></div>`).join(''):'<div class="card"><div class="card-body" style="text-align:center;padding:36px;color:var(--fg3)">No notes yet</div></div>'}`;
 }
-function modalAddNote(){openModal(`<div class="modal-head"><h3>New Note</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Title</label><input class="fi" id="nTitle" placeholder="Note title"></div><div class="fg"><label>Content</label><textarea class="fi" id="nContent" rows="4" placeholder="Write your note..."></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="if(!db.notes)db.notes=[];db.notes.push({id:uid(),userId:user.id,title:$('#nTitle').value||'Untitled',content:$('#nContent').value,createdAt:new Date().toISOString()});DB.save('notes');closeModals();render();toast('success','Saved','Note created')">Save</button></div>`);}
-function deleteNote(id){db.notes=db.notes.filter(n=>n.id!==id);DB.save('notes');render();toast('success','Deleted','Note removed');}
+function modalAddNote(){openModal(`<div class="modal-head"><h3>New Note</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><div class="fg"><label>Title</label><input class="fi" id="nTitle" placeholder="Note title"></div><div class="fg"><label>Content</label><textarea class="fi" id="nContent" rows="4" placeholder="Write..."></textarea></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="if(!db.notes)db.notes=[];db.notes.push({id:uid(),userId:user.id,title:$('#nTitle').value||'Untitled',content:$('#nContent').value,createdAt:new Date().toISOString()});DB.save('notes');closeModals();render();toast('success','Saved')">Save</button></div>`);}
 
-// ── Tickets ──
-function pgTickets(){
-  return `<div class="ph"><div><h1>Support Tickets</h1><p>${db.tickets.filter(t=>!t.resolved).length} open</p></div></div>
-  ${db.tickets.length?db.tickets.slice().reverse().map(t=>{const ed=db.users.find(u=>u.id===t.userId);return `<div class="wk" style="border-left:3px solid ${t.priority==='high'?'var(--danger)':t.priority==='medium'?'var(--warning)':'var(--success)'}"><div class="wk-head"><div><div class="wk-title">${t.subject}</div><div class="text-sm text-muted mt-2">From: ${ed?.name||'Unknown'} — ${fmtT(t.createdAt)}</div></div><div style="display:flex;gap:6px;align-items:center"><span class="badge bg-${t.priority==='high'?'red':t.priority==='medium'?'yellow':'green'}">${t.priority}</span>${t.resolved?'<span class="badge bg-green">Resolved</span>':`<button class="btn btn-sm btn-success" onclick="resolveTicket('${t.id}')"><i class="fa-solid fa-check"></i></button>`}</div></div><div class="wk-desc">${t.description}</div></div>`;}).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">No tickets</div>'}`;
+/* ── Tickets ── */
+function pgTix(){
+  return`<div class="ph"><div><h1>Support Tickets</h1><p>${db.tickets.filter(t=>!t.resolved).length} open</p></div></div>
+  ${db.tickets.length?db.tickets.slice().reverse().map(t=>{const ed=db.users.find(u=>u.id===t.userId);return`<div class="wk" style="border-left:3px solid ${t.priority==='high'?'var(--danger)':t.priority==='medium'?'var(--warning)':'var(--success)'}"><div class="wk-head"><div><div class="wk-title">${t.subject}</div><div class="text-sm text-muted mt-2">From: ${ed?.name||'Unknown'} — ${fmtT(t.createdAt)}</div></div><div style="display:flex;gap:6px;align-items:center"><span class="badge bg-${t.priority==='high'?'red':t.priority==='medium'?'yellow':'green'}">${t.priority}</span>${t.resolved?'<span class="badge bg-green">Resolved</span>':`<button class="btn btn-sm btn-success" onclick="resolveTix('${t.id}')"><i class="fa-solid fa-check"></i></button>`}</div></div><div class="wk-desc">${t.description}</div></div>`;}).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">No tickets</div>'}`;
 }
-function resolveTicket(id){const t=db.tickets.find(x=>x.id===id);if(!t)return;t.resolved=true;addNotif(t.userId,'Resolved',t.subject);DB.log('Resolve Ticket',t.subject);DB.save('tickets');render();toast('success','Resolved');}
+function resolveTix(id){const t=db.tickets.find(x=>x.id===id);if(!t)return;t.resolved=true;addNotif(t.userId,'Resolved',t.subject);DB.log('Resolve',t.subject);DB.save('tickets');render();toast('success','Resolved');}
 
-// ═══════════ EDITOR PAGES ═══════════
-
-function pgEDash(){
+/* ═══════════ EDITOR ═══════════ */
+function pgED(){
   const my=db.workAssignments.filter(w=>w.editorId===user.id);
-  const pen=my.filter(w=>w.status==='pending').length;
-  const inp=my.filter(w=>w.status==='in-progress').length;
-  const don=my.filter(w=>w.status==='completed').length;
-  return `<div class="ph"><div><h1>Dashboard</h1><p>Welcome, ${user.name}</p></div></div>
-  <div class="stats"><div class="stat"><div class="stat-top"><span class="stat-label">Pending</span><div class="stat-icon si-3"><i class="fa-solid fa-hourglass-half"></i></div></div><div class="stat-val">${pen}</div></div><div class="stat"><div class="stat-top"><span class="stat-label">In Progress</span><div class="stat-icon si-4"><i class="fa-solid fa-spinner"></i></div></div><div class="stat-val">${inp}</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Completed</span><div class="stat-icon si-2"><i class="fa-solid fa-check-circle"></i></div></div><div class="stat-val" style="color:var(--accent2)">${don}</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Pending Salary</span><div class="stat-icon si-1"><i class="fa-solid fa-indian-rupee-sign"></i></div></div><div class="stat-val" style="color:var(--accent)">${fmtM(user.pendingSalary||0)}</div></div></div>
-  <div class="card"><div class="card-head"><h3>Recent Work</h3></div><div class="card-body">${my.length?my.slice(-4).reverse().map(rEdWK).join(''):'<div style="text-align:center;padding:28px;color:var(--fg3)">No work assigned yet</div>'}</div></div>`;
+  return`<div class="ph"><div><h1>Dashboard</h1><p>Welcome, ${user.name}</p></div></div>
+  <div class="stats"><div class="stat"><div class="stat-top"><span class="stat-label">Pending</span><div class="stat-icon si-3"><i class="fa-solid fa-hourglass-half"></i></div></div><div class="stat-val">${my.filter(w=>w.status==='pending').length}</div></div><div class="stat"><div class="stat-top"><span class="stat-label">In Progress</span><div class="stat-icon si-4"><i class="fa-solid fa-spinner"></i></div></div><div class="stat-val">${my.filter(w=>w.status==='in-progress').length}</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Completed</span><div class="stat-icon si-2"><i class="fa-solid fa-check-circle"></i></div></div><div class="stat-val" style="color:var(--accent2)">${my.filter(w=>w.status==='completed').length}</div></div><div class="stat"><div class="stat-top"><span class="stat-label">Pending Salary</span><div class="stat-icon si-1"><i class="fa-solid fa-indian-rupee-sign"></i></div></div><div class="stat-val" style="color:var(--accent)">${fmtM(user.pendingSalary||0)}</div></div></div>
+  <div class="card"><div class="card-head"><h3>Recent Work</h3></div><div class="card-body">${my.length?my.slice(-4).reverse().map(rEWK).join(''):'<div style="text-align:center;padding:28px;color:var(--fg3)">No work assigned</div>'}</div></div>`;
 }
+function rEWK(w){const p=db.projects.find(x=>x.id===w.projectId);const dl=dlLeft(w.deadline);return`<div class="wk"><div class="wk-head"><div class="wk-title">${p?.name||'Unknown'}</div><span class="badge bg-${w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow'}">${w.status}</span></div><div class="wk-desc">${w.description||''}</div><div class="wk-meta"><span><i class="fa-solid fa-calendar"></i><span class="${dl!==null&&dl<=3?'dl-soon':'dl-ok'}">${dl!==null?(dl<=0?'Overdue':dl+'d'):fmtD(w.deadline)}</span></span></div>${w.status==='pending'?`<div class="wk-actions"><button class="btn btn-sm btn-primary" onclick="acceptW('${w.id}')"><i class="fa-solid fa-check"></i>Accept</button><button class="btn btn-sm btn-danger" onclick="rejectW('${w.id}')"><i class="fa-solid fa-times"></i>Reject</button></div>`:w.status==='in-progress'?`<div class="wk-actions"><button class="btn btn-sm btn-primary" onclick="navigate('submit-work')"><i class="fa-solid fa-cloud-arrow-up"></i>Submit</button></div>`:''}</div>`;}
 
-function rEdWK(w){const p=db.projects.find(x=>x.id===w.projectId);const dl=dlLeft(w.deadline);return `<div class="wk"><div class="wk-head"><div class="wk-title">${p?.name||'Unknown'}</div><span class="badge bg-${w.status==='completed'?'green':w.status==='in-progress'?'blue':'yellow'}">${w.status}</span></div><div class="wk-desc">${w.description||''}</div><div class="wk-meta"><span><i class="fa-solid fa-calendar"></i><span class="${dl!==null&&dl<=3?'dl-soon':'dl-ok'}">${dl!==null?(dl<=0?'Overdue':dl+'d'):fmtD(w.deadline)}</span></span></div>${w.status==='pending'?`<div class="wk-actions"><button class="btn btn-sm btn-primary" onclick="acceptW('${w.id}')"><i class="fa-solid fa-check"></i>Accept</button><button class="btn btn-sm btn-danger" onclick="rejectW('${w.id}')"><i class="fa-solid fa-times"></i>Reject</button></div>`:w.status==='in-progress'?`<div class="wk-actions"><button class="btn btn-sm btn-primary" onclick="navigate('submit-work')"><i class="fa-solid fa-cloud-arrow-up"></i>Submit</button></div>`:''}</div>`;}
-
-function pgMyWork(){
+function pgMW(){
   const my=db.workAssignments.filter(w=>w.editorId===user.id);
-  return `<div class="ph"><div><h1>My Work</h1><p>${my.length} assignments</p></div></div>
+  return`<div class="ph"><div><h1>My Work</h1><p>${my.length} assignments</p></div></div>
   <div class="tabs"><button class="tab-btn active" onclick="filterMW('all',this)">All</button><button class="tab-btn" onclick="filterMW('pending',this)">Pending</button><button class="tab-btn" onclick="filterMW('in-progress',this)">In Progress</button><button class="tab-btn" onclick="filterMW('completed',this)">Completed</button></div>
-  <div id="mwList">${my.length?my.slice().reverse().map(rEdWK).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">No work assigned</div>'}</div>`;
+  <div id="mwList">${my.length?my.slice().reverse().map(rEWK).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">No work</div>'}</div>`;
 }
-function filterMW(s,btn){$$('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const my=db.workAssignments.filter(w=>w.editorId===user.id);const f=s==='all'?my:my.filter(w=>w.status===s);$('#mwList').innerHTML=f.length?f.slice().reverse().map(rEdWK).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">None in this category</div>';}
+function filterMW(s,btn){$$('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const my=db.workAssignments.filter(w=>w.editorId===user.id);const f=s==='all'?my:my.filter(w=>w.status===s);$('#mwList').innerHTML=f.length?f.slice().reverse().map(rEWK).join(''):'<div style="text-align:center;padding:48px;color:var(--fg3)">None</div>';}
+function acceptW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='in-progress';addNotif('u1','Accepted',user.name+': '+(db.projects.find(p=>p.id===w.projectId)?.name||''));DB.log('Accept',w.projectId);DB.save('workAssignments');render();toast('success','Accepted');}
+function rejectW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='rejected';addNotif('u1','Rejected',user.name+': '+(db.projects.find(p=>p.id===w.projectId)?.name||''));DB.log('Reject',w.projectId);DB.save('workAssignments');render();toast('info','Rejected');}
 
-function acceptW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='in-progress';addNotif('u1','Accepted',`${user.name}: ${db.projects.find(p=>p.id===w.projectId)?.name||''}`);DB.log('Accept Work',w.projectId);DB.save('workAssignments');render();toast('success','Accepted');}
-function rejectW(id){const w=db.workAssignments.find(x=>x.id===id);if(!w)return;w.status='rejected';addNotif('u1','Rejected',`${user.name}: ${db.projects.find(p=>p.id===w.projectId)?.name||''}`);DB.log('Reject Work',w.projectId);DB.save('workAssignments');render();toast('info','Rejected');}
-
-function pgSubmitWork(){
-  const inp=db.workAssignments.filter(w=>w.editorId===user.id&&w.status==='in-progress');
-  uploadedFiles=[];
-  return `<div class="ph"><div><h1>Submit Work</h1><p>Upload completed files</p></div></div>
-  ${inp.length?`<div class="card"><div class="card-head"><h3>Select Assignment</h3></div><div class="card-body"><div class="fg"><select class="fi" id="swId">${inp.map(w=>{const p=db.projects.find(x=>x.id===w.projectId);return `<option value="${w.id}">${p?.name||'Unknown'}</option>`;}).join('')}</select></div></div></div>`:'<div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--fg3)">No in-progress work</div></div>'}
-  <div class="card mt-4"><div class="card-head"><h3>Upload Files</h3></div><div class="card-body"><div class="upload-zone" onclick="$('#fInput').click()"><i class="fa-solid fa-cloud-arrow-up"></i><p>Click or drag files here</p><span>PNG, JPG, PDF, PSD, AI — Max 50MB</span></div><input type="file" id="fInput" multiple accept=".png,.jpg,.jpeg,.pdf,.psd,.ai" style="display:none" onchange="handleFiles(this.files)"><div class="file-list" id="fList"></div></div></div>
+function pgSW(){
+  const inp=db.workAssignments.filter(w=>w.editorId===user.id&&w.status==='in-progress');uploadedFiles=[];
+  return`<div class="ph"><div><h1>Submit Work</h1><p>Upload completed files</p></div></div>
+  ${inp.length?`<div class="card"><div class="card-head"><h3>Select Assignment</h3></div><div class="card-body"><div class="fg"><select class="fi" id="swId">${inp.map(w=>{const p=db.projects.find(x=>x.id===w.projectId);return`<option value="${w.id}">${p?.name||'Unknown'}</option>`;}).join('')}</select></div></div></div>`:'<div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--fg3)">No in-progress work</div></div>'}
+  <div class="card mt-4"><div class="card-head"><h3>Upload Files</h3></div><div class="card-body"><div class="upload-zone" onclick="$('#fInput').click()"><i class="fa-solid fa-cloud-arrow-up"></i><p>Click or drag files</p><span>PNG, JPG, PDF, PSD, AI — Max 50MB</span></div><input type="file" id="fInput" multiple accept=".png,.jpg,.jpeg,.pdf,.psd,.ai" style="display:none" onchange="handleFiles(this.files)"><div class="file-list" id="fList"></div></div></div>
   <div class="card mt-4"><div class="card-head"><h3>Notes</h3></div><div class="card-body"><textarea class="fi" id="swNotes" rows="3" placeholder="Notes for admin..."></textarea></div></div>
   <div class="mt-4"><button class="btn btn-primary" onclick="submitWork()"><i class="fa-solid fa-paper-plane"></i>Submit</button></div>`;
 }
 function handleFiles(files){Array.from(files).forEach(f=>{if(f.size>52428800){toast('error','Too Large',f.name);return;}uploadedFiles.push({name:f.name,size:f.size,type:f.type});});renderFL();}
 function renderFL(){$('#fList').innerHTML=uploadedFiles.map((f,i)=>`<div class="file-item"><i class="fa-solid fa-file"></i><span class="fn">${f.name}</span><span class="text-muted text-sm">${(f.size/1024).toFixed(0)}KB</span><button class="fr" onclick="uploadedFiles.splice(${i},1);renderFL()"><i class="fa-solid fa-times"></i></button></div>`).join('');}
-function submitWork(){const wid=$('#swId')?.value;if(!wid){toast('error','Error','Select work');return;}if(!uploadedFiles.length){toast('error','Error','Upload files');return;}const w=db.workAssignments.find(x=>x.id===wid);if(!w)return;if(!db.files)db.files=[];uploadedFiles.forEach(f=>{db.files.push({id:uid(),assignmentId:wid,projectId:w.projectId,editorId:user.id,name:f.name,size:f.size,type:f.type,uploadedAt:new Date().toISOString()});});w.status='completed';const p=db.projects.find(x=>x.id===w.projectId);if(p)p.status='completed';addNotif('u1','Work Submitted',`${user.name}: ${p?.name||''}`);DB.log('Submit Work',p?.name||'');DB.saveAll();render();toast('success','Submitted','Work sent for review');}
+function submitWork(){const wid=$('#swId')?.value;if(!wid){toast('error','Error','Select work');return;}if(!uploadedFiles.length){toast('error','Error','Upload files');return;}const w=db.workAssignments.find(x=>x.id===wid);if(!w)return;if(!db.files)db.files=[];uploadedFiles.forEach(f=>{db.files.push({id:uid(),assignmentId:wid,projectId:w.projectId,editorId:user.id,name:f.name,size:f.size,type:f.type,uploadedAt:new Date().toISOString()});});w.status='completed';const p=db.projects.find(x=>x.id===w.projectId);if(p)p.status='completed';addNotif('u1','Submitted',user.name+': '+(p?.name||''));DB.log('Submit',p?.name||'');DB.saveAll();render();toast('success','Submitted');}
 
-function pgMyInv(){
+function pgMI(){
   const my=db.invoices.filter(i=>i.editorId===user.id);
-  return `<div class="ph"><div><h1>My Invoices</h1><p>Payment history</p></div></div>
-  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Invoice</th><th>Project</th><th>Amount</th><th>Date</th><th>Status</th><th>Print</th></tr></thead><tbody>${my.length?my.map(inv=>{const pr=db.projects.find(p=>p.id===inv.projectId);return `<tr><td style="font-family:'Space Grotesk';font-weight:600">#${inv.id.slice(-5).toUpperCase()}</td><td>${pr?.name||'—'}</td><td style="font-weight:600">${fmtM(inv.amount)}</td><td class="text-muted">${fmtD(inv.date)}</td><td><span class="badge bg-${inv.status==='paid'?'green':'yellow'}">${inv.status}</span></td><td><button class="btn-icon" onclick="printInvoice('${inv.id}')"><i class="fa-solid fa-print"></i></button></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="6">No invoices</td></tr>'}</tbody></table></div></div>`;
+  return`<div class="ph"><div><h1>My Invoices</h1><p>Payment history</p></div></div>
+  <div class="card"><div class="card-body" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>Invoice</th><th>Project</th><th>Amount</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>${my.length?my.map(inv=>{const pr=db.projects.find(p=>p.id===inv.projectId);return`<tr><td style="font-family:'Space Grotesk';font-weight:600">#${inv.id.slice(-5).toUpperCase()}</td><td>${pr?.name||'—'}</td><td style="font-weight:600">${fmtM(inv.amount)}</td><td class="text-muted">${fmtD(inv.date)}</td><td><span class="badge bg-${inv.status==='paid'?'green':'yellow'}">${inv.status}</span></td><td><button class="btn-icon" onclick="printInvoice('${inv.id}')"><i class="fa-solid fa-print"></i></button></td></tr>`;}).join(''):'<tr class="empty-row"><td colspan="6">No invoices</td></tr>'}</tbody></table></div></div>`;
 }
 
-function pgSupport(){
+function pgSup(){
   const my=db.tickets.filter(t=>t.userId===user.id);
-  return `<div class="ph"><div><h1>Get Help</h1><p>Submit a support ticket</p></div></div>
-  <div class="card"><div class="card-head"><h3>New Ticket</h3></div><div class="card-body"><div class="fg"><label>Subject</label><input class="fi" id="tSubj" placeholder="Brief description"></div><div class="fg"><label>Priority</label><select class="fi" id="tPri"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div><div class="fg"><label>Description</label><textarea class="fi" id="tDesc" rows="4" placeholder="Describe your issue..."></textarea></div><button class="btn btn-primary" onclick="const s=$('#tSubj').value.trim(),p=$('#tPri').value,d=$('#tDesc').value.trim();if(!s||!d){toast('error','Error','Fill all fields');return;}db.tickets.push({id:uid(),userId:user.id,subject:s,priority:p,description:d,resolved:false,createdAt:new Date().toISOString()});addNotif('u1','New Ticket',s);DB.log('Submit Ticket',s);DB.save('tickets');render();toast('success','Sent')"><i class="fa-solid fa-paper-plane"></i>Submit</button></div></div>
+  return`<div class="ph"><div><h1>Get Help</h1><p>Submit a ticket</p></div></div>
+  <div class="card"><div class="card-head"><h3>New Ticket</h3></div><div class="card-body"><div class="fg"><label>Subject</label><input class="fi" id="tSubj"></div><div class="fg"><label>Priority</label><select class="fi" id="tPri"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div><div class="fg"><label>Description</label><textarea class="fi" id="tDesc" rows="4"></textarea></div><button class="btn btn-primary" onclick="const s=$('#tSubj').value.trim(),p=$('#tPri').value,d=$('#tDesc').value.trim();if(!s||!d){toast('error','Error','Fill all');return;}db.tickets.push({id:uid(),userId:user.id,subject:s,priority:p,description:d,resolved:false,createdAt:new Date().toISOString()});addNotif('u1','Ticket',s);DB.log('Ticket',s);DB.save('tickets');render();toast('success','Sent')"><i class="fa-solid fa-paper-plane"></i>Submit</button></div></div>
   ${my.length?`<div class="card mt-4"><div class="card-head"><h3>My Tickets</h3></div><div class="card-body">${my.slice().reverse().map(t=>`<div class="wk" style="border-left:3px solid ${t.priority==='high'?'var(--danger)':t.priority==='medium'?'var(--warning)':'var(--success)'}"><div class="wk-head"><div class="wk-title">${t.subject}</div><div style="display:flex;gap:6px"><span class="badge bg-${t.priority==='high'?'red':t.priority==='medium'?'yellow':'green'}">${t.priority}</span>${t.resolved?'<span class="badge bg-green">Resolved</span>':'<span class="badge bg-yellow">Open</span>'}</div></div><div class="wk-desc">${t.description}</div><div class="text-sm text-muted">${fmtT(t.createdAt)}</div></div>`).join('')}</div></div>`:''}`;
 }
 
-// ═══════════ CHAT (Both) ═══════════
+/* ═══════════ CHAT ═══════════ */
 function pgChat(){
-  const contacts=db.users.filter(u=>u.id!==user.id);
-  return `<div class="chat-wrap"><div class="chat-list"><div class="chat-list-head"><h3>Messages</h3></div><div class="chat-contacts">${contacts.map(c=>{const last=getLM(user.id,c.id);return `<div class="chat-c ${chatWith===c.id?'active':''}" onclick="openChat('${c.id}',this)"><div class="sb-avatar" style="width:34px;height:34px;font-size:.7rem;flex-shrink:0">${c.avatar}</div><div class="chat-c-info"><div class="chat-c-name">${c.name}</div><div class="chat-c-prev">${last?last.text:'No messages'}</div></div><div class="chat-c-time">${last?fmtT(last.timestamp):''}</div></div>`;}).join('')}</div></div><div class="chat-main" id="chatMain"><div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--fg3)"><i class="fa-solid fa-comments" style="font-size:2.5rem;margin-bottom:14px;opacity:.25"></i><p>Select a conversation</p></div></div></div>`;
+  const ct=db.users.filter(u=>u.id!==user.id);
+  return`<div class="chat-wrap"><div class="chat-list"><div class="chat-list-head"><h3>Messages</h3></div><div class="chat-contacts">${ct.map(c=>{const l=getLM(user.id,c.id);return`<div class="chat-c ${chatWith===c.id?'active':''}" onclick="openChat('${c.id}',this)"><div class="sb-avatar" style="width:34px;height:34px;font-size:.7rem;flex-shrink:0">${c.avatar}</div><div class="chat-c-info"><div class="chat-c-name">${c.name}</div><div class="chat-c-prev">${l?l.text:'No messages'}</div></div><div class="chat-c-time">${l?fmtT(l.timestamp):''}</div></div>`;}).join('')}</div></div><div class="chat-main" id="chatMain"><div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--fg3)"><i class="fa-solid fa-comments" style="font-size:2.5rem;margin-bottom:14px;opacity:.25"></i><p>Select a conversation</p></div></div></div>`;
 }
 function getLM(u1,u2){const m=db.messages.filter(x=>(x.senderId===u1&&x.receiverId===u2)||(x.senderId===u2&&x.receiverId===u1)).sort((a,b)=>new Date(b.timestamp)-new Date(a.timestamp));return m[0];}
 function openChat(cid,el){
-  chatWith=cid;
-  $$('.chat-c').forEach(e=>e.classList.remove('active'));if(el)el.classList.add('active');
+  chatWith=cid;$$('.chat-c').forEach(e=>e.classList.remove('active'));if(el)el.classList.add('active');
   const other=db.users.find(u=>u.id===cid);
   const msgs=db.messages.filter(m=>(m.senderId===user.id&&m.receiverId===cid)||(m.senderId===cid&&m.receiverId===user.id)).sort((a,b)=>new Date(a.timestamp)-new Date(b.timestamp));
-  $('#chatMain').innerHTML=`<div class="chat-top"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${other.avatar}</div><div><div style="font-weight:500;font-size:.88rem">${other.name}</div><div class="text-sm text-muted">Online</div></div></div><div class="chat-msgs" id="chatMsgs">${msgs.length?msgs.map(m=>`<div class="msg ${m.senderId===user.id?'mine':''}"><div><div class="msg-b">${m.text}</div><div class="msg-t">${fmtT(m.timestamp)}</div></div></div>`).join(''):'<div style="text-align:center;color:var(--fg3);padding:36px">Say hello!</div>'}</div><div class="chat-iw"><input class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMsg('${cid}')"><button class="chat-send" onclick="sendMsg('${cid}')"><i class="fa-solid fa-paper-plane"></i></button></div>`;
+  $('#chatMain').innerHTML=`<div class="chat-top"><div class="sb-avatar" style="width:30px;height:30px;font-size:.65rem">${other.avatar}</div><div><div style="font-weight:500;font-size:.88rem">${other.name}</div><div class="text-sm text-muted">Online</div></div></div><div class="chat-msgs" id="chatMsgs">${msgs.length?msgs.map(m=>`<div class="msg ${m.senderId===user.id?'mine':''}"><div><div class="msg-b">${m.text}</div><div class="msg-t">${fmtT(m.timestamp)}</div></div></div>`).join(''):'<div style="text-align:center;color:var(--fg3);padding:36px">Say hello!</div>'}</div><div class="chat-iw"><input class="chat-input" id="chatInput" placeholder="Type..." onkeydown="if(event.key==='Enter')sendMsg('${cid}')"><button class="chat-send" onclick="sendMsg('${cid}')"><i class="fa-solid fa-paper-plane"></i></button></div>`;
   const el2=$('#chatMsgs');if(el2)el2.scrollTop=el2.scrollHeight;
 }
 function sendMsg(rid){const inp=$('#chatInput');if(!inp)return;const txt=inp.value.trim();if(!txt)return;db.messages.push({id:uid(),senderId:user.id,receiverId:rid,text:txt,timestamp:new Date().toISOString()});DB.save('messages');inp.value='';openChat(rid);}
 
-// ═══════════ PROFILE ═══════════
-function pgProfile(){
-  return `<div class="ph"><div><h1>Settings</h1><p>Manage your account</p></div></div>
+/* ═══════════ PROFILE ═══════════ */
+function pgProf(){
+  return`<div class="ph"><div><h1>Settings</h1><p>Manage your account</p></div></div>
   <div class="card"><div class="card-head"><h3>Profile</h3></div><div class="card-body"><form id="profileForm"><div class="frow"><div class="fg"><label>Name</label><input class="fi" value="${user.name}" ${user.role==='admin'?'readonly':''} id="pName"></div><div class="fg"><label>Email</label><input class="fi" value="${user.email}" readonly></div></div><div class="fg"><label>Phone</label><input class="fi" value="${user.phone||''}" id="pPhone"></div>${user.role==='editor'?`<div class="fg"><label>Portfolio</label><input class="fi" value="${user.portfolio||''}" id="pPort"></div><div class="fg"><label>Bio</label><textarea class="fi" id="pBio" rows="3">${user.bio||''}</textarea></div>`:''}<button type="submit" class="btn btn-primary mt-4"><i class="fa-solid fa-save"></i>Save</button></form></div></div>
   <div class="card mt-4"><div class="card-head"><h3>Change Password</h3></div><div class="card-body"><form id="pwForm"><div class="fg"><label>Current</label><input class="fi" type="password" id="pwC" required></div><div class="frow"><div class="fg"><label>New</label><input class="fi" type="password" id="pwN" required></div><div class="fg"><label>Confirm</label><input class="fi" type="password" id="pwF" required></div></div><button type="submit" class="btn btn-primary mt-4"><i class="fa-solid fa-key"></i>Update</button></form></div></div>
-  <div class="card mt-4"><div class="card-head"><h3>Google Sheets Connection</h3></div><div class="card-body"><p class="text-muted mb-4">Connected: <span class="${DB.url?'text-accent':'dl-soon'}">${DB.url?'Yes — synced':'No — using local storage'}</span></p><div class="fg"><label>Apps Script Web App URL</label><input class="fi" id="sheetUrl" value="${DB.url||''}" placeholder="https://script.google.com/macros/s/.../exec"></div><button class="btn btn-primary mt-2" onclick="DB.url=$('#sheetUrl').value.trim();DB.log('Config','Sheet URL updated');DB.save('activityLog');render();toast('success','Saved','URL updated. Data will sync on next action.')"><i class="fa-solid fa-link"></i>Save & Connect</button></div></div>
-  ${user.role==='admin'?`<div class="card mt-4" style="border-color:var(--danger)"><div class="card-head"><h3 style="color:var(--danger)">Danger Zone</h3></div><div class="card-body"><p class="text-muted mb-4">Permanently reset all data.</p><button class="btn btn-danger" onclick="openModal('<div class=\\'modal-head\\'><h3>Reset All</h3><button class=\\'modal-close\\' onclick=\\'closeModals()\\'>&times;</button></div><div class=\\'modal-body\\'><p class=\\'text-muted\\' style=\\'color:var(--danger)\\'>Type RESET to confirm.</p><input class=\\'fi mt-4\\' id=\\'resetC\\'></div><div class=\\'modal-foot\\'><button class=\\'btn btn-ghost\\' onclick=\\'closeModals()\\'>Cancel</button><button class=\\'btn btn-danger\\' onclick=\\'if($(\\'#resetC\\\').value===\\\"RESET\\\"){localStorage.removeItem(CACHE_KEY);db=null;init();closeModals();toast(\\\"success\\\",\\\"Reset\\\",\\\"All data cleared\\\")}else{toast(\\\"error\\\",\\\"Error\\\",\\\"Type RESET\\\")}\\'>Reset</button></div>')"><i class="fa-solid fa-trash"></i>Reset All Data</button></div></div>`:''}`;
+  <div class="card mt-4"><div class="card-head"><h3>Google Sheets</h3></div><div class="card-body"><p class="text-muted mb-4">Status: <span class="text-accent">Connected</span></p><div class="fg"><label>Web App URL</label><input class="fi" value="${SHEET_URL}" readonly style="opacity:.6"></div><p class="text-sm text-muted mt-2">Your data syncs to Google Sheets automatically on every action.</p></div></div>
+  ${user.role==='admin'?`<div class="card mt-4" style="border-color:var(--danger)"><div class="card-head"><h3 style="color:var(--danger)">Danger Zone</h3></div><div class="card-body"><p class="text-muted mb-4">Permanently reset all data in Sheets and local cache.</p><button class="btn btn-danger" onclick="openModal('<div class=\\'modal-head\\'><h3>Reset All</h3><button class=\\'modal-close\\' onclick=\\'closeModals()\\'>&times;</button></div><div class=\\'modal-body\\'><p class=\\'text-muted\\' style=\\'color:var(--danger)\\'>Type RESET to confirm.</p><input class=\\'fi mt-4\\' id=\\'resetC\\'></div><div class=\\'modal-foot\\'><button class=\\'btn btn-ghost\\' onclick=\\'closeModals()\\'>Cancel</button><button class=\\'btn btn-danger\\' onclick=\\'if($(\\\"#resetC\\\").value===\"RESET\"){localStorage.removeItem(CACHE_KEY);db=null;init();closeModals();toast(\"success\",\"Reset\",\"Cleared\")}else{toast(\"error\",\"Error\",\"Type RESET\")}\\'>Reset</button></div>')"><i class="fa-solid fa-trash"></i>Reset All Data</button></div></div>`:''}`;
 }
-function saveProfile(){
-  const u=db.users.find(x=>x.id===user.id);if(!u)return;
-  if($('#pName')&&!u.role==='admin')u.name=$('#pName').value;
-  u.phone=$('#pPhone')?.value||'';
-  if($('#pPort'))u.portfolio=$('#pPort').value;
-  if($('#pBio'))u.bio=$('#pBio').value;
-  u.avatar=ini(u.name);user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));
-  DB.log('Update Profile',u.name);DB.save('users');render();toast('success','Saved');
-}
-function changePw(){
-  const c=$('#pwC').value,n=$('#pwN').value,f=$('#pwF').value;
-  if(c!==user.password){toast('error','Error','Wrong current password');return;}
-  if(n!==f){toast('error','Error','Passwords mismatch');return;}
-  if(n.length<3){toast('error','Error','Too short');return;}
-  const u=db.users.find(x=>x.id===user.id);u.password=n;user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));
-  DB.save('users');$('#pwForm').reset();toast('success','Updated');
-}
+function saveProfile(){const u=db.users.find(x=>x.id===user.id);if(!u)return;u.phone=$('#pPhone')?.value||'';if($('#pPort'))u.portfolio=$('#pPort').value;if($('#pBio'))u.bio=$('#pBio').value;u.avatar=ini(u.name);user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));DB.log('Profile',u.name);DB.save('users');render();toast('success','Saved');}
+function changePw(){const c=$('#pwC').value,n=$('#pwN').value,f=$('#pwF').value;if(c!==user.password){toast('error','Error','Wrong password');return;}if(n!==f){toast('error','Error','Mismatch');return;}if(n.length<3){toast('error','Error','Too short');return;}const u=db.users.find(x=>x.id===user.id);u.password=n;user=u;sessionStorage.setItem(AUTH_KEY,JSON.stringify(u));DB.save('users');$('#pwForm').reset();toast('success','Updated');}
 
-// ═══════════ LOGIN ═══════════
+/* ═══════════ LOGIN ═══════════ */
 function renderLogin(){
-  $('#app').innerHTML=`<div class="login"><div class="login-left"><div class="login-box"><div class="login-logo"><div class="sb-logo-icon">T</div><span>Typixel</span></div><h2>Welcome Back</h2><p class="sub">Sign in to your design studio</p><form onsubmit="event.preventDefault();login($('#lE').value,$('#lP').value)"><div class="fg"><label>Email</label><input class="fi" type="email" id="lE" placeholder="you@example.com" required></div><div class="fg"><label>Password</label><input class="fi" type="password" id="lP" placeholder="Password" required></div><button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:11px"><i class="fa-solid fa-right-to-bracket"></i>Sign In</button></form><div class="login-divider">or</div><button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="modalJoin()"><i class="fa-solid fa-user-plus"></i>Join Our Team</button></div></div><div class="login-right"><div class="login-right-content"><h1>Design. Collaborate.<br><span style="color:var(--accent)">Deliver.</span></h1><p>Typixel streamlines your graphic design workflow — from client management to file delivery.</p><div class="features"><div class="feat"><i class="fa-solid fa-check-circle"></i>Google Sheets sync for all data</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Deadline tracking with alerts</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Team chat and notifications</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Print invoices and export CSV</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Activity log and quick notes</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Dark and light themes</div></div></div></div></div>`;
+  $('#app').innerHTML=`<div class="login"><div class="login-left"><div class="login-box"><div class="login-logo"><div class="sb-logo-icon">T</div><span>Typixel</span></div><h2>Welcome Back</h2><p class="sub">Sign in to your design studio</p><form onsubmit="event.preventDefault();login($('#lE').value,$('#lP').value)"><div class="fg"><label>Email</label><input class="fi" type="email" id="lE" placeholder="you@example.com" required></div><div class="fg"><label>Password</label><input class="fi" type="password" id="lP" placeholder="Password" required></div><button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:11px"><i class="fa-solid fa-right-to-bracket"></i>Sign In</button></form><div class="login-divider">or</div><button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="modalJoin()"><i class="fa-solid fa-user-plus"></i>Join Our Team</button></div></div><div class="login-right"><div class="login-right-content"><h1>Design. Collaborate.<br><span style="color:var(--accent)">Deliver.</span></h1><p>Typixel streamlines your graphic design workflow — fully synced to Google Sheets.</p><div class="features"><div class="feat"><i class="fa-solid fa-check-circle"></i>Google Sheets as your database</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Deadline tracking with alerts</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Team chat and notifications</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Print invoices and export CSV</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Activity log and quick notes</div><div class="feat"><i class="fa-solid fa-check-circle"></i>Dark and light themes</div></div></div></div></div>`;
 }
 function modalJoin(){openModal(`<div class="modal-head"><h3>Join Our Team</h3><button class="modal-close" onclick="closeModals()">&times;</button></div><div class="modal-body"><form id="jf"><div class="frow"><div class="fg"><label>Name</label><input class="fi" name="name" required></div><div class="fg"><label>Email</label><input class="fi" type="email" name="email" required></div></div><div class="fg"><label>Password</label><input class="fi" type="password" name="password" required></div><div class="fg"><label>Portfolio</label><input class="fi" name="portfolio" placeholder="https://..."></div><div class="fg"><label>About You</label><textarea class="fi" name="bio" rows="3"></textarea></div></form></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeModals()">Cancel</button><button class="btn btn-primary" onclick="const f=new FormData($('#jf'));register(f.get('name'),f.get('email'),f.get('password'),f.get('portfolio'),f.get('bio'))">Submit</button></div>`);}
 
-// ═══════════ DRAG & DROP ═══════════
+/* ═══════════ GLOBAL ═══════════ */
 document.addEventListener('dragover',e=>e.preventDefault());
 document.addEventListener('drop',e=>{e.preventDefault();if(e.target.closest('.upload-zone'))handleFiles(e.dataTransfer.files);});
-
-// Close dropdowns on outside click
 document.addEventListener('click',e=>{
   if(!e.target.closest('.dropdown'))$$('.dd-menu.open').forEach(m=>m.classList.remove('open'));
   if(!e.target.closest('.notif-panel')&&!e.target.closest('.tb-btn')){const p=$('#notifPanel');if(p)p.classList.remove('open');}
 });
 
-// ═══════════ INIT ═══════════
+/* ═══════════ INIT ═══════════ */
 async function init(){
-  db = await DB.load();
-  if(user){
-    // Verify user still exists in DB
-    const fresh = db.users.find(u=>u.id===user.id);
-    if(fresh){ user=fresh; sessionStorage.setItem(AUTH_KEY,JSON.stringify(fresh)); }
-    else{ user=null; sessionStorage.removeItem(AUTH_KEY); }
-  }
+  db=await DB.load();
+  if(user){const f=db.users.find(u=>u.id===user.id);if(f){user=f;sessionStorage.setItem(AUTH_KEY,JSON.stringify(f));}else{user=null;sessionStorage.removeItem(AUTH_KEY);}}
   render();
 }
 init();
